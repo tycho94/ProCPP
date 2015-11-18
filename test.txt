@@ -1,0 +1,8 @@
+total 56
+drwxrwxr-x 3 tycho tycho 4096 nov 18 15:26 ./
+drwxrwxr-x 7 tycho tycho 4096 nov 18 15:16 ../
+drwxrwxr-x 8 tycho tycho 4096 nov 18 15:25 .git/
+-rw-rw-r-- 1 tycho tycho  242 nov 18 15:25 .gitignore
+-rw-rw-r-- 1 tycho tycho 1068 nov 18 15:25 LICENSE
+-rw-rw-r-- 1 tycho tycho   93 nov 18 15:25 README.md
+-rw-rw-r-- 1 tycho tycho    0 nov 18 15:26 test.txt
