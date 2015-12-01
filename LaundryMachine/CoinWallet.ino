@@ -11,7 +11,7 @@ void CoinWallet::Poll()
 
 int CoinWallet::Balance()
 {
-  return ();
+  return (0);
 }
 
 boolean CoinWallet::Withdraw(int amount)

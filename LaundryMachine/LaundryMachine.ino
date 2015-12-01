@@ -16,6 +16,7 @@
 #include "ProgramSettings.h"
 #include "ProgramExecutor.h"
 
+
 static HardwareControl * mControl;
 static IBuzzer * mBuzzer;
 static ICoin * mCoin;
@@ -32,9 +33,14 @@ static ProgramExecutor * mProgramExecutor;
 
 void setup()
 {
+  mControl = new HardwareControl();
+  Serial.begin(9600);
+  Serial.println("start");
+  
 }
 
 void loop()
 {
+  mControl->SetDrain(1);
 }
 
