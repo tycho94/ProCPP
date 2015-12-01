@@ -116,6 +116,44 @@ boolean HardwareControl::GetProgramButton() {
   return (false);
 }
 
+
+boolean GetPressureSwitch()
+{
+  this->SetKeySelect(0);
+  if (centipede.digitalRead(IN_IN0) == HIGH) {
+
+    return (true);
+  }
+  return (false);
+}
+boolean GetLockSwitch()
+{
+  this->SetKeySelect(0);
+  if (centipede.digitalRead(IN_IN3) == HIGH) {
+
+    return (true);
+  }
+  return (false);
+}
+boolean GetSoap1Switch()
+{
+  this->SetKeySelect(0);
+  if (centipede.digitalRead(IN_IN1) == HIGH) {
+
+    return (true);
+  }
+  return (false);
+}
+boolean GetSoap2Switch()
+{
+  this->SetKeySelect(0);
+  if (centipede.digitalRead(IN_IN2) == HIGH) {
+
+    return (true);
+  }
+  return (false);
+}
+
 //returning values
 
 int HardwareControl::GetTemperature()
@@ -211,6 +249,3 @@ void HardwareControl::Strobe()
   centipede.digitalWrite(OUT_STROBE, HIGH);
   delay(10);
 }
-
-
-

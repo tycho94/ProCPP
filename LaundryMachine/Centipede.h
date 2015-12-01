@@ -15,7 +15,7 @@ extern uint8_t CSDataArray[2];
 class Centipede
 {
   public:
-          Centipede();
+    Centipede();
     void pinMode(int pin, int mode);
     void pinPullup(int pin, int mode);
     void digitalWrite(int pin, int level);
