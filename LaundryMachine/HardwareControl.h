@@ -17,12 +17,13 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
   public:
     HardwareControl();
     // Inputs
-    
+
     boolean GetCoin10Button();
     boolean GetCoin50Button();
     boolean GetCoin200Button();
     boolean GetCoinClearButton();
     boolean GetStartButton();
+    int GetWaterlevel();
     int GetTemperature();
 
     // Outputs

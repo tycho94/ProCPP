@@ -36,7 +36,7 @@ void setup()
   mControl = new HardwareControl();
   Serial.begin(9600);
   Serial.println("start");
-  
+
 }
 
 void loop()

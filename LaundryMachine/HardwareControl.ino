@@ -96,42 +96,46 @@ void HardwareControl::SetKeySelect(int value)
 void HardwareControl::SetGroup(int group)
 {
   Strobe();
-  if(group == 1)
-    {
-      centipede.digitalWrite(OUT_GROUP2, LOW);
-      centipede.digitalWrite(OUT_GROUP1, LOW);
-    }
-   if(group == 2)
-    {
-      centipede.digitalWrite(OUT_GROUP1, LOW);
-      centipede.digitalWrite(OUT_GROUP2, HIGH);
-    }
-   if(group == 3)
-    {
-      centipede.digitalWrite(OUT_GROUP1, HIGH); 
-      centipede.digitalWrite(OUT_GROUP2, LOW);
-    }
-   if(group == 4)
-    {
-      centipede.digitalWrite(OUT_GROUP2, HIGH);
-      centipede.digitalWrite(OUT_GROUP1, HIGH);  
-    }
+  if (group == 1)
+  {
+    centipede.digitalWrite(OUT_GROUP2, LOW);
+    centipede.digitalWrite(OUT_GROUP1, LOW);
+  }
+  if (group == 2)
+  {
+    centipede.digitalWrite(OUT_GROUP1, LOW);
+    centipede.digitalWrite(OUT_GROUP2, HIGH);
+  }
+  if (group == 3)
+  {
+    centipede.digitalWrite(OUT_GROUP1, HIGH);
+    centipede.digitalWrite(OUT_GROUP2, LOW);
+  }
+  if (group == 4)
+  {
+    centipede.digitalWrite(OUT_GROUP2, HIGH);
+    centipede.digitalWrite(OUT_GROUP1, HIGH);
+  }
 }
 
 void HardwareControl::SetData(int data)
 {
   Strobe();
-  if(data == 1){
-    centipede.digitalWrite(OUT_DATAA, HIGH);}
-  if(data == 2){
-    centipede.digitalWrite(OUT_DATAB, HIGH);}
-  if(data == 3){
-    centipede.digitalWrite(OUT_DATAC, HIGH);}
-  if(data == 4){
+  if (data == 1) {
+    centipede.digitalWrite(OUT_DATAA, HIGH);
+  }
+  if (data == 2) {
+    centipede.digitalWrite(OUT_DATAB, HIGH);
+  }
+  if (data == 3) {
+    centipede.digitalWrite(OUT_DATAC, HIGH);
+  }
+  if (data == 4) {
     centipede.digitalWrite(OUT_DATAC, HIGH);
     Strobe();
-    centipede.digitalWrite(OUT_DATAB, HIGH);}
-  
+    centipede.digitalWrite(OUT_DATAB, HIGH);
+  }
+
 }
 
 void HardwareControl::SetCoin50(int leds)
