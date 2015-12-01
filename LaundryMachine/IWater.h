@@ -3,11 +3,11 @@
 
 class IWater
 {
-public:
-  // Inputs
+  public:
+    // Inputs
 
-  // Outputs
-  virtual void SetDrain(int level) = 0;
+    // Outputs
+    virtual void SetDrain(int level) = 0;
 };
 
 #endif

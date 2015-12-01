@@ -27,7 +27,7 @@ HardwareControl::HardwareControl()
 {
   Wire.begin(); // start I2C
   centipede.initialize(); // set all registers to default
-  for (int i = 0; i <= 15; i++) 
+  for (int i = 0; i <= 15; i++)
   {
     centipede.pinMode(i, OUTPUT);
   }

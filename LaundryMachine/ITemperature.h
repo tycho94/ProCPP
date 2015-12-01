@@ -3,11 +3,11 @@
 
 class ITemperature
 {
-public:
-  // Inputs
-  virtual int GetTemperature() = 0;
+  public:
+    // Inputs
+    virtual int GetTemperature() = 0;
 
-  // Outputs
+    // Outputs
 };
 
 #endif

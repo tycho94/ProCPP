@@ -1,7 +1,7 @@
 ProgramSettings::ProgramSettings(char t)
 {
   type = t;
-  
+
   switch (type)
   {
     case 'A':

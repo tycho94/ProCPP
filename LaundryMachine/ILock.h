@@ -3,10 +3,10 @@
 
 class ILock
 {
-public:
-  // Inputs
+  public:
+    // Inputs
 
-  // Outputs
+    // Outputs
 };
 
 #endif
