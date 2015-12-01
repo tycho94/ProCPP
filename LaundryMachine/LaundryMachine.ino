@@ -36,10 +36,16 @@ void setup()
   mControl = new HardwareControl();
   Serial.begin(9600);
   Serial.println("start");
-
-}
+  
+  mControl->SetProgramIndicator(1);
+  mControl->SetCoin200(2);
+  mControl->SetCoin50(3);
+  mControl->SetCoin10(3);
+  mControl->SetLock(1);
+  }
 
 void loop()
-{
+{ 
+  
 }
 

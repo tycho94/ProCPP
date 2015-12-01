@@ -117,8 +117,8 @@ boolean HardwareControl::GetProgramButton() {
 }
 
 
-boolean GetPressureSwitch()
-{
+boolean HardwareControl::GetPressureSwitch() {
+
   this->SetKeySelect(0);
   if (centipede.digitalRead(IN_IN0) == HIGH) {
 
@@ -126,7 +126,7 @@ boolean GetPressureSwitch()
   }
   return (false);
 }
-boolean GetLockSwitch()
+boolean HardwareControl::GetLockSwitch()
 {
   this->SetKeySelect(0);
   if (centipede.digitalRead(IN_IN3) == HIGH) {
@@ -135,7 +135,7 @@ boolean GetLockSwitch()
   }
   return (false);
 }
-boolean GetSoap1Switch()
+boolean HardwareControl::GetSoap1Switch()
 {
   this->SetKeySelect(0);
   if (centipede.digitalRead(IN_IN1) == HIGH) {
@@ -144,11 +144,10 @@ boolean GetSoap1Switch()
   }
   return (false);
 }
-boolean GetSoap2Switch()
+boolean HardwareControl::GetSoap2Switch()
 {
   this->SetKeySelect(0);
   if (centipede.digitalRead(IN_IN2) == HIGH) {
-
     return (true);
   }
   return (false);
@@ -163,48 +162,117 @@ int HardwareControl::GetTemperature()
 
 // setting outputs
 
+void HardwareControl::SetCoin10(int leds)
+{
+  SetGroup(1);
+  if (leds <= 0)
+    SetData(0);
+  if (leds > 0)
+    SetData(1);
+  if (leds > 1)
+    SetData(2);
+  if (leds > 2)
+    SetData(3);
+}
+
 void HardwareControl::SetCoin50(int leds)
 {
+  SetGroup(2);
+  if (leds <= 0)
+    SetData(0);
+  if (leds > 0)
+    SetData(1);
+  if (leds > 1)
+    SetData(2);
+  if (leds > 2)
+    SetData(3);
+}
+
+void HardwareControl::SetCoin200(int leds)
+{
+  SetGroup(3);
+  if (leds <= 0)
+    SetData(0);
+  if (leds > 0)
+    SetData(1);
+  if (leds > 1)
+    SetData(2);
 }
 
 void HardwareControl::SetSoap2(int level)
 {
+  SetGroup(3);
+  if (level <= 0)
+  {
+    SetData(3);
+  }
+  else
+    SetData(0);
 }
 
 void HardwareControl::SetDrain(int level)
 {
-  SetGroup(2);
-  SetData(3);
+  if (level <= 0)
+    centipede.digitalWrite(OUT_DRAIN, LOW);
+  else
+    centipede.digitalWrite(OUT_DRAIN, HIGH);
 }
 
 void HardwareControl::SetDirection(int dir)
 {
-}
+}//TODO
 
 void HardwareControl::SetProgramIndicator(int program)
 {
-}
+  SetGroup(4);
+  SetData(program);
+}//TODO
 
 void HardwareControl::SetBuzzer(int level)
 {
+  if (level <= 0)
+    centipede.digitalWrite(OUT_BUZZER, LOW);
+  else
+    centipede.digitalWrite(OUT_BUZZER, HIGH);
+}//TODO
+
+void HardwareControl::SetSink(int level)
+{
+  if (level <= 0)
+    centipede.digitalWrite(OUT_SINK, LOW);
+  else
+    centipede.digitalWrite(OUT_SINK, HIGH);
 }
+
+
+void HardwareControl::SetHeater(int level)
+{
+  if (level <= 0)
+    centipede.digitalWrite(OUT_HEATER, LOW);
+  else
+    centipede.digitalWrite(OUT_HEATER, HIGH);
+}//TODO
+
+void HardwareControl::SetLock(int level)
+{
+  if (level <= 0)
+    centipede.digitalWrite(OUT_LOCK, LOW);
+  else
+    centipede.digitalWrite(OUT_LOCK, HIGH);
+}
+
+
+
 
 // private sets - used by gets/sets
 
 void HardwareControl::SetKeySelect(int value)
 {
-  if (value == 0) {
-    centipede.digitalWrite(OUT_KEYSELECT, LOW);
-  }
-  else if (value == 1) {
-    centipede.digitalWrite(OUT_KEYSELECT, HIGH);
-  }
+  centipede.digitalWrite(OUT_KEYSELECT, value);
 }
 
 void HardwareControl::SetGroup(int group)
 {
-  Strobe();
-
   if (group == 1)
   {
     centipede.digitalWrite(OUT_GROUP2, LOW);
@@ -225,12 +293,16 @@ void HardwareControl::SetGroup(int group)
     centipede.digitalWrite(OUT_GROUP2, HIGH);
     centipede.digitalWrite(OUT_GROUP1, HIGH); //11
   }
+  Strobe();
 }
 
 void HardwareControl::SetData(int data)
 {
-  Strobe();
-
+  if (data == 0) {
+    centipede.digitalWrite(OUT_DATAA, LOW);
+    centipede.digitalWrite(OUT_DATAB, LOW);
+    centipede.digitalWrite(OUT_DATAC, LOW);
+  }
   if (data == 1) {
     centipede.digitalWrite(OUT_DATAA, HIGH);
   }
@@ -240,12 +312,24 @@ void HardwareControl::SetData(int data)
   if (data == 3) {
     centipede.digitalWrite(OUT_DATAC, HIGH);
   }
+  if (data == 4) {
+    centipede.digitalWrite(OUT_DATAA, LOW);
+  }
+  if (data == 5) {
+    centipede.digitalWrite(OUT_DATAB, LOW);
+  }
+  if (data == 6) {
+    centipede.digitalWrite(OUT_DATAC, LOW);
+  }
+  Strobe();
 }
 
 void HardwareControl::Strobe()
 {
+  delay(10);
   centipede.digitalWrite(OUT_STROBE, LOW);
   delay(80);
   centipede.digitalWrite(OUT_STROBE, HIGH);
   delay(10);
+  centipede.digitalWrite(OUT_STROBE, LOW);
 }

@@ -51,7 +51,7 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     void SetCoin200(int leds);  // off = 0 - levels 1-2 = led 1-2
   private:
     Centipede centipede;
-    void SetKeySelect(int value); //TODO
+    void SetKeySelect(int value); // false = 0 true = 1
     void SetGroup(int group);   // group 1 = 00, 2 = 10, 3 = 01, 4 = 11
     void SetData(int data);     // data 0 = LOW 1 = DATAA 2 = DATAB 3 = DATAC
     void Strobe();
