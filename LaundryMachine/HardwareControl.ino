@@ -49,23 +49,85 @@ HardwareControl::HardwareControl()
   centipede.digitalWrite(OUT_LOCK, LOW);
 }
 
+//getting buttons
+
 boolean HardwareControl::GetCoin10Button()
 {
+  /*
+    we need this to HIGH because is the comb to acces to the buttons
+    Buttons --> KeySelect HIGH
+  */
+  this->SetKeySelect(1);
+
+  if (centipede.digitalRead(IN_IN3) == HIGH) {
+    return (true);
+  }
+
   return (false);
 }
 
-boolean HardwareControl::GetStartButton()
+boolean HardwareControl::GetCoin50Button()
 {
+  this->SetKeySelect(1);
+
+  if (centipede.digitalRead(IN_IN2) == HIGH) {
+    return (true);
+  }
+
   return (false);
 }
+
+boolean HardwareControl::GetCoin200Button()
+{
+  this->SetKeySelect(1);
+
+  if (centipede.digitalRead(IN_IN1) == HIGH) {
+    return (true);
+  }
+  return (false);
+}
+
+boolean HardwareControl::GetCoinClearButton() {
+
+  this->SetKeySelect(1);
+  if ((centipede.digitalRead(IN_IN1) == HIGH) && (centipede.digitalRead(IN_IN2) == HIGH) && (centipede.digitalRead(IN_IN3) == HIGH)) {
+    return (true);
+  }
+  return (false);
+}
+boolean HardwareControl::GetStartButton() {
+
+  this->SetKeySelect(1);
+  if (centipede.digitalRead(IN_IN0) == HIGH) {
+
+    return (true);
+  }
+  return (false);
+}
+
+boolean HardwareControl::GetProgramButton() {
+
+  this->SetKeySelect(1);
+
+  if ((centipede.digitalRead(IN_IN0) == HIGH) && (centipede.digitalRead(IN_IN3) == HIGH)) {
+
+    return (true);
+  }
+  return (false);
+}
+
+//returning values
 
 int HardwareControl::GetTemperature()
 {
   return (0);
 }
 
+// setting outputs
 
-
+void HardwareControl::SetCoin50(int leds)
+{
+}
 
 void HardwareControl::SetSoap2(int level)
 {
@@ -73,8 +135,8 @@ void HardwareControl::SetSoap2(int level)
 
 void HardwareControl::SetDrain(int level)
 {
-  this->SetGroup(1);
-  this->SetData(4);
+  SetGroup(2);
+  SetData(3);
 }
 
 void HardwareControl::SetDirection(int dir)
@@ -89,38 +151,48 @@ void HardwareControl::SetBuzzer(int level)
 {
 }
 
+// private sets - used by gets/sets
+
 void HardwareControl::SetKeySelect(int value)
 {
+  if (value == 0) {
+    centipede.digitalWrite(OUT_KEYSELECT, LOW);
+  }
+  else if (value == 1) {
+    centipede.digitalWrite(OUT_KEYSELECT, HIGH);
+  }
 }
 
 void HardwareControl::SetGroup(int group)
 {
   Strobe();
+
   if (group == 1)
   {
     centipede.digitalWrite(OUT_GROUP2, LOW);
-    centipede.digitalWrite(OUT_GROUP1, LOW);
+    centipede.digitalWrite(OUT_GROUP1, LOW); //00
   }
   if (group == 2)
   {
-    centipede.digitalWrite(OUT_GROUP1, LOW);
-    centipede.digitalWrite(OUT_GROUP2, HIGH);
+    centipede.digitalWrite(OUT_GROUP2, LOW);
+    centipede.digitalWrite(OUT_GROUP1, HIGH);  //01
   }
   if (group == 3)
   {
-    centipede.digitalWrite(OUT_GROUP1, HIGH);
-    centipede.digitalWrite(OUT_GROUP2, LOW);
+    centipede.digitalWrite(OUT_GROUP2, HIGH);
+    centipede.digitalWrite(OUT_GROUP1, LOW); //10
   }
   if (group == 4)
   {
     centipede.digitalWrite(OUT_GROUP2, HIGH);
-    centipede.digitalWrite(OUT_GROUP1, HIGH);
+    centipede.digitalWrite(OUT_GROUP1, HIGH); //11
   }
 }
 
 void HardwareControl::SetData(int data)
 {
   Strobe();
+
   if (data == 1) {
     centipede.digitalWrite(OUT_DATAA, HIGH);
   }
@@ -130,11 +202,6 @@ void HardwareControl::SetData(int data)
   if (data == 3) {
     centipede.digitalWrite(OUT_DATAC, HIGH);
   }
-}
-
-void HardwareControl::SetCoin50(int leds)
-{
-
 }
 
 void HardwareControl::Strobe()

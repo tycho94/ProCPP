@@ -41,6 +41,5 @@ void setup()
 
 void loop()
 {
-  mControl->SetDrain(1);
 }
 

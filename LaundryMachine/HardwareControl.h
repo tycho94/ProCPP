@@ -16,7 +16,6 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
 {
   public:
     HardwareControl();
-    //Centipede centipede;
     // Inputs
 
     // Buttons
