@@ -3,11 +3,11 @@
 
 class ISoap
 {
-public:
-  // Inputs
+  public:
+    // Inputs
 
-  // Outputs
-  virtual void SetSoap2(int level) = 0;
+    // Outputs
+    virtual void SetSoap2(int level) = 0;
 };
 
 #endif

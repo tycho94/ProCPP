@@ -3,14 +3,14 @@
 
 class ProgramSelect
 {
-public:
-  ProgramSelect(IProgram *);
-  void Poll();
-  char GetProgramType();
-  void InstallStartHandler(void (* handler)());
-private:
-  IProgram * mProgram;
-  void (* mStartHandler) (void);
+  public:
+    ProgramSelect(IProgram *);
+    void Poll();
+    char GetProgramType();
+    void InstallStartHandler(void (* handler)());
+  private:
+    IProgram * mProgram;
+    void (* mStartHandler) (void);
 };
 
 #endif

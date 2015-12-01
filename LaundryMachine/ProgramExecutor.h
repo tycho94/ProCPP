@@ -13,20 +13,20 @@
 
 class ProgramExecutor
 {
-public:
-  ProgramExecutor(IBuzzer *, IMotor *, ILock *, ISoap *, ITemperature *, IWater *, CoinWallet *);
-  boolean Start(ProgramSettings *);
-  boolean Step();
-  boolean IsReady();
-private:
-  IBuzzer * mBuzzer;
-  IMotor * mMotor;
-  ILock * mLock;
-  ISoap * mSoap;
-  ITemperature * mTemperature;
-  IWater * mWater;
-  CoinWallet * mCoinWallet;
-  ProgramSettings * mProgramSettings;
+  public:
+    ProgramExecutor(IBuzzer *, IMotor *, ILock *, ISoap *, ITemperature *, IWater *, CoinWallet *);
+    boolean Start(ProgramSettings *);
+    boolean Step();
+    boolean IsReady();
+  private:
+    IBuzzer * mBuzzer;
+    IMotor * mMotor;
+    ILock * mLock;
+    ISoap * mSoap;
+    ITemperature * mTemperature;
+    IWater * mWater;
+    CoinWallet * mCoinWallet;
+    ProgramSettings * mProgramSettings;
 };
 
 #endif

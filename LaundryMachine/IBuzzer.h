@@ -3,8 +3,8 @@
 
 class IBuzzer
 {
-public:
-  virtual void SetBuzzer(int level) = 0;
+  public:
+    virtual void SetBuzzer(int level) = 0;
 };
 
 #endif

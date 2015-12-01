@@ -5,13 +5,13 @@
 
 class CoinWallet
 {
-public:
-  CoinWallet(ICoin *);
-  void Poll();
-  int Balance();
-  boolean Withdraw(int amount);
-private:
-  ICoin * mCoin;
+  public:
+    CoinWallet(ICoin *);
+    void Poll();
+    int Balance();
+    boolean Withdraw(int amount);
+  private:
+    ICoin * mCoin;
 };
 
 #endif
