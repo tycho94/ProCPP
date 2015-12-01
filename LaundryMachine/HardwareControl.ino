@@ -130,12 +130,6 @@ void HardwareControl::SetData(int data)
   if (data == 3) {
     centipede.digitalWrite(OUT_DATAC, HIGH);
   }
-  if (data == 4) {
-    centipede.digitalWrite(OUT_DATAC, HIGH);
-    Strobe();
-    centipede.digitalWrite(OUT_DATAB, HIGH);
-  }
-
 }
 
 void HardwareControl::SetCoin50(int leds)
