@@ -59,7 +59,7 @@ boolean HardwareControl::GetCoin10Button()
   */
   this->SetKeySelect(1);
 
-  if (centipede.digitalRead(IN_IN3) == HIGH) {
+  if (centipede.digitalRead(IN_IN3) == HIGH && centipede.digitalRead(IN_IN2) == LOW && centipede.digitalRead(IN_IN1) == LOW) {
     return (true);
   }
 
@@ -70,7 +70,7 @@ boolean HardwareControl::GetCoin50Button()
 {
   this->SetKeySelect(1);
 
-  if (centipede.digitalRead(IN_IN2) == HIGH) {
+  if (centipede.digitalRead(IN_IN2) == HIGH && centipede.digitalRead(IN_IN1) == LOW && centipede.digitalRead(IN_IN3) == LOW) {
     return (true);
   }
 
@@ -81,7 +81,7 @@ boolean HardwareControl::GetCoin200Button()
 {
   this->SetKeySelect(1);
 
-  if (centipede.digitalRead(IN_IN1) == HIGH) {
+  if (centipede.digitalRead(IN_IN1) == HIGH && centipede.digitalRead(IN_IN2) == LOW && centipede.digitalRead(IN_IN3) == LOW) {
     return (true);
   }
   return (false);
@@ -98,7 +98,7 @@ boolean HardwareControl::GetCoinClearButton() {
 boolean HardwareControl::GetStartButton() {
 
   this->SetKeySelect(1);
-  if (centipede.digitalRead(IN_IN0) == HIGH) {
+  if (centipede.digitalRead(IN_IN0) == HIGH && centipede.digitalRead(IN_IN3) == LOW) {
 
     return (true);
   }
@@ -139,7 +139,6 @@ boolean HardwareControl::GetSoap1Switch()
 {
   this->SetKeySelect(0);
   if (centipede.digitalRead(IN_IN1) == HIGH) {
-
     return (true);
   }
   return (false);
@@ -191,23 +190,45 @@ void HardwareControl::SetCoin50(int leds)
 void HardwareControl::SetCoin200(int leds)
 {
   SetGroup(3);
-  if (leds <= 0)
-    SetData(0);
-  if (leds > 0)
-    SetData(1);
-  if (leds > 1)
-    SetData(2);
+  if (leds <= 0){
+    SetDataOff(1);
+    SetDataOff(2);
+  }
+  else {
+    if (leds > 0)
+      SetData(1);
+    if (leds > 1)
+      SetData(2);
+
+    SetDataOff(3);
+    Serial.println("Data off");
+  }
+}
+
+
+void HardwareControl::SetSoap1(int level)
+{
+  if (level <= 0)
+    centipede.digitalWrite(OUT_SOAP1, LOW);
+  else
+    centipede.digitalWrite(OUT_SOAP1, HIGH);
 }
 
 void HardwareControl::SetSoap2(int level)
 {
   SetGroup(3);
   if (level <= 0)
-  {
-    SetData(3);
-  }
+    SetDataOff(3);
   else
-    SetData(0);
+    SetData(3);
+}
+
+void HardwareControl::SetMotor(int level)
+{
+  if (level <= 0)
+    centipede.digitalWrite(OUT_MOTOR_RL, LOW);
+  else
+    centipede.digitalWrite(OUT_MOTOR_RL, HIGH);
 }
 
 void HardwareControl::SetDrain(int level)
@@ -268,11 +289,14 @@ void HardwareControl::SetLock(int level)
 
 void HardwareControl::SetKeySelect(int value)
 {
+  //Strobe();
   centipede.digitalWrite(OUT_KEYSELECT, value);
+  Strobe();
 }
 
 void HardwareControl::SetGroup(int group)
 {
+  //Strobe();
   if (group == 1)
   {
     centipede.digitalWrite(OUT_GROUP2, LOW);
@@ -298,6 +322,7 @@ void HardwareControl::SetGroup(int group)
 
 void HardwareControl::SetData(int data)
 {
+  //Strobe();
   if (data == 0) {
     centipede.digitalWrite(OUT_DATAA, LOW);
     centipede.digitalWrite(OUT_DATAB, LOW);
@@ -312,24 +337,28 @@ void HardwareControl::SetData(int data)
   if (data == 3) {
     centipede.digitalWrite(OUT_DATAC, HIGH);
   }
-  if (data == 4) {
+  Strobe();
+}
+
+void HardwareControl::SetDataOff(int data)
+{
+  Strobe();
+  if (data == 1) {
     centipede.digitalWrite(OUT_DATAA, LOW);
   }
-  if (data == 5) {
+  if (data == 2) {
     centipede.digitalWrite(OUT_DATAB, LOW);
   }
-  if (data == 6) {
+  if (data == 3) {
     centipede.digitalWrite(OUT_DATAC, LOW);
   }
-  Strobe();
 }
 
 void HardwareControl::Strobe()
 {
-  delay(10);
-  centipede.digitalWrite(OUT_STROBE, LOW);
-  delay(80);
-  centipede.digitalWrite(OUT_STROBE, HIGH);
-  delay(10);
-  centipede.digitalWrite(OUT_STROBE, LOW);
+  /*
+    centipede.digitalWrite(OUT_STROBE, LOW);
+    delay(80);
+    centipede.digitalWrite(OUT_STROBE, HIGH);
+    delay(10);*/
 }

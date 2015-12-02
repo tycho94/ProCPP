@@ -36,16 +36,50 @@ void setup()
   mControl = new HardwareControl();
   Serial.begin(9600);
   Serial.println("start");
-  
-  mControl->SetProgramIndicator(1);
-  mControl->SetCoin200(2);
-  mControl->SetCoin50(3);
-  mControl->SetCoin10(3);
-  mControl->SetLock(1);
-  }
+
+}
 
 void loop()
-{ 
-  
+{
+  /*
+    if (mControl->GetCoin200Button())
+    mControl->SetCoin200(2);
+    if (mControl->GetCoin50Button())
+    mControl->SetCoin50(3);
+    if (mControl->GetCoin10Button())
+    mControl->SetCoin10(3);
+
+    if (mControl->GetCoinClearButton())
+    {
+    mControl->SetCoin10(0);
+    mControl->SetCoin50(0);
+    mControl->SetCoin200(0);
+    }*/
+
+
+  if (mControl->GetSoap2Switch())
+    mControl->SetSoap2(1);
+  else
+    mControl->SetSoap2(0);
+
+  if (mControl->GetSoap1Switch()){
+    mControl->SetSoap1(1);
+    if(mControl->GetPressureSwitch()&&mControl->GetLockSwitch()){
+        
+      }
+  }else
+    mControl->SetSoap1(0);
+
+  if (mControl->GetLockSwitch())
+    mControl->SetLock(1);
+  else
+    mControl->SetLock(0);
+  if (mControl->GetPressureSwitch())
+    mControl->SetDrain(1);
+  else
+    mControl->SetDrain(0);
+
+    
+
 }
 
