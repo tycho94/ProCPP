@@ -69,7 +69,7 @@ boolean HardwareControl::GetCoin10Button()
 boolean HardwareControl::GetCoin50Button()
 {
   this->SetKeySelect(1);
-
+  delay(20);
   if (centipede.digitalRead(IN_IN2) == HIGH && centipede.digitalRead(IN_IN1) == LOW && centipede.digitalRead(IN_IN3) == LOW) {
     return (true);
   }
@@ -190,7 +190,7 @@ void HardwareControl::SetCoin50(int leds)
 void HardwareControl::SetCoin200(int leds)
 {
   SetGroup(3);
-  if (leds <= 0){
+  if (leds <= 0) {
     SetDataOff(1);
     SetDataOff(2);
   }
@@ -201,7 +201,6 @@ void HardwareControl::SetCoin200(int leds)
       SetData(2);
 
     SetDataOff(3);
-    Serial.println("Data off");
   }
 }
 
@@ -223,13 +222,7 @@ void HardwareControl::SetSoap2(int level)
     SetData(3);
 }
 
-void HardwareControl::SetMotor(int level)
-{
-  if (level <= 0)
-    centipede.digitalWrite(OUT_MOTOR_RL, LOW);
-  else
-    centipede.digitalWrite(OUT_MOTOR_RL, HIGH);
-}
+
 
 void HardwareControl::SetDrain(int level)
 {
@@ -239,9 +232,37 @@ void HardwareControl::SetDrain(int level)
     centipede.digitalWrite(OUT_DRAIN, HIGH);
 }
 
+void HardwareControl::SetMotor(int speedlevel)
+{
+  if (speedlevel == 0)
+  {
+    centipede.digitalWrite(OUT_SPEED2, HIGH);
+    centipede.digitalWrite(OUT_SPEED1, HIGH);
+  }
+  if (speedlevel == 1)
+  {
+    centipede.digitalWrite(OUT_SPEED2, HIGH);
+    centipede.digitalWrite(OUT_SPEED1, LOW);
+  }
+  if (speedlevel == 2)
+  {
+    centipede.digitalWrite(OUT_SPEED2, LOW);
+    centipede.digitalWrite(OUT_SPEED1, HIGH);
+  }
+    if (speedlevel == 3)
+  {
+    centipede.digitalWrite(OUT_SPEED2, LOW);
+    centipede.digitalWrite(OUT_SPEED1, LOW);
+  }
+}
+
 void HardwareControl::SetDirection(int dir)
 {
-}//TODO
+  if (dir <= 0)
+    centipede.digitalWrite(OUT_MOTOR_RL, LOW);
+  else
+    centipede.digitalWrite(OUT_MOTOR_RL, HIGH);
+}
 
 void HardwareControl::SetProgramIndicator(int program)
 {
@@ -290,6 +311,7 @@ void HardwareControl::SetLock(int level)
 void HardwareControl::SetKeySelect(int value)
 {
   //Strobe();
+  Serial.println(value);
   centipede.digitalWrite(OUT_KEYSELECT, value);
   Strobe();
 }
@@ -352,13 +374,14 @@ void HardwareControl::SetDataOff(int data)
   if (data == 3) {
     centipede.digitalWrite(OUT_DATAC, LOW);
   }
+  Strobe();
 }
 
 void HardwareControl::Strobe()
 {
-  /*
+  
     centipede.digitalWrite(OUT_STROBE, LOW);
     delay(80);
     centipede.digitalWrite(OUT_STROBE, HIGH);
-    delay(10);*/
+    delay(10);
 }

@@ -42,7 +42,7 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     void SetSoap2(int level);   // off = 0 on = 1
     void SetDrain(int level);   // off = 0 on = 1
     void SetSink(int level);    // off = 0 on = 1
-    void SetMotor(int level);   // off = 0 on = 1
+    void SetMotor(int speedlevel);   // off = 0 on = 1
     void SetHeater(int level);  // off = 0 on = 1
     void SetDirection(int dir); // left = 0 right = 1
     void SetProgramIndicator(int program); // off = 0 - levels 1-2-3 = led 1-2-3
