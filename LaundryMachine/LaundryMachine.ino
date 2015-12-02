@@ -1,5 +1,6 @@
+
 #include <Wire.h>
-#include "Centipede.h"
+#include <Centipede.h>
 
 #include "IBuzzer.h"
 #include "ICoin.h"
@@ -41,41 +42,26 @@ void setup()
 
 void loop()
 {
-  //Test1();
-  if (mControl->GetCoin200Button())
-    mControl->SetCoin200(2);
-    if (mControl->GetCoin50Button())
-    mControl->SetCoin50(3);
-    if (mControl->GetCoin10Button())
-    mControl->SetCoin10(3);
-
-  
-  if (mControl->GetSoap2Switch()) {
-    mControl->SetSoap2(1);
-    mControl->SetMotor(3);
-  }
-  else {
-    mControl->SetSoap2(0);
-    mControl->SetMotor(0);
-}
+  Test1();
 }
 
 void Test1()
-{
-  
-    if (mControl->GetCoin200Button())
-    mControl->SetCoin200(2);
-    if (mControl->GetCoin50Button())
-    mControl->SetCoin50(3);
-    if (mControl->GetCoin10Button())
+{ 
+  if (mControl->GetCoin10Button())
     mControl->SetCoin10(3);
+  if (mControl->GetCoin50Button())
+    mControl->SetCoin50(3);
+  if (mControl->GetCoin200Button())
+    mControl->SetCoin200(2);
 
-    if (mControl->GetCoinClearButton())
-    {
+
+
+  if (mControl->GetCoinClearButton())
+  {
     mControl->SetCoin10(0);
     mControl->SetCoin50(0);
     mControl->SetCoin200(0);
-    }
+  }
 
   if (mControl->GetSoap2Switch()) {
     mControl->SetSoap2(1);

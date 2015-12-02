@@ -57,6 +57,7 @@ boolean HardwareControl::GetCoin10Button()
     we need this to HIGH because is the comb to acces to the buttons
     Buttons --> KeySelect HIGH
   */
+
   this->SetKeySelect(1);
 
   if (centipede.digitalRead(IN_IN3) == HIGH && centipede.digitalRead(IN_IN2) == LOW && centipede.digitalRead(IN_IN1) == LOW) {
@@ -249,7 +250,7 @@ void HardwareControl::SetMotor(int speedlevel)
     centipede.digitalWrite(OUT_SPEED2, LOW);
     centipede.digitalWrite(OUT_SPEED1, HIGH);
   }
-    if (speedlevel == 3)
+  if (speedlevel == 3)
   {
     centipede.digitalWrite(OUT_SPEED2, LOW);
     centipede.digitalWrite(OUT_SPEED1, LOW);
@@ -310,15 +311,12 @@ void HardwareControl::SetLock(int level)
 
 void HardwareControl::SetKeySelect(int value)
 {
-  //Strobe();
-  Serial.println(value);
   centipede.digitalWrite(OUT_KEYSELECT, value);
-  Strobe();
 }
 
 void HardwareControl::SetGroup(int group)
 {
-  //Strobe();
+  Strobe();
   if (group == 1)
   {
     centipede.digitalWrite(OUT_GROUP2, LOW);
@@ -339,12 +337,11 @@ void HardwareControl::SetGroup(int group)
     centipede.digitalWrite(OUT_GROUP2, HIGH);
     centipede.digitalWrite(OUT_GROUP1, HIGH); //11
   }
-  Strobe();
 }
 
 void HardwareControl::SetData(int data)
 {
-  //Strobe();
+  Strobe();
   if (data == 0) {
     centipede.digitalWrite(OUT_DATAA, LOW);
     centipede.digitalWrite(OUT_DATAB, LOW);
@@ -359,7 +356,6 @@ void HardwareControl::SetData(int data)
   if (data == 3) {
     centipede.digitalWrite(OUT_DATAC, HIGH);
   }
-  Strobe();
 }
 
 void HardwareControl::SetDataOff(int data)
@@ -374,14 +370,12 @@ void HardwareControl::SetDataOff(int data)
   if (data == 3) {
     centipede.digitalWrite(OUT_DATAC, LOW);
   }
-  Strobe();
 }
 
 void HardwareControl::Strobe()
 {
-  
-    centipede.digitalWrite(OUT_STROBE, LOW);
-    delay(80);
-    centipede.digitalWrite(OUT_STROBE, HIGH);
-    delay(10);
+  centipede.digitalWrite(OUT_STROBE, LOW);
+  delay(80);
+  centipede.digitalWrite(OUT_STROBE, HIGH);
+  delay(10);
 }
