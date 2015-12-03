@@ -9,9 +9,19 @@ void CoinWallet::showBalance()
 {
   int remainder;
   int q;
+  
+  q=remainder/10;
+  remainder=balance%10;
+  mCoin->SetCoin10(q);
+  
+  q=balance/50;
+  remainder=balance%50;
+  mCoin->SetCoin50(q);
+  
   q= balance/200;
   remainder=balance%200;
-  mCoin->Set
+  mCoin->SetCoin200(q);
+
 }
 
 void CoinWallet::Poll()
