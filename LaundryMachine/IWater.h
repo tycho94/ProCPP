@@ -7,7 +7,7 @@ class IWater
     // Inputs
 
     // Outputs
-    virtual void SetDrain(int level) = 0;
+    virtual void SetWaterlevel(int level) = 0;
 };
 
 #endif

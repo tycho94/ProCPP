@@ -42,8 +42,7 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     void SetLock(int level);    // off = 0 on = 1
     void SetSoap1(int level);   // off = 0 on = 1
     void SetSoap2(int level);   // off = 0 on = 1
-    void SetDrain(int level);   // off = 0 on = 1
-    void SetSink(int level);    // off = 0 on = 1
+    void SetWaterlevel(int waterlevel);
     void SetMotor(int speedlevel);   // off = 0 on = 1
     void SetHeater(int level);  // off = 0 on = 1
     void SetDirection(int dir); // left = 0 right = 1
@@ -58,7 +57,6 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     void Strobe();
 
     int waterLevel;
-    int temperature;
 
 };
 

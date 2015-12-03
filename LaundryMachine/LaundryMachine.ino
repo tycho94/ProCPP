@@ -35,17 +35,20 @@ void setup()
 {
   Serial.begin(9600);
   Serial.println("start");
-
+  mControl = new HardwareControl();
+  mBuzzer = new HardwareControl();
   mCoin = new HardwareControl();
   mCoinWallet = new CoinWallet(mCoin);
 }
 
 void loop()
 {
-  Test1();
+  //TestBuzzer();
+  //TestCoinWallet();
+  TestFunctions();
 }
 
-void Test1()
+void TestCoinWallet()
 {
   if (mCoin->GetCoin10Button()) {
     mCoinWallet->Deposit(10);
@@ -63,43 +66,47 @@ void Test1()
     Serial.println(mCoinWallet->Clear());
     Serial.println();
   }
+}
 
-  
-    if (mControl->GetSoap2Switch()) {
-      mControl->SetSoap2(1);
-      mControl->SetMotor(3);
-    }
-    else {
-      mControl->SetSoap2(0);
-    }
+void TestBuzzer() {
+  mBuzzer->SetBuzzer(0);
+}
 
-    if (mControl->GetSoap1Switch()) {
-      mControl->SetSoap1(2);
-      mControl->SetMotor(2);
-    }
-    else {
-      mControl->SetSoap1(0);
-    }
+void TestFunctions() {
+  if (mControl->GetSoap2Switch()) {
+    mControl->SetSoap2(1);
+    mControl->SetMotor(3);
+  }
+  else {
+    mControl->SetSoap2(0);
+  }
 
-
-
-    if (mControl->GetLockSwitch()) {
-      mControl->SetLock(1);
-      mControl->SetMotor(1);
-    }
-    else {
-      mControl->SetLock(0);
-    }
+  if (mControl->GetSoap1Switch()) {
+    mControl->SetSoap1(2);
+    mControl->SetMotor(2);
+  }
+  else {
+    mControl->SetSoap1(0);
+  }
 
 
-    if (mControl->GetPressureSwitch()) {
-      mControl->SetDrain(1);
-      mControl->SetSink(1);
-      mControl->SetMotor(0);
-    }
-    else {
-      mControl->SetDrain(0);
-      mControl->SetSink(0);
-    }
+
+  if (mControl->GetLockSwitch()) {
+    mControl->SetLock(1);
+    mControl->SetMotor(1);
+  }
+  else {
+    mControl->SetLock(0);
+  }
+
+
+  if (mControl->GetPressureSwitch()) {
+
+    mControl->SetMotor(0);
+
+  }
+
+  mControl->SetWaterlevel(2);
+  mControl->SetHeater(2);
 }
 

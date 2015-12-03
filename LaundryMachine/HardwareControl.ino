@@ -49,7 +49,6 @@ HardwareControl::HardwareControl()
   centipede.digitalWrite(OUT_LOCK, LOW);
 
   waterLevel = 0;
-  temperature = 0;
 }
 
 
@@ -156,15 +155,37 @@ boolean HardwareControl::GetSoap2Switch() {
 //return waterLevel
 int HardwareControl::GetWaterlevel()
 {
+  int waterLevel = 0;
+
+  if (centipede.digitalRead(IN_W2) == LOW && centipede.digitalRead(IN_W1) == LOW)
+    waterLevel = 0;
+  if (centipede.digitalRead(IN_W2) == LOW && centipede.digitalRead(IN_W1) == HIGH)
+    waterLevel = 1;
+  if (centipede.digitalRead(IN_W2) == HIGH && centipede.digitalRead(IN_W1) == LOW)
+    waterLevel = 2;
+  if (centipede.digitalRead(IN_W2) == HIGH && centipede.digitalRead(IN_W1) == HIGH)
+    waterLevel = 3;
+
   return waterLevel;
-}//TODO
+}
 
 //returning values
 
-//return temperature
+//retur temperature, 0 = cold, 1 = less cold, 2 = medium, 3 = hot
 int HardwareControl::GetTemperature() {
+  int temperature = 0;
+
+  if (centipede.digitalRead(IN_T2) == LOW && centipede.digitalRead(IN_T1) == LOW)
+    temperature = 0;
+  if (centipede.digitalRead(IN_T2) == LOW && centipede.digitalRead(IN_T1) == HIGH)
+    temperature = 1;
+  if (centipede.digitalRead(IN_T2) == HIGH && centipede.digitalRead(IN_T1) == LOW)
+    temperature = 2;
+  if (centipede.digitalRead(IN_T2) == HIGH && centipede.digitalRead(IN_T1) == HIGH)
+    temperature = 3;
+
   return temperature;
-}//TODO
+}
 
 // setting outputs
 
@@ -249,10 +270,10 @@ void HardwareControl::SetCoin200(int leds)
 void HardwareControl::SetBuzzer(int level)
 {
   if (level <= 0)
-    centipede.digitalWrite(OUT_BUZZER, LOW);
-  else
     centipede.digitalWrite(OUT_BUZZER, HIGH);
-}//TODO
+  else
+    centipede.digitalWrite(OUT_BUZZER, LOW);
+}
 
 //set the lock led to on or off, 0 or 1
 void HardwareControl::SetLock(int level)
@@ -285,24 +306,27 @@ void HardwareControl::SetSoap2(int level)
     SetData(3);
 }
 
-//sets draining to high or low, 0 or 1
-void HardwareControl::SetDrain(int level)
+//set waterlevel to 0 emtpy, 1 33%, 2 66%, 3 filled
+void HardwareControl::SetWaterlevel(int wantedWaterlevel)
 {
-  if (level <= 0)
-    centipede.digitalWrite(OUT_DRAIN, LOW);
-  else
-    centipede.digitalWrite(OUT_DRAIN, HIGH);
-}
-
-//set the sink to true or false, 0 or 1
-void HardwareControl::SetSink(int level)
-{
-  if (level <= 0)
+  if (wantedWaterlevel == GetWaterlevel())
+  {
     centipede.digitalWrite(OUT_SINK, LOW);
-  else
-    centipede.digitalWrite(OUT_SINK, HIGH);
-}
+    centipede.digitalWrite(OUT_DRAIN, LOW);
+  }
 
+  if (wantedWaterlevel < GetWaterlevel())
+  {
+    centipede.digitalWrite(OUT_SINK, HIGH);
+    centipede.digitalWrite(OUT_DRAIN, LOW);
+  }
+
+  if (wantedWaterlevel > GetWaterlevel())
+  {
+    centipede.digitalWrite(OUT_SINK, LOW);
+    centipede.digitalWrite(OUT_DRAIN, HIGH);
+  }
+}
 //set speed to off, slow, medium or high respectivly to 0, 1, 2, 3
 void HardwareControl::SetMotor(int speedlevel)
 {
@@ -328,14 +352,15 @@ void HardwareControl::SetMotor(int speedlevel)
   }
 }
 
-//set the heater to on or off, 0 or 1
+//set the heater to keep temp at certain value, 0 = cold, 1 = less cold, 2 = medium, 3 = hot
 void HardwareControl::SetHeater(int level)
 {
-  if (level <= 0)
-    centipede.digitalWrite(OUT_HEATER, LOW);
-  else
+  if (GetTemperature() >= level)
     centipede.digitalWrite(OUT_HEATER, HIGH);
-}//TODO
+  else
+    centipede.digitalWrite(OUT_HEATER, LOW);
+
+}
 
 //set dir, 0 is left, 1 is right
 void HardwareControl::SetDirection(int dir)
@@ -369,7 +394,7 @@ void HardwareControl::SetProgramIndicator(int program)
     SetData(3);
   }
 
-}//TODO
+}
 
 // private sets - used by gets/sets
 
