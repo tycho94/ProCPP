@@ -5,21 +5,21 @@ CoinWallet::CoinWallet(ICoin * c)
   mCoin = c;
   balance = 0;
 }
-void CoinWallet::showBalance()
+void CoinWallet::ShowBalance()
 {
   int remainder;
   int q;
-  
-  q=remainder/10;
-  remainder=balance%10;
+
+  q = remainder / 10;
+  remainder = balance % 10;
   mCoin->SetCoin10(q);
-  
-  q=balance/50;
-  remainder=balance%50;
+
+  q = balance / 50;
+  remainder = balance % 50;
   mCoin->SetCoin50(q);
-  
-  q= balance/200;
-  remainder=balance%200;
+
+  q = balance / 200;
+  remainder = balance % 200;
   mCoin->SetCoin200(q);
 
 }
@@ -35,22 +35,22 @@ int CoinWallet::Balance()
 
 boolean CoinWallet::Withdraw(int amount)
 {
-  if ( amount<=balance)
+  if ( amount <= balance)
   {
-    balance=balance-amount;
-    showBalance();
+    balance = balance - amount;
+    ShowBalance();
     return true;
   }
   else
   {
-  return (false);
+    return (false);
   }
 }
-boolean CoinWallet::Deposit( int amount){
-  if( amount>0 && (balance+amount<=600) )
+boolean CoinWallet::Deposit( int amount) {
+  if ( amount > 0 && (balance + amount <= 600) )
   {
-    balance=balance+amount;
-    showBalance();
+    balance = balance + amount;
+    ShowBalance();
     return true;
   }
   else

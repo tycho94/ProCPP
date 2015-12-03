@@ -31,7 +31,6 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     boolean GetSoap1Switch();
     boolean GetSoap2Switch();
     // Settings
-    int GetSpeed();
     int GetWaterlevel();
     int GetTemperature();
 
@@ -57,10 +56,9 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     void SetDataOff(int data);
     void Strobe();
 
-    int motorSpeed;
     int waterLevel;
-    int Temperature;
-    
+    int temperature;
+
 };
 
 #endif

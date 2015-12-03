@@ -47,41 +47,38 @@ HardwareControl::HardwareControl()
   centipede.digitalWrite(OUT_SINK, LOW);
   centipede.digitalWrite(OUT_DRAIN, LOW);
   centipede.digitalWrite(OUT_LOCK, LOW);
+
+  waterLevel = 0;
+  temperature = 0;
 }
+
 
 //getting buttons
 
-boolean HardwareControl::GetCoin10Button()
-{
-  /*
-    we need this to HIGH because is the comb to acces to the buttons
-    Buttons --> KeySelect HIGH
-  */
-
+boolean HardwareControl::GetCoin10Button() {
+  //set keyselect to 1(buttons)
   this->SetKeySelect(1);
-
+  //check if coin 10 is clicked, since clear also clicks coin 10 + 50 + 200 check if btn 50,200 low
   if (centipede.digitalRead(IN_IN3) == HIGH && centipede.digitalRead(IN_IN2) == LOW && centipede.digitalRead(IN_IN1) == LOW) {
     return (true);
   }
-
   return (false);
 }
 
-boolean HardwareControl::GetCoin50Button()
-{
+boolean HardwareControl::GetCoin50Button() {
+  //set keyselect to 1(buttons)
   this->SetKeySelect(1);
-  delay(20);
+  //check if coin 50 is clicked, since clear also clicks coin 10 + 50 + 200 check if btn 10,200 are low
   if (centipede.digitalRead(IN_IN2) == HIGH && centipede.digitalRead(IN_IN1) == LOW && centipede.digitalRead(IN_IN3) == LOW) {
     return (true);
   }
-
   return (false);
 }
 
-boolean HardwareControl::GetCoin200Button()
-{
+boolean HardwareControl::GetCoin200Button() {
+  //set keyselect to 1(buttons)
   this->SetKeySelect(1);
-
+  //check if coin 200 is clicked, since clear also clicks coin 10 + 50 + 200 check if btn 10,50 are low
   if (centipede.digitalRead(IN_IN1) == HIGH && centipede.digitalRead(IN_IN2) == LOW && centipede.digitalRead(IN_IN3) == LOW) {
     return (true);
   }
@@ -89,63 +86,66 @@ boolean HardwareControl::GetCoin200Button()
 }
 
 boolean HardwareControl::GetCoinClearButton() {
-
+  //set keyselect to 1(buttons)
   this->SetKeySelect(1);
+  //check if button10,50,200 are pressed(this is the result of pressing coinclear)
   if ((centipede.digitalRead(IN_IN1) == HIGH) && (centipede.digitalRead(IN_IN2) == HIGH) && (centipede.digitalRead(IN_IN3) == HIGH)) {
     return (true);
   }
   return (false);
 }
 boolean HardwareControl::GetStartButton() {
-
+  //set keyselect to 1(buttons)
   this->SetKeySelect(1);
+  //check if start is high and coin10 is low - see program
   if (centipede.digitalRead(IN_IN0) == HIGH && centipede.digitalRead(IN_IN3) == LOW) {
-
     return (true);
   }
   return (false);
 }
 
 boolean HardwareControl::GetProgramButton() {
-
+  //set keyselect to 1(buttons)
   this->SetKeySelect(1);
-
+  //check if start is high and coin10 is high, this happens when programbutton is clicked
   if ((centipede.digitalRead(IN_IN0) == HIGH) && (centipede.digitalRead(IN_IN3) == HIGH)) {
-
     return (true);
   }
   return (false);
 }
 
+//get switches
 
 boolean HardwareControl::GetPressureSwitch() {
-
+  //set keyselect to 0(switches)
   this->SetKeySelect(0);
+  //check if pressure switch is true
   if (centipede.digitalRead(IN_IN0) == HIGH) {
-
     return (true);
   }
   return (false);
 }
-boolean HardwareControl::GetLockSwitch()
-{
+
+boolean HardwareControl::GetLockSwitch() {
+  //set keyselect to 0(switches)
   this->SetKeySelect(0);
   if (centipede.digitalRead(IN_IN3) == HIGH) {
-
     return (true);
   }
   return (false);
 }
-boolean HardwareControl::GetSoap1Switch()
-{
+
+boolean HardwareControl::GetSoap1Switch() {
+  //set keyselect to 0(switches)
   this->SetKeySelect(0);
   if (centipede.digitalRead(IN_IN1) == HIGH) {
     return (true);
   }
   return (false);
 }
-boolean HardwareControl::GetSoap2Switch()
-{
+
+boolean HardwareControl::GetSoap2Switch() {
+  //set keyselect to 0(switches)
   this->SetKeySelect(0);
   if (centipede.digitalRead(IN_IN2) == HIGH) {
     return (true);
@@ -153,17 +153,27 @@ boolean HardwareControl::GetSoap2Switch()
   return (false);
 }
 
+
 //returning values
 
-int HardwareControl::GetTemperature()
+//return temperature
+int HardwareControl::GetTemperature() {
+  return temperature;
+}//TODO
+
+//return waterLevel
+int HardwareControl::GetWaterlevel()
 {
-  return (0);
-}
+  return waterLevel;
+}//TODO
+
 
 // setting outputs
 
+//set the coin50 leds to 0, 1, 2 or 3
 void HardwareControl::SetCoin10(int leds)
 {
+  //set group to 1
   SetGroup(1);
   if (leds <= 0)
     SetData(0);
@@ -175,8 +185,10 @@ void HardwareControl::SetCoin10(int leds)
     SetData(3);
 }
 
+//set the coin50 leds to 0, 1, 2 or 3
 void HardwareControl::SetCoin50(int leds)
 {
+  //set group to 2
   SetGroup(2);
   if (leds <= 0)
     SetData(0);
@@ -188,10 +200,13 @@ void HardwareControl::SetCoin50(int leds)
     SetData(3);
 }
 
+//set coin200 leds to 0, 1 or 2
 void HardwareControl::SetCoin200(int leds)
 {
+  //set group to 3
   SetGroup(3);
   if (leds <= 0) {
+    //turn off data seperatly so that soap2 led isnt influenced
     SetDataOff(1);
     SetDataOff(2);
   }
@@ -201,21 +216,26 @@ void HardwareControl::SetCoin200(int leds)
     if (leds > 1)
       SetData(2);
 
+    //turn off
     SetDataOff(3);
   }
 }
 
-
+//sets soap one to high or low, 0 or 1
 void HardwareControl::SetSoap1(int level)
 {
+  //if level is 0 or lower the led is off else its high
   if (level <= 0)
     centipede.digitalWrite(OUT_SOAP1, LOW);
   else
     centipede.digitalWrite(OUT_SOAP1, HIGH);
 }
 
+//set soap2 led, 0 off, 1 on
 void HardwareControl::SetSoap2(int level)
 {
+  //set group to 3
+  //if level is 0 or lower the led is off else its high
   SetGroup(3);
   if (level <= 0)
     SetDataOff(3);
@@ -223,8 +243,7 @@ void HardwareControl::SetSoap2(int level)
     SetData(3);
 }
 
-
-
+//sets draining to high or low, 0 or 1
 void HardwareControl::SetDrain(int level)
 {
   if (level <= 0)
@@ -233,6 +252,7 @@ void HardwareControl::SetDrain(int level)
     centipede.digitalWrite(OUT_DRAIN, HIGH);
 }
 
+//set speed to off, slow, medium or high respectivly to 0, 1, 2, 3
 void HardwareControl::SetMotor(int speedlevel)
 {
   if (speedlevel == 0)
@@ -257,6 +277,7 @@ void HardwareControl::SetMotor(int speedlevel)
   }
 }
 
+//set dir, 0 is left, 1 is right
 void HardwareControl::SetDirection(int dir)
 {
   if (dir <= 0)
@@ -265,12 +286,14 @@ void HardwareControl::SetDirection(int dir)
     centipede.digitalWrite(OUT_MOTOR_RL, HIGH);
 }
 
+//set the program led
 void HardwareControl::SetProgramIndicator(int program)
 {
   SetGroup(4);
   SetData(program);
 }//TODO
 
+//set the buzzer to true or false, 0 or 1
 void HardwareControl::SetBuzzer(int level)
 {
   if (level <= 0)
@@ -279,6 +302,8 @@ void HardwareControl::SetBuzzer(int level)
     centipede.digitalWrite(OUT_BUZZER, HIGH);
 }//TODO
 
+
+//set the sink to true or false, 0 or 1
 void HardwareControl::SetSink(int level)
 {
   if (level <= 0)
@@ -287,7 +312,7 @@ void HardwareControl::SetSink(int level)
     centipede.digitalWrite(OUT_SINK, HIGH);
 }
 
-
+//set the heater to on or off, 0 or 1
 void HardwareControl::SetHeater(int level)
 {
   if (level <= 0)
@@ -296,6 +321,7 @@ void HardwareControl::SetHeater(int level)
     centipede.digitalWrite(OUT_HEATER, HIGH);
 }//TODO
 
+//set the lock led to on or off, 0 or 1
 void HardwareControl::SetLock(int level)
 {
   if (level <= 0)
@@ -309,11 +335,13 @@ void HardwareControl::SetLock(int level)
 
 // private sets - used by gets/sets
 
+//set keyselct to true or false
 void HardwareControl::SetKeySelect(int value)
 {
   centipede.digitalWrite(OUT_KEYSELECT, value);
 }
 
+//group 1 = 00, group 2 = 01, group 3 = 10, group 4 = 11
 void HardwareControl::SetGroup(int group)
 {
   Strobe();
@@ -339,6 +367,7 @@ void HardwareControl::SetGroup(int group)
   }
 }
 
+//set data to 0 = all off, 1 DATA_A, 2 DATA_B, 3 DATA_C
 void HardwareControl::SetData(int data)
 {
   Strobe();
@@ -358,6 +387,7 @@ void HardwareControl::SetData(int data)
   }
 }
 
+//turn off data registries seperatly, 1=a, 2=b, 3=c
 void HardwareControl::SetDataOff(int data)
 {
   Strobe();
@@ -372,6 +402,7 @@ void HardwareControl::SetDataOff(int data)
   }
 }
 
+//strobe method so we can use the centipede groups/data writing
 void HardwareControl::Strobe()
 {
   centipede.digitalWrite(OUT_STROBE, LOW);

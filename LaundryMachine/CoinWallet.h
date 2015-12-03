@@ -8,9 +8,10 @@ class CoinWallet
   public:
     CoinWallet(ICoin *);
     void Poll();
-    int Balance();
+    void ShowBalance();
     boolean Withdraw(int amount);
     boolean Deposit(int amount);
+    int Balance();
   private:
     ICoin * mCoin;
     int balance;
