@@ -267,12 +267,9 @@ void HardwareControl::SetCoin200(int leds)
 }
 
 //set the buzzer to true or false, 0 or 1
-void HardwareControl::SetBuzzer(int level)
+void HardwareControl::SetBuzzer(boolean level)
 {
-  if (level <= 0)
-    centipede.digitalWrite(OUT_BUZZER, HIGH);
-  else
-    centipede.digitalWrite(OUT_BUZZER, LOW);
+    centipede.digitalWrite(OUT_BUZZER, !level);
 }
 
 //set the lock led to on or off, 0 or 1

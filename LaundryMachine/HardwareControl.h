@@ -38,7 +38,7 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     void SetCoin10(int leds);   // off = 0 - levels 1-2-3 = led 1-2-3
     void SetCoin50(int leds);   // off = 0 - levels 1-2-3 = led 1-2-3
     void SetCoin200(int leds);  // off = 0 - levels 1-2 = led 1-2
-    void SetBuzzer(int level);  // off = 0 on = 1
+    void SetBuzzer(boolean level);  // off = 0 on = 1
     void SetLock(int level);    // off = 0 on = 1
     void SetSoap1(int level);   // off = 0 on = 1
     void SetSoap2(int level);   // off = 0 on = 1

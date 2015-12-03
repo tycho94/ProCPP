@@ -43,9 +43,10 @@ void setup()
 
 void loop()
 {
-  //TestBuzzer();
+  TestBuzzer();
   //TestCoinWallet();
-  TestFunctions();
+  //TestFunctions();
+  
 }
 
 void TestCoinWallet()
@@ -69,7 +70,7 @@ void TestCoinWallet()
 }
 
 void TestBuzzer() {
-  mBuzzer->SetBuzzer(0);
+  mBuzzer->SetBuzzer(1);
 }
 
 void TestFunctions() {
