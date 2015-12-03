@@ -85,6 +85,16 @@ boolean HardwareControl::GetCoin200Button() {
   return (false);
 }
 
+boolean HardwareControl::GetProgramButton() {
+  //set keyselect to 1(buttons)
+  this->SetKeySelect(1);
+  //check if start is high and coin10 is high, this happens when programbutton is clicked
+  if ((centipede.digitalRead(IN_IN0) == HIGH) && (centipede.digitalRead(IN_IN3) == HIGH)) {
+    return (true);
+  }
+  return (false);
+}
+
 boolean HardwareControl::GetCoinClearButton() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
@@ -99,16 +109,6 @@ boolean HardwareControl::GetStartButton() {
   this->SetKeySelect(1);
   //check if start is high and coin10 is low - see program
   if (centipede.digitalRead(IN_IN0) == HIGH && centipede.digitalRead(IN_IN3) == LOW) {
-    return (true);
-  }
-  return (false);
-}
-
-boolean HardwareControl::GetProgramButton() {
-  //set keyselect to 1(buttons)
-  this->SetKeySelect(1);
-  //check if start is high and coin10 is high, this happens when programbutton is clicked
-  if ((centipede.digitalRead(IN_IN0) == HIGH) && (centipede.digitalRead(IN_IN3) == HIGH)) {
     return (true);
   }
   return (false);
@@ -153,6 +153,11 @@ boolean HardwareControl::GetSoap2Switch() {
   return (false);
 }
 
+//return waterLevel
+int HardwareControl::GetWaterlevel()
+{
+  return waterLevel;
+}//TODO
 
 //returning values
 
@@ -161,13 +166,6 @@ int HardwareControl::GetTemperature() {
   return temperature;
 }//TODO
 
-//return waterLevel
-int HardwareControl::GetWaterlevel()
-{
-  return waterLevel;
-}//TODO
-
-
 // setting outputs
 
 //set the coin50 leds to 0, 1, 2 or 3
@@ -175,14 +173,24 @@ void HardwareControl::SetCoin10(int leds)
 {
   //set group to 1
   SetGroup(1);
-  if (leds <= 0)
+  if (leds <= 0) {
     SetData(0);
-  if (leds > 0)
+  }
+  else if (leds == 1) {
     SetData(1);
-  if (leds > 1)
+    SetDataOff(2);
+    SetDataOff(3);
+  }
+  else if (leds == 2) {
+    SetData(1);
     SetData(2);
-  if (leds > 2)
+    SetDataOff(3);
+  }
+  else if (leds == 3) {
+    SetData(1);
+    SetData(2);
     SetData(3);
+  }
 }
 
 //set the coin50 leds to 0, 1, 2 or 3
@@ -190,14 +198,24 @@ void HardwareControl::SetCoin50(int leds)
 {
   //set group to 2
   SetGroup(2);
-  if (leds <= 0)
+  if (leds <= 0) {
     SetData(0);
-  if (leds > 0)
+  }
+  else if (leds == 1) {
     SetData(1);
-  if (leds > 1)
+    SetDataOff(2);
+    SetDataOff(3);
+  }
+  else if (leds == 2) {
+    SetData(1);
     SetData(2);
-  if (leds > 2)
+    SetDataOff(3);
+  }
+  else if (leds == 3) {
+    SetData(1);
+    SetData(2);
     SetData(3);
+  }
 }
 
 //set coin200 leds to 0, 1 or 2
@@ -211,14 +229,38 @@ void HardwareControl::SetCoin200(int leds)
     SetDataOff(2);
   }
   else {
-    if (leds > 0)
+    if (leds == 1) {
       SetData(1);
-    if (leds > 1)
+      SetDataOff(2);
+    }
+    else if (leds == 2) {
+      SetData(1);
       SetData(2);
+    }
+  }
 
-    //turn off
+  if (!GetSoap2Switch()) {
+    //check soap led
     SetDataOff(3);
   }
+}
+
+//set the buzzer to true or false, 0 or 1
+void HardwareControl::SetBuzzer(int level)
+{
+  if (level <= 0)
+    centipede.digitalWrite(OUT_BUZZER, LOW);
+  else
+    centipede.digitalWrite(OUT_BUZZER, HIGH);
+}//TODO
+
+//set the lock led to on or off, 0 or 1
+void HardwareControl::SetLock(int level)
+{
+  if (level <= 0)
+    centipede.digitalWrite(OUT_LOCK, LOW);
+  else
+    centipede.digitalWrite(OUT_LOCK, HIGH);
 }
 
 //sets soap one to high or low, 0 or 1
@@ -252,6 +294,15 @@ void HardwareControl::SetDrain(int level)
     centipede.digitalWrite(OUT_DRAIN, HIGH);
 }
 
+//set the sink to true or false, 0 or 1
+void HardwareControl::SetSink(int level)
+{
+  if (level <= 0)
+    centipede.digitalWrite(OUT_SINK, LOW);
+  else
+    centipede.digitalWrite(OUT_SINK, HIGH);
+}
+
 //set speed to off, slow, medium or high respectivly to 0, 1, 2, 3
 void HardwareControl::SetMotor(int speedlevel)
 {
@@ -277,6 +328,15 @@ void HardwareControl::SetMotor(int speedlevel)
   }
 }
 
+//set the heater to on or off, 0 or 1
+void HardwareControl::SetHeater(int level)
+{
+  if (level <= 0)
+    centipede.digitalWrite(OUT_HEATER, LOW);
+  else
+    centipede.digitalWrite(OUT_HEATER, HIGH);
+}//TODO
+
 //set dir, 0 is left, 1 is right
 void HardwareControl::SetDirection(int dir)
 {
@@ -290,48 +350,26 @@ void HardwareControl::SetDirection(int dir)
 void HardwareControl::SetProgramIndicator(int program)
 {
   SetGroup(4);
-  SetData(program);
+  if (program == 1)
+  {
+    SetData(1);
+    SetDataOff(2);
+    SetDataOff(3);
+  }
+  if (program == 2)
+  {
+    SetDataOff(1);
+    SetData(2);
+    SetDataOff(3);
+  }
+  if (program == 3)
+  {
+    SetDataOff(1);
+    SetDataOff(2);
+    SetData(3);
+  }
+
 }//TODO
-
-//set the buzzer to true or false, 0 or 1
-void HardwareControl::SetBuzzer(int level)
-{
-  if (level <= 0)
-    centipede.digitalWrite(OUT_BUZZER, LOW);
-  else
-    centipede.digitalWrite(OUT_BUZZER, HIGH);
-}//TODO
-
-
-//set the sink to true or false, 0 or 1
-void HardwareControl::SetSink(int level)
-{
-  if (level <= 0)
-    centipede.digitalWrite(OUT_SINK, LOW);
-  else
-    centipede.digitalWrite(OUT_SINK, HIGH);
-}
-
-//set the heater to on or off, 0 or 1
-void HardwareControl::SetHeater(int level)
-{
-  if (level <= 0)
-    centipede.digitalWrite(OUT_HEATER, LOW);
-  else
-    centipede.digitalWrite(OUT_HEATER, HIGH);
-}//TODO
-
-//set the lock led to on or off, 0 or 1
-void HardwareControl::SetLock(int level)
-{
-  if (level <= 0)
-    centipede.digitalWrite(OUT_LOCK, LOW);
-  else
-    centipede.digitalWrite(OUT_LOCK, HIGH);
-}
-
-
-
 
 // private sets - used by gets/sets
 
@@ -409,4 +447,5 @@ void HardwareControl::Strobe()
   delay(80);
   centipede.digitalWrite(OUT_STROBE, HIGH);
   delay(10);
+  centipede.digitalWrite(OUT_STROBE, LOW);
 }

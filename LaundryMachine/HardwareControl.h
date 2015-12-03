@@ -35,6 +35,9 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     int GetTemperature();
 
     // Outputs
+    void SetCoin10(int leds);   // off = 0 - levels 1-2-3 = led 1-2-3
+    void SetCoin50(int leds);   // off = 0 - levels 1-2-3 = led 1-2-3
+    void SetCoin200(int leds);  // off = 0 - levels 1-2 = led 1-2
     void SetBuzzer(int level);  // off = 0 on = 1
     void SetLock(int level);    // off = 0 on = 1
     void SetSoap1(int level);   // off = 0 on = 1
@@ -45,9 +48,7 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     void SetHeater(int level);  // off = 0 on = 1
     void SetDirection(int dir); // left = 0 right = 1
     void SetProgramIndicator(int program); // off = 0 - levels 1-2-3 = led 1-2-3
-    void SetCoin10(int leds);   // off = 0 - levels 1-2-3 = led 1-2-3
-    void SetCoin50(int leds);   // off = 0 - levels 1-2-3 = led 1-2-3
-    void SetCoin200(int leds);  // off = 0 - levels 1-2 = led 1-2
+
   private:
     Centipede centipede;
     void SetKeySelect(int value); // false = 0 true = 1

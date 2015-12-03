@@ -33,10 +33,11 @@ static ProgramExecutor * mProgramExecutor;
 
 void setup()
 {
-  mControl = new HardwareControl();
   Serial.begin(9600);
   Serial.println("start");
 
+  mCoin = new HardwareControl();
+  mCoinWallet = new CoinWallet(mCoin);
 }
 
 void loop()
@@ -45,58 +46,60 @@ void loop()
 }
 
 void Test1()
-{ 
-  if (mControl->GetCoin10Button())
-    mControl->SetCoin10(3);
-  if (mControl->GetCoin50Button())
-    mControl->SetCoin50(3);
-  if (mControl->GetCoin200Button())
-    mControl->SetCoin200(2);
+{
+  if (mCoin->GetCoin10Button()) {
+    mCoinWallet->Deposit(10);
+  }
+  if (mCoin->GetCoin50Button()) {
+    mCoinWallet->Deposit(50);
+  }
+  if (mCoin->GetCoin200Button()) {
+    mCoinWallet->Deposit(200);
+  }
 
-
-
-  if (mControl->GetCoinClearButton())
+  if (mCoin->GetCoinClearButton())
   {
-    mControl->SetCoin10(0);
-    mControl->SetCoin50(0);
-    mControl->SetCoin200(0);
+    Serial.print("return: ");
+    Serial.println(mCoinWallet->Clear());
+    Serial.println();
   }
 
-  if (mControl->GetSoap2Switch()) {
-    mControl->SetSoap2(1);
-    mControl->SetMotor(3);
-  }
-  else {
-    mControl->SetSoap2(0);
-  }
+  
+    if (mControl->GetSoap2Switch()) {
+      mControl->SetSoap2(1);
+      mControl->SetMotor(3);
+    }
+    else {
+      mControl->SetSoap2(0);
+    }
 
-  if (mControl->GetSoap1Switch()) {
-    mControl->SetSoap1(2);
-    mControl->SetMotor(2);
-  }
-  else {
-    mControl->SetSoap1(0);
-  }
-
-
-
-  if (mControl->GetLockSwitch()) {
-    mControl->SetLock(1);
-    mControl->SetMotor(1);
-  }
-  else {
-    mControl->SetLock(0);
-  }
+    if (mControl->GetSoap1Switch()) {
+      mControl->SetSoap1(2);
+      mControl->SetMotor(2);
+    }
+    else {
+      mControl->SetSoap1(0);
+    }
 
 
-  if (mControl->GetPressureSwitch()) {
-    mControl->SetDrain(1);
-    mControl->SetSink(1);
-    mControl->SetMotor(0);
-  }
-  else {
-    mControl->SetDrain(0);
-    mControl->SetSink(0);
-  }
+
+    if (mControl->GetLockSwitch()) {
+      mControl->SetLock(1);
+      mControl->SetMotor(1);
+    }
+    else {
+      mControl->SetLock(0);
+    }
+
+
+    if (mControl->GetPressureSwitch()) {
+      mControl->SetDrain(1);
+      mControl->SetSink(1);
+      mControl->SetMotor(0);
+    }
+    else {
+      mControl->SetDrain(0);
+      mControl->SetSink(0);
+    }
 }
 

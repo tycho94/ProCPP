@@ -5,7 +5,7 @@ class ILock
 {
   public:
     // Inputs
-  
+
     // Outputs
 };
 

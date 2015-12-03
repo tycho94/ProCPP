@@ -4,41 +4,73 @@ CoinWallet::CoinWallet(ICoin * c)
 {
   mCoin = c;
   balance = 0;
+  Serial.println("start coinwallet");
 }
-void CoinWallet::ShowBalance()
+
+//set the coin leds
+void CoinWallet::ShowBalance(int group)
 {
-  int remainder;
-  int q;
+  int coins;
 
-  q = remainder / 10;
-  remainder = balance % 10;
-  mCoin->SetCoin10(q);
+  //200 coins
+  if (group == 200) {
+    coins = balance / 200;
+    mCoin->SetCoin200(coins);
+    Serial.print("200: ");
+    Serial.println(coins);
 
-  q = balance / 50;
-  remainder = balance % 50;
-  mCoin->SetCoin50(q);
+  }
 
-  q = balance / 200;
-  remainder = balance % 200;
-  mCoin->SetCoin200(q);
+  //50 coins
+  if (group == 50) {
+    coins = (balance % 200) / 50;
+    mCoin->SetCoin50(coins);
+    Serial.print("50: ");
+    Serial.println(coins);
+  }
 
+  //10 coins
+  if (group == 10) {
+    coins = (balance % 50) / 10;
+    mCoin->SetCoin10(coins);
+    Serial.print("10: ");
+    Serial.println(coins);
+
+  }
 }
 
-void CoinWallet::Poll()
+//add money to the coinwallet, the maximum is 580, returns false if the coinwallet is at its max
+void CoinWallet::Deposit(int amount) {
+  if ((((balance % 50) / amount) <= 2 && amount == 10) || (((balance % 200) / amount) <= 2 && amount == 50) || (balance / amount <= 1 && amount == 200))
+  {
+    balance += amount;
+    Serial.print("balance: ");
+    Serial.println(balance);
+    ShowBalance(amount);
+  }
+}
+
+
+//returns the money still in the coinwallet
+int CoinWallet::Clear()
 {
+  int temp = balance;
+  balance = 0;
+  mCoin->SetCoin10(0);
+  mCoin->SetCoin50(0);
+  mCoin->SetCoin200(0);
+  return temp;
 }
 
-int CoinWallet::Balance()
-{
-  return balance;
-}
-
+//take money for any program
 boolean CoinWallet::Withdraw(int amount)
 {
   if ( amount <= balance)
   {
-    balance = balance - amount;
-    ShowBalance();
+    balance -= amount;
+    ShowBalance(10);
+    ShowBalance(50);
+    ShowBalance(200);
     return true;
   }
   else
@@ -46,16 +78,5 @@ boolean CoinWallet::Withdraw(int amount)
     return (false);
   }
 }
-boolean CoinWallet::Deposit( int amount) {
-  if ( amount > 0 && (balance + amount <= 600) )
-  {
-    balance = balance + amount;
-    ShowBalance();
-    return true;
-  }
-  else
-  {
-    return false;
-  }
-}
+
 

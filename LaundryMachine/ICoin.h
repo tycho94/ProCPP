@@ -7,6 +7,8 @@ class ICoin
     // Inputs
     virtual boolean GetCoin10Button() = 0;
     virtual boolean GetCoin50Button() = 0;
+    virtual boolean GetCoin200Button() = 0;
+    virtual boolean GetCoinClearButton() = 0;
 
     // Outputs
     virtual void SetCoin10(int leds) = 0;

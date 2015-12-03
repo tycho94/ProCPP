@@ -7,11 +7,10 @@ class CoinWallet
 {
   public:
     CoinWallet(ICoin *);
-    void Poll();
-    void ShowBalance();
+    void ShowBalance(int group);
     boolean Withdraw(int amount);
-    boolean Deposit(int amount);
-    int Balance();
+    void Deposit(int amount);
+    int Clear();
   private:
     ICoin * mCoin;
     int balance;
