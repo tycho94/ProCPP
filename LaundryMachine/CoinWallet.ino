@@ -8,11 +8,16 @@ CoinWallet::CoinWallet(ICoin * c)
 }
 
 //set the coin leds
+
 void CoinWallet::ShowBalance(int group)
 {
   int coins;
 
   //200 coins
+  //when first led on means the sum is 200
+  //when second led on means the sum is 400
+  //when first and third led on means the sum is 600
+  // wehn press one more time nothing happens
   if (group == 200) {
     coins = balance / 200;
     mCoin->SetCoin200(coins);
@@ -22,6 +27,10 @@ void CoinWallet::ShowBalance(int group)
   }
 
   //50 coins
+  //when first led on means the sum is 50
+  //when second led on means the sum is 100
+  //when third led on means the sum is 150
+  //when press one more time means the sum is 200 so all coin50 indicator go off and one coin200 indicator goes on
   if (group == 50) {
     coins = (balance % 200) / 50;
     mCoin->SetCoin50(coins);
@@ -30,6 +39,11 @@ void CoinWallet::ShowBalance(int group)
   }
 
   //10 coins
+  //when the first led is on means the sum is 10
+  //when the second led is on means the sum is 20
+  //when the third led is on means the sum is 30
+  //when the first and third led is on means the sum is 40
+  //when press one more means the sum is now 50 so all coin10 indicators go off and one coin50 indicator goes on
   if (group == 10) {
     coins = (balance % 50) / 10;
     mCoin->SetCoin10(coins);
