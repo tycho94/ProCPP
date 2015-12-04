@@ -39,7 +39,7 @@ void CoinWallet::ShowBalance(int group)
   }
 }
 
-//add money to the coinwallet, the maximum is 580, returns false if the coinwallet is at its max
+//add money to the coinwallet, //check if leds are at their maximum, if so, do not add money
 void CoinWallet::Deposit(int amount) {
   if ((((balance % 50) / amount) <= 2 && amount == 10) || (((balance % 200) / amount) <= 2 && amount == 50) || (balance / amount <= 1 && amount == 200))
   {

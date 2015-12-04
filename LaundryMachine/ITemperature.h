@@ -8,6 +8,7 @@ class ITemperature
     virtual int GetTemperature() = 0;
 
     // Outputs
+    virtual void SetHeater(int level) = 0;
 };
 
 #endif

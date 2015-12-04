@@ -16,8 +16,7 @@
 #include "ProgramSettings.h"
 #include "ProgramExecutor.h"
 
-
-static HardwareControl * mControl;
+//interfaces
 static IBuzzer * mBuzzer;
 static ICoin * mCoin;
 static IMotor * mMotor;
@@ -26,7 +25,9 @@ static IProgram * mProgram;
 static ISoap * mSoap;
 static ITemperature * mTemperature;
 static IWater * mWater;
+//classes
 static CoinWallet * mCoinWallet;
+static HardwareControl * mControl;
 static ProgramSelect * mProgramSelect;
 static ProgramSettings * mProgramSettings;
 static ProgramExecutor * mProgramExecutor;
@@ -35,17 +36,25 @@ void setup()
 {
   Serial.begin(9600);
   Serial.println("start");
-  mControl = new HardwareControl();
+  //interface = new hardwarecontrol();
   mBuzzer = new HardwareControl();
   mCoin = new HardwareControl();
+  mMotor = new HardwareControl();
+  mLock = new HardwareControl();
+  mProgram = new HardwareControl();
+  mSoap = new HardwareControl();
+  mTemperature = new HardwareControl();
+  mWater = new HardwareControl();
+  //classes
   mCoinWallet = new CoinWallet(mCoin);
+  mControl = new HardwareControl();
 }
 
 void loop()
 {
-  TestBuzzer();
+  //TestBuzzer();
   //TestCoinWallet();
-  //TestFunctions();
+  TestFunctions();
   
 }
 
@@ -90,8 +99,6 @@ void TestFunctions() {
     mControl->SetSoap1(0);
   }
 
-
-
   if (mControl->GetLockSwitch()) {
     mControl->SetLock(1);
     mControl->SetMotor(1);
@@ -107,7 +114,7 @@ void TestFunctions() {
 
   }
 
-  mControl->SetWaterlevel(2);
-  mControl->SetHeater(2);
+  mWater->SetWaterlevel(2);
+  mTemperature->SetHeater(2);
 }
 
