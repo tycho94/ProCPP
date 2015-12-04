@@ -6,7 +6,7 @@
 class CoinWallet
 {
   public:
-    CoinWallet(ICoin *);
+    CoinWallet(ICoin * c);
     void ShowBalance(int group);
     boolean Withdraw(int amount);
     void Deposit(int amount);
