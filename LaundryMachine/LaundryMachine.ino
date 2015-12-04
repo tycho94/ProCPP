@@ -55,7 +55,7 @@ void loop()
   //TestBuzzer();
   //TestCoinWallet();
   TestFunctions();
-  
+
 }
 
 void TestCoinWallet()
@@ -84,27 +84,27 @@ void TestBuzzer() {
 
 void TestFunctions() {
   if (mControl->GetSoap2Switch()) {
-    mControl->SetSoap2(1);
+    mSoap->SetSoap2(1);
     mControl->SetMotor(3);
   }
   else {
-    mControl->SetSoap2(0);
+    mSoap->SetSoap2(0);
   }
 
   if (mControl->GetSoap1Switch()) {
-    mControl->SetSoap1(2);
+    mSoap->SetSoap1(2);
     mControl->SetMotor(2);
   }
   else {
-    mControl->SetSoap1(0);
+    mSoap->SetSoap1(0);
   }
 
   if (mControl->GetLockSwitch()) {
-    mControl->SetLock(1);
+    mLock->SetLock(1);
     mControl->SetMotor(1);
   }
   else {
-    mControl->SetLock(0);
+    mLock->SetLock(0);
   }
 
 
@@ -117,4 +117,3 @@ void TestFunctions() {
   mWater->SetWaterlevel(2);
   mTemperature->SetHeater(2);
 }
-
