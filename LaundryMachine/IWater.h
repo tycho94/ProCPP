@@ -11,7 +11,8 @@ class IWater
 
     // Outputs
     virtual void SetWaterlevel(int level) = 0;
-    virtual int GetWater()=0;
+    virtual int GetWaterLevel()=0;
+    virtual boolean GetPressureSwitch() = 0;
 };
 
 #endif
