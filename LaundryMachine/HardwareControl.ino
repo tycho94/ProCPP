@@ -77,7 +77,8 @@ boolean HardwareControl::GetProgramButton() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if start is high and coin10 is high, this happens when programbutton is clicked
-  return ((centipede.digitalRead(IN_IN0) == HIGH) && (centipede.digitalRead(IN_IN3) == HIGH));
+  return ((centipede.digitalRead(IN_IN0) == HIGH)
+  && (centipede.digitalRead(IN_IN3) == HIGH));
 
 }
 
