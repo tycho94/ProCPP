@@ -4,7 +4,6 @@ CoinWallet::CoinWallet(ICoin * c)
 {
   mCoin = c;
   balance = 0;
-  Serial.println("start coinwallet");
 }
 
 //set the coin leds
@@ -21,9 +20,6 @@ void CoinWallet::ShowBalance(int group)
   if (group == 200) {
     coins = balance / 200;
     mCoin->SetCoin200(coins);
-    Serial.print("200: ");
-    Serial.println(coins);
-
   }
 
   //50 coins
@@ -34,8 +30,6 @@ void CoinWallet::ShowBalance(int group)
   if (group == 50) {
     coins = (balance % 200) / 50;
     mCoin->SetCoin50(coins);
-    Serial.print("50: ");
-    Serial.println(coins);
   }
 
   //10 coins
@@ -47,9 +41,6 @@ void CoinWallet::ShowBalance(int group)
   if (group == 10) {
     coins = (balance % 50) / 10;
     mCoin->SetCoin10(coins);
-    Serial.print("10: ");
-    Serial.println(coins);
-
   }
 }
 
@@ -58,8 +49,6 @@ void CoinWallet::Deposit(int amount) {
   if ((((balance % 50) / amount) <= 2 && amount == 10) || (((balance % 200) / amount) <= 2 && amount == 50) || (balance / amount <= 1 && amount == 200))
   {
     balance += amount;
-    Serial.print("balance: ");
-    Serial.println(balance);
     ShowBalance(amount);
   }
 }

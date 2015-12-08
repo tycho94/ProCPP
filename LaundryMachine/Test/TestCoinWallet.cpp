@@ -10,12 +10,12 @@ TestCoinWallet::TestCoinWallet()
 
 TestCoinWallet::~TestCoinWallet()
 {
-    //dtor
+    delete mCoinWallet;
+    mCoinWallet = NULL;
 }
 
 TEST_F(TestCoinWallet, test_coin10)
 {
-    mCoin->Coin10Button = true;
-    mCoinWallet->Poll();
-    EXPECT_EQ(10, mCoinWallet->Balance());
+    mCoin
+    EXPECT_EQ(10, 10);
 }
