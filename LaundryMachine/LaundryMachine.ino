@@ -53,24 +53,24 @@ void setup()
 void loop()
 {
   //TestBuzzer();
-  //TestCoinWallet();
+  //TestButtons();
   //TestFunctions();
-  //TestProgram();
+  TestWater();
 }
 
-void TestProgram()
+
+void TestWater()
 {
-  static int i = 1;
-  if(mProgram->GetProgramButton())
-  {
-  mProgram->SetProgramIndicator(i);
-  i++;
+  if (mWater->GetPressureSwitch()) {
+    mWater->SetWaterlevel(WATER_66_PERCENT);
   }
-  if(i > 3)
-  i=1;
+  else {
+    mWater->SetWaterlevel(WATER_0_PERCENT);
+  }
+  
 }
 
-void TestCoinWallet()
+void TestButtons()
 {
   if (mCoin->GetCoin10Button()) {
     mCoinWallet->Deposit(10);
@@ -88,6 +88,15 @@ void TestCoinWallet()
     Serial.println(mCoinWallet->Clear());
     Serial.println();
   }
+
+  static int i = 1;
+  if (mProgram->GetProgramButton())
+  {
+    mProgram->SetProgramIndicator(i);
+    i++;
+  }
+  if (i > 3)
+    i = 1;
 }
 
 void TestBuzzer() {
@@ -119,13 +128,8 @@ void TestFunctions() {
     mLock->SetLock(0);
   }
 
-
-  if (mControl->GetPressureSwitch()) {
-
+  if (mWater->GetPressureSwitch()) {
     mControl->SetMotor(0);
-
   }
-
-  mWater->SetWaterlevel(2);
-  mTemperature->SetHeater(2);
+  mTemperature->SetTemperature(2);
 }

@@ -47,8 +47,6 @@ HardwareControl::HardwareControl()
   centipede.digitalWrite(OUT_SINK, LOW);
   centipede.digitalWrite(OUT_DRAIN, LOW);
   centipede.digitalWrite(OUT_LOCK, LOW);
-
-  waterLevel = 0;
 }
 
 
@@ -127,7 +125,7 @@ boolean HardwareControl::GetSoap2Switch() {
 //return waterLevel
 int HardwareControl::GetWaterlevel()
 {
-  int waterLevel = 0;
+  int waterLevel;
 
   if (centipede.digitalRead(IN_W2) == LOW && centipede.digitalRead(IN_W1) == LOW)
     waterLevel = 0;
@@ -220,28 +218,26 @@ void HardwareControl::SetCoin200(int leds)
     //turn off data seperatly so that soap2 led isnt influenced
     SetDataOff(1);
     SetDataOff(2);
+    SetDataOff(3);
   }
   else {
     if (leds == 1) {
       SetData(1);
       SetDataOff(2);
+      SetDataOff(3);
     }
     else if (leds == 2) {
       SetData(1);
       SetData(2);
+      SetDataOff(3);
     }
-  }
-
-  if (GetSoap2Switch()) {
-    //check soap led
-    SetDataOff(3);
   }
 }
 
 //set the buzzer to true or false, 0 or 1
 void HardwareControl::SetBuzzer(boolean level)
 {
-    centipede.digitalWrite(OUT_BUZZER, !level);
+  centipede.digitalWrite(OUT_BUZZER, !level);
 }
 
 //set the lock led to on or off, 0 or 1
@@ -253,7 +249,7 @@ void HardwareControl::SetLock(int level)
 //sets soap one to high or low, 0 or 1
 void HardwareControl::SetSoap1(int level)
 {
-    centipede.digitalWrite(OUT_SOAP1, level);
+  centipede.digitalWrite(OUT_SOAP1, level);
 }
 
 //set soap2 led, 0 off, 1 on
@@ -286,7 +282,9 @@ void HardwareControl::SetWaterlevel(int wantedWaterlevel)
   else if (wantedWaterlevel > GetWaterlevel())
   {
     centipede.digitalWrite(OUT_SINK, LOW);
-    centipede.digitalWrite(OUT_DRAIN, HIGH);
+    if (GetPressureSwitch()) {
+      centipede.digitalWrite(OUT_DRAIN, HIGH);
+    } 
   }
 }
 //set speed to off, slow, medium or high respectivly to 0, 1, 2, 3
@@ -315,7 +313,7 @@ void HardwareControl::SetMotor(int speedlevel)
 }
 
 //set the heater to keep temp at certain value, 0 = cold, 1 = less cold, 2 = medium, 3 = hot
-void HardwareControl::SetHeater(int level)
+void HardwareControl::SetTemperature(int level)
 {
   if (GetTemperature() >= level)
     centipede.digitalWrite(OUT_HEATER, HIGH);

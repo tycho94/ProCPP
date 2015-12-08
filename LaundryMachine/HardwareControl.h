@@ -46,7 +46,7 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     //void SetSink(boolean state);     // off = 0 on = 1
     //void SetDrain(boolean state);    // off = 0 on = 1
     void SetMotor(int speedlevel);   // 0=off 1=slow 2=medium 3=high
-    void SetHeater(int level);  // off = 0 on = 1
+    void SetTemperature(int level);  // off = 0 on = 1
     void SetDirection(int dir); // left = 0 right = 1
     void SetProgramIndicator(int program); // off = 0 - levels 1-2-3 = led 1-2-3
 
@@ -57,8 +57,6 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     void SetData(int data);     // data 0 = LOW 1 = DATAA 2 = DATAB 3 = DATAC
     void SetDataOff(int data);
     void Strobe();
-
-    int waterLevel;
 
 };
 

@@ -3,10 +3,10 @@
 
 enum WaterLevel
 {
-  WATER_0_PERCENT,
-  WATER_33_PERCENT,
+  WATER_0_PERCENT = 0,
+  WATER_33_PERCENT = 1,
   WATER_66_PERCENT,
-  WATER_100_PERCENT
+  WATER_100_PERCENT = 3
 };
 
 class IWater
@@ -16,11 +16,11 @@ class IWater
     //virtual void SetSink(boolean state) = 0;
     //virtual void SetDrain(boolean state) = 0;
     virtual int GetWaterlevel() = 0; //level: 0=empty, 1=1/3, 2=2/3, 3=filled
+    virtual boolean GetPressureSwitch() = 0;
 
     // Outputs
     virtual void SetWaterlevel(int level) = 0;
 
-    virtual boolean GetPressureSwitch() = 0;
 };
 
 #endif

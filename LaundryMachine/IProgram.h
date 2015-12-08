@@ -1,6 +1,13 @@
 #ifndef IPROGRAM_H
 #define IPROGRAM_H
 
+enum Program
+{
+  PROGRAM_A = 1,
+  PROGRAM_B,
+  PROGRAM_C = 3
+};
+
 class IProgram
 {
   public:

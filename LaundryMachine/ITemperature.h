@@ -3,9 +3,9 @@
 
 enum Temperature
 {
-    COLD,
+    COLD = 1,
     WARM,
-    HOT
+    HOT = 3
 };
 
 class ITemperature
@@ -13,8 +13,9 @@ class ITemperature
   public:
     // Inputs
     virtual int GetTemperature() = 0;   //temp: 0 - cold, 1 - medium, 2 - hot
-    // Outputs
-    virtual void SetHeater(int level) = 0;
+    
+    // Outputs  
+    virtual void SetTemperature(int level) = 0;
 };
 
 #endif
