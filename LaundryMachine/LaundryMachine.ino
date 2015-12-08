@@ -54,8 +54,20 @@ void loop()
 {
   //TestBuzzer();
   //TestCoinWallet();
-  TestFunctions();
+  //TestFunctions();
+  //TestProgram();
+}
 
+void TestProgram()
+{
+  static int i = 1;
+  if(mProgram->GetProgramButton())
+  {
+  mProgram->SetProgramIndicator(i);
+  i++;
+  }
+  if(i > 3)
+  i=1;
 }
 
 void TestCoinWallet()

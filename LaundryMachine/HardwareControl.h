@@ -31,8 +31,8 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     boolean GetSoap1Switch();
     boolean GetSoap2Switch();
     // Settings
-    WaterLevel GetWaterlevel();   // 0=empty, 1=1/3, 2=2/3, 3=filled
-    Temperature GetTemperature(); // 0=cold, 1=medium, 2=hot
+    int GetWaterlevel();   // 0=empty, 1=1/3, 2=2/3, 3=filled
+    int GetTemperature(); // 0=cold, 1=medium, 2=hot
 
     // Outputs
     void SetCoin10(int leds);   // off = 0 - levels 1-2-3 = led 1-2-3
@@ -43,9 +43,9 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     void SetSoap1(int level);   // off = 0 on = 1
     void SetSoap2(int level);   // off = 0 on = 1
     void SetWaterlevel(int waterlevel);
-    void SetSink(boolean state);     // off = 0 on = 1
-    void SetDrain(boolean state);    // off = 0 on = 1
-    void SetMotorSpeed(int speedlevel);   // 0=off 1=slow 2=medium 3=high
+    //void SetSink(boolean state);     // off = 0 on = 1
+    //void SetDrain(boolean state);    // off = 0 on = 1
+    void SetMotor(int speedlevel);   // 0=off 1=slow 2=medium 3=high
     void SetHeater(int level);  // off = 0 on = 1
     void SetDirection(int dir); // left = 0 right = 1
     void SetProgramIndicator(int program); // off = 0 - levels 1-2-3 = led 1-2-3
