@@ -9,10 +9,10 @@ enum Direction
 
 enum Speed
 {
-  MOTOR_OFF = 1,
+  MOTOR_OFF = 0,
   MOTOR_LOW,
   MOTOR_REGULAR,
-  MOTOR_HIGH = 4
+  MOTOR_HIGH = 3
 };
 
 class IMotor

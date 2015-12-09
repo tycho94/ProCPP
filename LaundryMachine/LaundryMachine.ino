@@ -54,8 +54,8 @@ void loop()
 {
   //TestBuzzer();
   //TestButtons();
-  //TestFunctions();
-  TestWater();
+  TestFunctions();
+  //TestWater();
 }
 
 
@@ -104,32 +104,30 @@ void TestBuzzer() {
 }
 
 void TestFunctions() {
-  if (mControl->GetSoap2Switch()) {
+  if (mSoap->GetSoap2Switch()) {
     mSoap->SetSoap2(1);
-    mControl->SetMotor(3);
+    mMotor->SetMotor(MOTOR_LOW);
   }
   else {
     mSoap->SetSoap2(0);
   }
 
-  if (mControl->GetSoap1Switch()) {
+  if (mSoap->GetSoap1Switch()) {
     mSoap->SetSoap1(2);
-    mControl->SetMotor(2);
+    mMotor->SetMotor(MOTOR_REGULAR);
   }
   else {
     mSoap->SetSoap1(0);
   }
 
-  if (mControl->GetLockSwitch()) {
+  if (mLock->GetLockSwitch()) {
     mLock->SetLock(1);
-    mControl->SetMotor(1);
+    mMotor->SetMotor(MOTOR_HIGH);
   }
   else {
     mLock->SetLock(0);
   }
 
   if (mWater->GetPressureSwitch()) {
-    mControl->SetMotor(0);
-  }
-  mTemperature->SetTemperature(2);
+    mMotor->SetMotor(MOTOR_OFF);}
 }
