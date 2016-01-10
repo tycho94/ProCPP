@@ -4,7 +4,7 @@
 class IBuzzer
 {
   public:
-    virtual void SetBuzzer(boolean level) = 0;
+    virtual void SetBuzzer(bool level) = 0;
 };
 
 #endif

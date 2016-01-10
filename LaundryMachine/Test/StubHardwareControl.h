@@ -1,56 +1,84 @@
-#ifndef STUBHARDWARECONTROL_H
-#define STUBHARDWARECONTROL_H
+#pragma once
 
-#include "ArduinoWrapper.h"	// to be included before all other LaundryMachine include files
+// wrapper for the types that arduino has and we don't
+#include "ArduinoWrapper.h"
 
-#include "IBuzzer.h"
-#include "ICoin.h"
-#include "ILock.h"
-#include "IMotor.h"
-#include "IProgram.h"
-#include "ISoap.h"
-#include "ITemperature.h"
-#include "IWater.h"
+// include all the interfaces that we're going to reimplement
+#include "../IBuzzer.h"
+#include "../ICoin.h"
+#include "../ILock.h"
+#include "../IMotor.h"
+#include "../IProgram.h"
+#include "../ISoap.h"
+#include "../ITemperature.h"
+#include "../IWater.h"
 
 class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor, public IProgram, public ISoap, public ITemperature, public IWater
 {
   public:
-    // public member variable to control the behaviour of the StubHardwareControl
-    // e.g. TestCoinWallet sets Coin10Button, and GetCoin10Button() returns the value of this variable
-    boolean Coin10Button;
+    StubHardwareControl();
+    virtual ~StubHardwareControl();
 
-    // Inputs
-    boolean GetLockSwitch();
-    boolean GetCoinClearButton();
-    boolean GetCoin200Button();
-    boolean GetCoin50Button();
-    boolean GetCoin10Button();
-    boolean GetStartButton();
-    boolean GetProgramButton();
-    boolean GetSoap1Switch();
-    boolean GetSoap2Switch();
-    boolean GetPressureSwitch();
+
+    // IBuzzer
+    void SetBuzzer(bool level);
+    // custom function for tests
+    bool GetBuzzer();
+
+    // IWater
+    bool GetPressureSwitch();
     int GetWaterlevel();
-    int GetTemperature();
 
-    // Outputs
-    void SetBuzzer(boolean level);
     void SetWaterlevel(int level);
-    void SetTemperature(int level);
-    void SetSoap1(int level);
-    void SetLock(int level);
-    void SetMotor(int speedlevel);
-    void SetCoin10(int leds);
-    void SetCoin200(int leds);
-    void SetBuzzer(int level);
-    void SetSoap2(int level);
     void SetDrain(int level);
-    void SetDirection(int dir);
+
+    // ITemperature
+    int GetTemperature();
+    void SetTemperature(int level);
+
+    // ISoap
+    void SetSoap1(int level);
+    void SetSoap2(int level);
+
+    bool GetSoap1Switch();
+    bool GetSoap2Switch();
+
+    // IProgram
+    bool GetStartButton();
+    bool GetProgramButton();
+
     void SetProgramIndicator(int program);
+
+    // IMotor
+    void SetMotor(int speedlevel);
+    void SetDirection(int dir);
+
+    // ILock
+    bool GetLockSwitch();
+    void SetLock(int level);
+
+    // ICoin
+    bool GetCoin10Button();
+    bool GetCoin50Button();
+    bool GetCoin200Button();
+    bool GetCoinClearButton();
+
+    // custom methods for testings
+    int GetCoinAmount();
+    void ResetCoinAmount();
+
+    void SetCoin10(int leds);
     void SetCoin50(int leds);
+    void SetCoin200(int leds);
 
   private:
-    int coins;
-};
+    // Coin testing variables
+    int AmountOfCoins;
+    bool Coin10Button;
+    bool Coin50Button;
+    bool Coin200Button;
+    bool CoinClearButton;
 
-#endif // STUBHARDWARECONTROL_H
+    // Buzzer testing variables
+    bool BuzzerButton;
+};

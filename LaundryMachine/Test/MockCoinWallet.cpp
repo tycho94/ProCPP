@@ -1,4 +1,4 @@
-#include "CoinWallet.h"
+#include "../CoinWallet.h"
 
 CoinWallet::CoinWallet(ICoin * c)
 {
@@ -46,7 +46,9 @@ void CoinWallet::ShowBalance(int group)
 
 //add money to the coinwallet, //check if leds are at their maximum, if so, do not add money
 void CoinWallet::Deposit(int amount) {
-  if ((((balance % 50) / amount) <= 2 && amount == 10) || (((balance % 200) / amount) <= 2 && amount == 50) || (balance / amount <= 1 && amount == 200))
+  if ((((balance % 50) / amount) <= 2 && amount == 10) ||
+      (((balance % 200) / amount) <= 2 && amount == 50) ||
+      (balance / amount <= 1 && amount == 200))
   {
     balance += amount;
     ShowBalance(amount);
@@ -66,7 +68,7 @@ int CoinWallet::Clear()
 }
 
 //take money for any program
-boolean CoinWallet::Withdraw(int amount)
+bool CoinWallet::Withdraw(int amount)
 {
   if ( amount <= balance)
   {

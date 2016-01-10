@@ -8,7 +8,7 @@ class CoinWallet
   public:
     CoinWallet(ICoin * c);
     void ShowBalance(int group);
-    boolean Withdraw(int amount);
+    bool Withdraw(int amount);
     void Deposit(int amount);
     int Clear();
   private:
