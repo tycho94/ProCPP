@@ -236,7 +236,7 @@ void HardwareControl::SetCoin200(int leds)
 }
 
 //set the buzzer to true or false, 0 or 1
-void HardwareControl::SetBuzzer(boolean level)
+void HardwareControl::SetBuzzer(bool level)
 {
   centipede.digitalWrite(OUT_BUZZER, !level);
 }
@@ -285,7 +285,7 @@ void HardwareControl::SetWaterlevel(int wantedWaterlevel)
     centipede.digitalWrite(OUT_SINK, LOW);
     if (GetPressureSwitch()) {
       centipede.digitalWrite(OUT_DRAIN, HIGH);
-    } 
+    }
   }
 }
 //set speed to off, slow, medium or high respectivly to 0, 1, 2, 3
