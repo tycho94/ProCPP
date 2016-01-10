@@ -6,6 +6,7 @@ StubHardwareControl::StubHardwareControl() {
     Coin10Button = false;
     Coin50Button = false;
     Coin200Button = false;
+    SwitchLocker = false;
 }
 
 StubHardwareControl::~StubHardwareControl() {
@@ -87,11 +88,11 @@ bool StubHardwareControl::GetBuzzer() {
 }
 
 bool StubHardwareControl::GetLockSwitch() {
-    return true;
+    return SwitchLocker;
 }
 
 void StubHardwareControl::SetLock(int level) {
-    (void) level; // this does nothing, gets rid of compiler warning
+    SwitchLocker = level;
 }
 
 void StubHardwareControl::SetMotor(int speedlevel) {

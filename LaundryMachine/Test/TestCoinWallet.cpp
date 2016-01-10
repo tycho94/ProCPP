@@ -5,6 +5,8 @@
 // optionally include a thing you want to test that is *not* in the stubhardwarecontroller
 #include "../CoinWallet.h"
 
+//Set is already done in stubhardwarecontrol. pre-seted ?
+
 // TEST - defines a new test that will be run
 // coinwallet - says that this tests some function, can be arbitrary
 // get10coins - says that this is a specific test case for that function, can be arbitrary
