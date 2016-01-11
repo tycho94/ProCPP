@@ -27,4 +27,4 @@ $(BIN): $(SRC) $(GTEST) $(HEADERS)
 
 clean:
 	@# bash script to check if the file exists, if it does remove it.
-	@if [ -a $(BIN) ]; then rm -f $(BIN); fi;
+	@if [ -f $(BIN) ]; then rm -f $(BIN); fi;
