@@ -82,4 +82,7 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
 
     // Buzzer testing variables
     bool BuzzerButton;
+
+    // Lock testing variables
+    bool SwitchLocker;
 };
