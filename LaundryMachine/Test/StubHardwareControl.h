@@ -78,7 +78,9 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     bool Coin50Button;
     bool Coin200Button;
     bool CoinClearButton;
-
+    bool SwitchLocker;
     // Buzzer testing variables
     bool BuzzerButton;
+    bool Soap1;
+    bool Soap2;
 };

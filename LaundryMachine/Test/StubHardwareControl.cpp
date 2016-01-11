@@ -7,6 +7,8 @@ StubHardwareControl::StubHardwareControl() {
     Coin50Button = false;
     Coin200Button = false;
     SwitchLocker = false;
+    Soap1 = false;
+    Soap2 = false;
 }
 
 StubHardwareControl::~StubHardwareControl() {
@@ -63,7 +65,7 @@ int StubHardwareControl::GetTemperature() {
     return (0);
 }
 
-void StubHardwareControl::SetSoap2(int level) {
+void StubHardwareControl::SetSoap2(bool level) {
     (void) level; // this does nothing, gets rid of compiler warning
 }
 
@@ -104,19 +106,21 @@ bool StubHardwareControl::GetProgramButton() {
 }
 
 bool StubHardwareControl::GetSoap1Switch() {
-    return true;
+    return Soap1;
 }
 
 bool StubHardwareControl::GetSoap2Switch() {
-    return true;
+    return Soap2;
 }
 
-void StubHardwareControl::SetSoap1(int level) {
-    (void) level; // this does nothing, gets rid of compiler warning
+void StubHardwareControl::SetSoap1(bool level) {
+    //(void) level; // this does nothing, gets rid of compiler warning
+    Soap1 = level;
 }
 
-void StubHardwareControl::SetTemperature(int level) {
-    (void) level; // this does nothing, gets rid of compiler warning
+void StubHardwareControl::SetTemperature(bool level) {
+    //(void) level; // this does nothing, gets rid of compiler warning
+    Soap2 = level;
 }
 
 int StubHardwareControl::GetWaterlevel() {
