@@ -11,7 +11,8 @@ BIN=LaundryMachineTest
 SRC=./StubHardwareControl.cpp \
 	./TestCoinWallet.cpp \
 	./TestBuzzer.cpp \
-	./MockCoinWallet.cpp
+	./MockCoinWallet.cpp\
+	./TestLock.cpp
 HEADERS=../*.h ./*.h
 # gtest sources
 GTEST=./gtest/src/gtest-all.cc ./gtest/src/gtest_main.cc
