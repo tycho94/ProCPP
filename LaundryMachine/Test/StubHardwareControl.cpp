@@ -98,6 +98,8 @@ void StubHardwareControl::SetLock(int level) {
 }
 
 void StubHardwareControl::SetMotor(int speedlevel) {
+    //how is suposed to test this without the hardware control thing
+    //because we need need to set it and we will get diferent values
     (void) speedlevel; // this does nothing, gets rid of compiler warning
 }
 
