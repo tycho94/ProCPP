@@ -153,7 +153,7 @@ int StubHardwareControl::GetWaterlevel() {
 }
 
 bool StubHardwareControl::GetPressureSwitch() {
-    return pressureSwitch;
+    return pressureSwithch;
 }
 
 void StubHardwareControl::SetWaterlevel(int level) {
