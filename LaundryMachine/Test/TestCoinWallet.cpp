@@ -39,6 +39,40 @@ TEST(CoinWallet, get200coins) {
     EXPECT_EQ(c.GetCoinAmount(), 200);
 }
 
+//
+TEST(CoinWalletclear, clear1) {
+    StubHardwareControl c;
+    CoinWallet wallet(&c);
+
+    wallet.Deposit(200);
+    EXPECT_EQ(c.GetCoin200Button(), true);
+    wallet.Deposit(50);
+    EXPECT_EQ(c.GetCoin50Button(), true);
+    EXPECT_EQ(c.GetCoinAmount(), 250);
+    c.ResetCoinAmount();
+    EXPECT_EQ(c.GetCoinAmount(), 0);
+
+}
+
+//put money celar put money clear
+TEST(CoinWallet, clear2) {
+    StubHardwareControl c;
+    CoinWallet wallet(&c);
+
+    wallet.Deposit(200);
+    EXPECT_EQ(c.GetCoin200Button(), true);
+    EXPECT_EQ(c.GetCoinAmount(), 200);
+    c.ResetCoinAmount();
+    EXPECT_EQ(c.GetCoinAmount(), 0);
+
+    wallet.Deposit(50);
+    EXPECT_EQ(c.GetCoin50Button(), true);
+    EXPECT_EQ(c.GetCoinAmount(), 50);
+    c.ResetCoinAmount();
+    EXPECT_EQ(c.GetCoinAmount(), 0);
+
+}
+
 // Be careful with names and such because you will get some very
 // incomprehensible errors. If you do get some of these errors read them
 // carefully because somewhere in those lines there's the real reason why the

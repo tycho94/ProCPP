@@ -78,18 +78,25 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     bool Coin50Button;
     bool Coin200Button;
     bool CoinClearButton;
-    bool SwitchLocker;
-<<<<<<< HEAD
-    // Buzzer testing variables
-    bool BuzzerButton;
-    bool Soap1;
-    bool Soap2;
-=======
 
     // Buzzer testing variables
     bool BuzzerButton;
 
     // Lock testing variables
     bool SwitchLocker;
->>>>>>> origin/master
+
+    // Water testing variables
+    int WaterLevel;
+    bool pressureSwitch;
+
+    // Motor testing variables
+    int motorDir;
+    int motorSpeed;
+
+    // Temperature testing variables
+    int currentTemp;
+
+    // Soap testing variables
+    bool soap1;
+    bool soap2;
 };

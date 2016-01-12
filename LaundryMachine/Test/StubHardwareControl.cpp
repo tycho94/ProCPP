@@ -7,8 +7,13 @@ StubHardwareControl::StubHardwareControl() {
     Coin50Button = false;
     Coin200Button = false;
     SwitchLocker = false;
-    Soap1 = false;
-    Soap2 = false;
+    WaterLevel = 0;
+    pressureSwitch = true;
+    motorDir = 1;
+    motorSpeed = 0;
+    currentTemp = 1;
+    soap1 = false;
+    soap2 = false;
 }
 
 StubHardwareControl::~StubHardwareControl() {
@@ -62,11 +67,23 @@ bool StubHardwareControl::GetStartButton() {
 }
 
 int StubHardwareControl::GetTemperature() {
-    return (0);
+    return currentTemp;
 }
 
-void StubHardwareControl::SetSoap2(bool level) {
-    (void) level; // this does nothing, gets rid of compiler warning
+void StubHardwareControl::SetSoap1(int level) {
+    //(void) level; // this does nothing, gets rid of compiler warning
+    if (level)
+        soap1 = true;
+    else
+        soap1 = false;
+}
+
+void StubHardwareControl::SetSoap2(int level) {
+    //(void) level; // this does nothing, gets rid of compiler warning
+    if (level)
+        soap2 = true;
+    else
+        soap2 = false;
 }
 
 void StubHardwareControl::SetDrain(int level) {
@@ -74,7 +91,11 @@ void StubHardwareControl::SetDrain(int level) {
 }
 
 void StubHardwareControl::SetDirection(int dir) {
-    (void) dir; // this does nothing, gets rid of compiler warning
+    //(void) dir; // this does nothing, gets rid of compiler warning
+    if (dir == 1)
+        motorDir = dir;
+    if (dir == 2)
+        motorDir = dir;
 }
 
 void StubHardwareControl::SetProgramIndicator(int program) {
@@ -98,9 +119,15 @@ void StubHardwareControl::SetLock(int level) {
 }
 
 void StubHardwareControl::SetMotor(int speedlevel) {
-    //how is suposed to test this without the hardware control thing
-    //because we need need to set it and we will get diferent values
-    (void) speedlevel; // this does nothing, gets rid of compiler warning
+    //(void) speedlevel; // this does nothing, gets rid of compiler warning
+    if (speedlevel == 0)
+      motorSpeed = speedlevel;
+    else if (speedlevel == 1)
+      motorSpeed = speedlevel;
+    else if (speedlevel == 2)
+      motorSpeed = speedlevel;
+    else if (speedlevel == 3)
+      motorSpeed = speedlevel;
 }
 
 bool StubHardwareControl::GetProgramButton() {
@@ -108,31 +135,29 @@ bool StubHardwareControl::GetProgramButton() {
 }
 
 bool StubHardwareControl::GetSoap1Switch() {
-    return Soap1;
-}
-
-bool StubHardwareControl::GetSoap2Switch() {
-    return Soap2;
-}
-
-void StubHardwareControl::SetSoap1(bool level) {
-    //(void) level; // this does nothing, gets rid of compiler warning
-    Soap1 = level;
-}
-
-void StubHardwareControl::SetTemperature(bool level) {
-    //(void) level; // this does nothing, gets rid of compiler warning
-    Soap2 = level;
-}
-
-int StubHardwareControl::GetWaterlevel() {
-    return 0;
-}
-
-bool StubHardwareControl::GetPressureSwitch() {
     return true;
 }
 
+bool StubHardwareControl::GetSoap2Switch() {
+    return true;
+}
+
+void StubHardwareControl::SetTemperature(int level) {
+    //(void) level; // this does nothing, gets rid of compiler warning
+    if (level > 0 && level < 4)
+      currentTemp = level;
+}
+
+int StubHardwareControl::GetWaterlevel() {
+    return WaterLevel;
+}
+
+bool StubHardwareControl::GetPressureSwitch() {
+    return pressureSwitch;
+}
+
 void StubHardwareControl::SetWaterlevel(int level) {
-    (void) level; // this does nothing, gets rid of compiler warning
+    //(void) level; // this does nothing, gets rid of compiler warning
+    if (level >= 0 && level < 4)
+      WaterLevel = level;
 }
