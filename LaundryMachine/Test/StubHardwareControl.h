@@ -52,6 +52,8 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     // IMotor
     void SetMotor(int speedlevel);
     void SetDirection(int dir);
+    int GetMotorSpeed();
+    int GetMotorDir();
 
     // ILock
     bool GetLockSwitch();

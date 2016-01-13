@@ -10,9 +10,9 @@ StubHardwareControl::StubHardwareControl() {
     SwitchLocker = false;
     waterLevel = 0;
     pressureSwitch = true;
-    motorDir = 1;
+    motorDir = 1;//right
     motorSpeed = 0;
-    currentTemp = 1;
+    currentTemp = 1;//cold
     soap1 = false;
     soap2 = false;
     startButton = true;
@@ -66,6 +66,14 @@ bool StubHardwareControl::GetStartButton() {
     return startButton;
 }
 
+int StubHardwareControl::GetMotorSpeed(){
+    return motorSpeed;
+}
+
+int StubHardwareControl::GetMotorDir(){
+    return motorDir;
+}
+
 int StubHardwareControl::GetTemperature() {
     return currentTemp;
 }
@@ -91,15 +99,19 @@ void StubHardwareControl::SetDrain(int level) {
 }
 
 void StubHardwareControl::SetDirection(int dir) {
-    //(void) dir; // this does nothing, gets rid of compiler warning
-    if (dir == 1)
+    // LEFT or RIGHT
+    if (dir == 0 || dir == 1)
         motorDir = dir;
-    if (dir == 2)
-        motorDir = dir;
+
+}
+void StubHardwareControl::SetMotor(int speedlevel) {
+    //from LOW to HIG [0-4)
+    if (speedlevel >= 0 && speedlevel < 4)
+      motorSpeed = speedlevel;
 }
 
 void StubHardwareControl::SetProgramIndicator(int program) {
-	if(program <= 2 &&  program >= 0)
+	if(program <= 2 && program >= 0)
 	    programIndicator = program;
 }
 
@@ -123,18 +135,6 @@ void StubHardwareControl::SetLock(int level) {
     SwitchLocker = level;
 }
 
-void StubHardwareControl::SetMotor(int speedlevel) {
-    //(void) speedlevel; // this does nothing, gets rid of compiler warning
-    if (speedlevel == 0)
-      motorSpeed = speedlevel;
-    else if (speedlevel == 1)
-      motorSpeed = speedlevel;
-    else if (speedlevel == 2)
-      motorSpeed = speedlevel;
-    else if (speedlevel == 3)
-      motorSpeed = speedlevel;
-}
-
 bool StubHardwareControl::GetProgramButton() {
     return programButton;
 }
@@ -148,7 +148,7 @@ bool StubHardwareControl::GetSoap2Switch() {
 }
 
 void StubHardwareControl::SetTemperature(int level) {
-    //(void) level; // this does nothing, gets rid of compiler warning
+    //between 1 (COLD) and 3 (HOT)
     if (level > 0 && level < 4)
       currentTemp = level;
 }
