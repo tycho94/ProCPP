@@ -15,7 +15,8 @@ StubHardwareControl::StubHardwareControl() {
     currentTemp = 1;
     soap1 = false;
     soap2 = false;
-    start_button = 0;
+    startButton = true;
+    programButton = true;
 }
 
 StubHardwareControl::~StubHardwareControl() {
@@ -62,7 +63,7 @@ void StubHardwareControl::ResetCoinAmount() {
 }
 
 bool StubHardwareControl::GetStartButton() {
-    return start_button;
+    return startButton;
 }
 
 int StubHardwareControl::GetTemperature() {
@@ -98,7 +99,12 @@ void StubHardwareControl::SetDirection(int dir) {
 }
 
 void StubHardwareControl::SetProgramIndicator(int program) {
-    (void) program; // this does nothing, gets rid of compiler warning
+	if(program <= 2 &&  program >= 0)
+	    programIndicator = program;
+}
+
+int StubHardwareControl::GetProgramIndicator(){
+	return programIndicator;
 }
 
 void StubHardwareControl::SetBuzzer(bool level) {
@@ -130,7 +136,7 @@ void StubHardwareControl::SetMotor(int speedlevel) {
 }
 
 bool StubHardwareControl::GetProgramButton() {
-    return true;
+    return programButton;
 }
 
 bool StubHardwareControl::GetSoap1Switch() {
