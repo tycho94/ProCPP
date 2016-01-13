@@ -3,9 +3,11 @@
 StubHardwareControl::StubHardwareControl() {
     AmountOfCoins = 0;
     BuzzerButton = false;
-    Coin10Button = false;
-    Coin50Button = false;
-    Coin200Button = false;
+    CoinClearButton = true;
+    Coin10Button = true;
+    Coin50Button = true;
+    Coin200Button = true;
+    StartButton = true;
     SwitchLocker = false;
     waterLevel = 0;
     pressureSwitch = true;
@@ -38,19 +40,16 @@ bool StubHardwareControl::GetCoinClearButton() {
 
 void StubHardwareControl::SetCoin10(int leds) {
     (void) leds;
-    Coin10Button = true;
     AmountOfCoins += 10;
 }
 
 void StubHardwareControl::SetCoin50(int leds) {
     (void) leds;
-    Coin50Button = true;
     AmountOfCoins += 50;
 }
 
 void StubHardwareControl::SetCoin200(int leds) {
     (void) leds;
-    Coin200Button = true;
     AmountOfCoins += 200;
 }
 

@@ -14,9 +14,19 @@ TEST(CoinWallet, get10coins) {
     StubHardwareControl c;
     CoinWallet wallet(&c);
 
-    wallet.Deposit(10);
+
     EXPECT_EQ(c.GetCoin10Button(), true);
+
+    EXPECT_EQ(c.GetCoinAmount(), 0);
+    wallet.Deposit(10);
     EXPECT_EQ(c.GetCoinAmount(), 10);
+    wallet.Deposit(10);
+    EXPECT_EQ(c.GetCoinAmount(), 20);
+    wallet.Deposit(10);
+    EXPECT_EQ(c.GetCoinAmount(), 30);
+    wallet.Deposit(10);
+    EXPECT_NE(c.GetCoinAmount(), 40);
+
 }
 
 // Again, we test coin wallet but in a different test case, now with 50 coins
@@ -24,54 +34,63 @@ TEST(CoinWallet, get50coins) {
     StubHardwareControl c;
     CoinWallet wallet(&c);
 
-    wallet.Deposit(50);
+
     EXPECT_EQ(c.GetCoin50Button(), true);
+
+    EXPECT_EQ(c.GetCoinAmount(), 0);
+    wallet.Deposit(50);
     EXPECT_EQ(c.GetCoinAmount(), 50);
+    wallet.Deposit(50);
+    EXPECT_EQ(c.GetCoinAmount(), 100);
+    wallet.Deposit(50);
+    EXPECT_EQ(c.GetCoinAmount(), 150);
+    wallet.Deposit(50);
+    EXPECT_NE(c.GetCoinAmount(), 200);
 }
+
 
 // Again, we test coin wallet but in a different test case, now with 200 coins
 TEST(CoinWallet, get200coins) {
     StubHardwareControl c;
     CoinWallet wallet(&c);
 
-    wallet.Deposit(200);
     EXPECT_EQ(c.GetCoin200Button(), true);
+
+    EXPECT_EQ(c.GetCoinAmount(),0);
+    wallet.Deposit(200);
     EXPECT_EQ(c.GetCoinAmount(), 200);
+    wallet.Deposit(200);
+    EXPECT_EQ(c.GetCoinAmount(), 400);
+    wallet.Deposit(200);
+    EXPECT_NE(c.GetCoinAmount(), 600);   
 }
 
 //
-TEST(CoinWallet, clear1) {
+TEST(CoinWallet, CoinClear) {
     StubHardwareControl c;
     CoinWallet wallet(&c);
 
+    EXPECT_EQ(c.GetCoinClearButton(), true);
+
+    EXPECT_EQ(c.GetCoinAmount(), 0);
     wallet.Deposit(200);
-    EXPECT_EQ(c.GetCoin200Button(), true);
     wallet.Deposit(50);
-    EXPECT_EQ(c.GetCoin50Button(), true);
-    EXPECT_EQ(c.GetCoinAmount(), 250);
+    EXPECT_NE(c.GetCoinAmount(), 0);
+    c.ResetCoinAmount();
+    EXPECT_EQ(c.GetCoinAmount(), 0);
+
+    wallet.Deposit(200);
+    EXPECT_NE(c.GetCoinAmount(), 0);
+    c.ResetCoinAmount();
+    EXPECT_EQ(c.GetCoinAmount(), 0);
+
+    wallet.Deposit(50);
+    EXPECT_NE(c.GetCoinAmount(), 0);
     c.ResetCoinAmount();
     EXPECT_EQ(c.GetCoinAmount(), 0);
 
 }
 
-//put money celar put money clear
-TEST(CoinWallet, clear2) {
-    StubHardwareControl c;
-    CoinWallet wallet(&c);
-
-    wallet.Deposit(200);
-    EXPECT_EQ(c.GetCoin200Button(), true);
-    EXPECT_EQ(c.GetCoinAmount(), 200);
-    c.ResetCoinAmount();
-    EXPECT_EQ(c.GetCoinAmount(), 0);
-
-    wallet.Deposit(50);
-    EXPECT_EQ(c.GetCoin50Button(), true);
-    EXPECT_EQ(c.GetCoinAmount(), 50);
-    c.ResetCoinAmount();
-    EXPECT_EQ(c.GetCoinAmount(), 0);
-
-}
 
 // Be careful with names and such because you will get some very
 // incomprehensible errors. If you do get some of these errors read them

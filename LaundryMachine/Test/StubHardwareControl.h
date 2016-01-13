@@ -46,7 +46,6 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     // IProgram
     bool GetStartButton();
     bool GetProgramButton();
-
     void SetProgramIndicator(int program);
 
     // IMotor
@@ -99,4 +98,7 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     // Soap testing variables
     bool soap1;
     bool soap2;
+
+    //Program testing variables
+    bool StartButton;
 };
