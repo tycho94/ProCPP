@@ -27,4 +27,4 @@
 *.out
 *.app
 
-Test/Linux/LaundryMachineTest
+./LaundryMachine/Test/LaundryMachineTest
