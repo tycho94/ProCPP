@@ -7,7 +7,6 @@ StubHardwareControl::StubHardwareControl() {
     Coin10Button = true;
     Coin50Button = true;
     Coin200Button = true;
-    StartButton = true;
     SwitchLocker = false;
     waterLevel = 0;
     pressureSwitch = true;

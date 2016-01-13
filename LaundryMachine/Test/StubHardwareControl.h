@@ -100,11 +100,6 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     bool soap1;
     bool soap2;
 
-<<<<<<< HEAD
-    //Program testing variables
-    bool StartButton;
-=======
     // Program testing variables
     bool start_button;
->>>>>>> 5e195f9f384178abca0365bf365e6e1e6d1ebc55
 };
