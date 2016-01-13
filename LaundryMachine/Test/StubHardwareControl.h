@@ -86,7 +86,7 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     bool SwitchLocker;
 
     // Water testing variables
-    int WaterLevel;
+    int waterLevel;
     bool pressureSwitch;
 
     // Motor testing variables
