@@ -37,8 +37,8 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     void SetTemperature(int level);
 
     // ISoap
-    void SetSoap1(int level);
-    void SetSoap2(int level);
+    void SetSoap1(bool level);
+    void SetSoap2(bool level);
 
     bool GetSoap1Switch();
     bool GetSoap2Switch();
@@ -87,6 +87,7 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     // Water testing variables
     int waterLevel;
     bool pressureSwitch;
+    bool drain;
 
     // Motor testing variables
     int motorDir;
@@ -99,6 +100,11 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     bool soap1;
     bool soap2;
 
+<<<<<<< HEAD
     //Program testing variables
     bool StartButton;
+=======
+    // Program testing variables
+    bool start_button;
+>>>>>>> 5e195f9f384178abca0365bf365e6e1e6d1ebc55
 };
