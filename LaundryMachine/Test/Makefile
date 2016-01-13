@@ -10,12 +10,7 @@ MFLAGS=-I /usr/include/gtest/ -L /usr/lib/
 # name of executable
 BIN=LaundryMachineTest
 # mocked controller files with tests
-SRC=./StubHardwareControl.cpp \
-	./TestCoinWallet.cpp \
-	./TestBuzzer.cpp \
-	./MockCoinWallet.cpp \
-	./TestLock.cpp \
-	./TestWater.cpp
+SRC=./*.cpp
 HEADERS=../*.h ./*.h
 # gtest sources
 GTEST=./gtest/src/gtest-all.cc ./gtest/src/gtest_main.cc

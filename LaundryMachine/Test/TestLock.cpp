@@ -10,7 +10,7 @@ TEST(Lock, SetLockerTrue) {
 }
 //similar to Buzzer
 //working this time with a sitch instead of a button.
-TEST(Lick, SetLockerFalse) {
+TEST(Lock, SetLockerFalse) {
     StubHardwareControl c;
 
     c.SetLock(false);
