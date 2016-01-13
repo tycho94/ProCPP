@@ -2,7 +2,7 @@
 #include "gtest/gtest.h"
 
 //Test setting the program
-TEST(Program, SetTemperature) {
+TEST(Temperature, SetTemperature) {
     StubHardwareControl c;
 
     c.SetTemperature(COLD);
