@@ -14,7 +14,8 @@ SRC=./StubHardwareControl.cpp \
 	./TestCoinWallet.cpp \
 	./TestBuzzer.cpp \
 	./MockCoinWallet.cpp \
-	./TestLock.cpp
+	./TestLock.cpp \
+	./TestWater.cpp
 HEADERS=../*.h ./*.h
 # gtest sources
 GTEST=./gtest/src/gtest-all.cc ./gtest/src/gtest_main.cc

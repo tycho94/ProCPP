@@ -88,6 +88,7 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     // Water testing variables
     int waterLevel;
     bool pressureSwitch;
+    bool drain;
 
     // Motor testing variables
     int motorDir;
@@ -99,4 +100,7 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     // Soap testing variables
     bool soap1;
     bool soap2;
+
+    // Program testing variables
+    bool start_button;
 };
