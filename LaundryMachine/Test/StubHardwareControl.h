@@ -37,8 +37,8 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     void SetTemperature(int level);
 
     // ISoap
-    void SetSoap1(int level);
-    void SetSoap2(int level);
+    void SetSoap1(bool level);
+    void SetSoap2(bool level);
 
     bool GetSoap1Switch();
     bool GetSoap2Switch();
