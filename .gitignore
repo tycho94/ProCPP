@@ -27,4 +27,4 @@
 *.out
 *.app
 
-./LaundryMachine/Test/LaundryMachineTest
+LaundryMachine/Test/LaundryMachineTest

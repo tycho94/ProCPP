@@ -7,7 +7,7 @@ StubHardwareControl::StubHardwareControl() {
     Coin50Button = false;
     Coin200Button = false;
     SwitchLocker = false;
-    WaterLevel = 0;
+    waterLevel = 0;
     pressureSwitch = true;
     motorDir = 1;
     motorSpeed = 0;
@@ -149,7 +149,7 @@ void StubHardwareControl::SetTemperature(int level) {
 }
 
 int StubHardwareControl::GetWaterlevel() {
-    return WaterLevel;
+    return waterLevel;
 }
 
 bool StubHardwareControl::GetPressureSwitch() {
@@ -159,5 +159,5 @@ bool StubHardwareControl::GetPressureSwitch() {
 void StubHardwareControl::SetWaterlevel(int level) {
     //(void) level; // this does nothing, gets rid of compiler warning
     if (level >= 0 && level < 4)
-      WaterLevel = level;
+      waterLevel = level;
 }
