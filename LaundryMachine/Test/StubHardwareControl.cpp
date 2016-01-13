@@ -71,7 +71,7 @@ int StubHardwareControl::GetTemperature() {
     return currentTemp;
 }
 
-void StubHardwareControl::SetSoap1(int level) {
+void StubHardwareControl::SetSoap1(bool level) {
     //(void) level; // this does nothing, gets rid of compiler warning
     if (level)
         soap1 = true;
@@ -79,7 +79,7 @@ void StubHardwareControl::SetSoap1(int level) {
         soap1 = false;
 }
 
-void StubHardwareControl::SetSoap2(int level) {
+void StubHardwareControl::SetSoap2(bool level) {
     //(void) level; // this does nothing, gets rid of compiler warning
     if (level)
         soap2 = true;
@@ -136,11 +136,11 @@ bool StubHardwareControl::GetProgramButton() {
 }
 
 bool StubHardwareControl::GetSoap1Switch() {
-    return true;
+    return soap1;
 }
 
 bool StubHardwareControl::GetSoap2Switch() {
-    return true;
+    return soap2;
 }
 
 void StubHardwareControl::SetTemperature(int level) {
