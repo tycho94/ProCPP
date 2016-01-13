@@ -40,7 +40,7 @@ TEST(CoinWallet, get200coins) {
 }
 
 //
-TEST(CoinWalletclear, clear1) {
+TEST(CoinWallet, clear1) {
     StubHardwareControl c;
     CoinWallet wallet(&c);
 
