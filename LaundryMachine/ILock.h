@@ -5,9 +5,9 @@ class ILock
 {
   public:
     // Inputs
-    virtual boolean GetLockSwitch() = 0;
+    virtual bool GetLockSwitch() = 0;
     // Outputs
-    virtual void SetLock(int level) = 0;    // off = 0 on = 1
+    virtual void SetLock(bool level) = 0;    // off = 0 on = 1
 };
 
 #endif

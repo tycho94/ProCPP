@@ -13,10 +13,12 @@ StubHardwareControl::StubHardwareControl() {
     motorDir = 1;//right
     motorSpeed = 0;
     currentTemp = 1;//cold
+    heater = false;
     soap1 = false;
     soap2 = false;
     startButton = true;
     programButton = true;
+
 }
 
 StubHardwareControl::~StubHardwareControl() {
@@ -80,27 +82,20 @@ int StubHardwareControl::GetTemperature() {
 
 void StubHardwareControl::SetSoap1(bool level) {
     //(void) level; // this does nothing, gets rid of compiler warning
-    if (level)
-        soap1 = true;
-    else
-        soap1 = false;
+    soap1 = level;
 }
 
 void StubHardwareControl::SetSoap2(bool level) {
     //(void) level; // this does nothing, gets rid of compiler warning
-    if (level)
-        soap2 = true;
-    else
-        soap2 = false;
+    soap2 = level;
 }
 
-void StubHardwareControl::SetDrain(int level) {
+void StubHardwareControl::SetDrain(bool level) {
     drain = level;
 }
 
-void StubHardwareControl::SetDirection(int dir) {
+void StubHardwareControl::SetDirection(bool dir) {
     // LEFT or RIGHT
-    if (dir == 0 || dir == 1)
         motorDir = dir;
 
 }
@@ -131,7 +126,7 @@ bool StubHardwareControl::GetLockSwitch() {
     return SwitchLocker;
 }
 
-void StubHardwareControl::SetLock(int level) {
+void StubHardwareControl::SetLock(bool level) {
     SwitchLocker = level;
 }
 
@@ -148,9 +143,20 @@ bool StubHardwareControl::GetSoap2Switch() {
 }
 
 void StubHardwareControl::SetTemperature(int level) {
-    //between 1 (COLD) and 3 (HOT)
-    if (level > 0 && level < 4)
-      currentTemp = level;
+    if(GetTemperature() >= level)
+	heater = false;
+    else 
+	heater = true;
+	
+    currentTemp = level;
+}
+
+bool StubHardwareControl::GetHeater(){
+    return heater;
+}
+
+void StubHardwareControl::SetCurrentTemp(int level) {
+    currentTemp = level;
 }
 
 int StubHardwareControl::GetWaterlevel() {

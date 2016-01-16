@@ -30,11 +30,14 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     int GetWaterlevel();
 
     void SetWaterlevel(int level);
-    void SetDrain(int level);
+    void SetDrain(bool level);
 
     // ITemperature
     int GetTemperature();
     void SetTemperature(int level);
+    //testing functions
+    void SetCurrentTemp(int level);
+    bool GetHeater();
 
     // ISoap
     void SetSoap1(bool level);
@@ -51,13 +54,13 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
 
     // IMotor
     void SetMotor(int speedlevel);
-    void SetDirection(int dir);
+    void SetDirection(bool dir);
     int GetMotorSpeed();
     int GetMotorDir();
 
     // ILock
     bool GetLockSwitch();
-    void SetLock(int level);
+    void SetLock(bool level);
 
     // ICoin
     bool GetCoin10Button();
@@ -98,6 +101,7 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
 
     // Temperature testing variables
     int currentTemp;
+    bool heater;    
 
     // Soap testing variables
     bool soap1;

@@ -52,28 +52,28 @@ HardwareControl::HardwareControl()
 
 //getting buttons
 
-boolean HardwareControl::GetCoin10Button() {
+bool HardwareControl::GetCoin10Button() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if coin 10 is clicked, since clear also clicks coin 10 + 50 + 200 check if btn 50,200 low
   return (centipede.digitalRead(IN_IN3) == HIGH && centipede.digitalRead(IN_IN2) == LOW && centipede.digitalRead(IN_IN1) == LOW);
 }
 
-boolean HardwareControl::GetCoin50Button() {
+bool HardwareControl::GetCoin50Button() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if coin 50 is clicked, since clear also clicks coin 10 + 50 + 200 check if btn 10,200 are low
   return (centipede.digitalRead(IN_IN2) == HIGH && centipede.digitalRead(IN_IN1) == LOW && centipede.digitalRead(IN_IN3) == LOW);
 }
 
-boolean HardwareControl::GetCoin200Button() {
+bool HardwareControl::GetCoin200Button() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if coin 200 is clicked, since clear also clicks coin 10 + 50 + 200 check if btn 10,50 are low
   return (centipede.digitalRead(IN_IN1) == HIGH && centipede.digitalRead(IN_IN2) == LOW && centipede.digitalRead(IN_IN3) == LOW);
 }
 
-boolean HardwareControl::GetProgramButton() {
+bool HardwareControl::GetProgramButton() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if start is high and coin10 is high, this happens when programbutton is clicked
@@ -82,14 +82,14 @@ boolean HardwareControl::GetProgramButton() {
 
 }
 
-boolean HardwareControl::GetCoinClearButton() {
+bool HardwareControl::GetCoinClearButton() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if button10,50,200 are pressed(this is the result of pressing coinclear)
   return ((centipede.digitalRead(IN_IN1) == HIGH) && (centipede.digitalRead(IN_IN2) == HIGH) && (centipede.digitalRead(IN_IN3) == HIGH));
 
 }
-boolean HardwareControl::GetStartButton() {
+bool HardwareControl::GetStartButton() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if start is high and coin10 is low - see program
@@ -98,26 +98,26 @@ boolean HardwareControl::GetStartButton() {
 
 //get switches
 
-boolean HardwareControl::GetPressureSwitch() {
+bool HardwareControl::GetPressureSwitch() {
   //set keyselect to 0(switches)
   this->SetKeySelect(0);
   //return pressure switch state
   return (centipede.digitalRead(IN_IN0) == HIGH);
 }
 
-boolean HardwareControl::GetLockSwitch() {
+bool HardwareControl::GetLockSwitch() {
   //set keyselect to 0(switches)
   this->SetKeySelect(0);
   return (centipede.digitalRead(IN_IN3) == HIGH);
 }
 
-boolean HardwareControl::GetSoap1Switch() {
+bool HardwareControl::GetSoap1Switch() {
   //set keyselect to 0(switches)
   this->SetKeySelect(0);
   return (centipede.digitalRead(IN_IN1) == HIGH);
 }
 
-boolean HardwareControl::GetSoap2Switch() {
+bool HardwareControl::GetSoap2Switch() {
   //set keyselect to 0(switches)
   this->SetKeySelect(0);
   return (centipede.digitalRead(IN_IN2) == HIGH);
@@ -242,19 +242,19 @@ void HardwareControl::SetBuzzer(bool level)
 }
 
 //set the lock led to on or off, 0 or 1
-void HardwareControl::SetLock(int level)
+void HardwareControl::SetLock(bool level)
 {
   centipede.digitalWrite(OUT_LOCK, level);
 }
 
 //sets soap one to high or low, 0 or 1
-void HardwareControl::SetSoap1(int level)
+void HardwareControl::SetSoap1(bool level)
 {
   centipede.digitalWrite(OUT_SOAP1, level);
 }
 
 //set soap2 led, 0 off, 1 on
-void HardwareControl::SetSoap2(int level)
+void HardwareControl::SetSoap2(bool level)
 {
   //set group to 3
   //if level is 0 or lower the led is off else its high
@@ -324,7 +324,7 @@ void HardwareControl::SetTemperature(int level)
 }
 
 //set dir, 0 is left, 1 is right
-void HardwareControl::SetDirection(int dir)
+void HardwareControl::SetDirection(bool dir)
 {
   centipede.digitalWrite(OUT_MOTOR_RL, dir);
 }
