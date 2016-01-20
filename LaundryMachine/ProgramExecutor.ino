@@ -14,7 +14,10 @@ ProgramExecutor::ProgramExecutor(IBuzzer * b, IMotor * m, ILock * l, ISoap * s, 
 boolean ProgramExecutor::Start(ProgramSettings * p)
 {
   mProgramSettings = p;
-  return (true);
+  if (mCoinWallet->Withdraw(p->cost) && mLock->GetLockSwitch() && mSoap->GetSoap1Switch() && mSoap->GetSoap2Switch())
+    return true;
+  else
+    return false;
 }
 
 boolean ProgramExecutor::Step()

@@ -1,5 +1,5 @@
 #include <Wire.h>
-#include "Centipede.h"
+#include <Centipede.h>
 
 #include "IBuzzer.h"
 #include "ICoin.h"
@@ -52,13 +52,13 @@ void setup()
 
 void loop()
 {
-  //TestBuzzer();
-  //TestButtons();
-  TestFunctions();
-  //TestWater();
+  
 }
 
 
+
+//hardware control tests
+/*
 void TestWater()
 {
   if (mWater->GetPressureSwitch()) {
@@ -130,4 +130,4 @@ void TestFunctions() {
 
   if (mWater->GetPressureSwitch()) {
     mMotor->SetMotor(MOTOR_OFF);}
-}
+}*/
