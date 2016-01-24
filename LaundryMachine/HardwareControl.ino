@@ -269,24 +269,27 @@ void HardwareControl::SetSoap2(bool level)
 //set waterlevel to 0 emtpy, 1 33%, 2 66%, 3 filled
 void HardwareControl::SetWaterlevel(int wantedWaterlevel)
 {
+
+  while (wantedWaterlevel != GetWaterlevel())
+  {
+    if (wantedWaterlevel < GetWaterlevel())
+    {
+      centipede.digitalWrite(OUT_SINK, HIGH);
+      centipede.digitalWrite(OUT_DRAIN, LOW);
+    }
+
+    else if (wantedWaterlevel > GetWaterlevel())
+    {
+      centipede.digitalWrite(OUT_SINK, LOW);
+      if (GetPressureSwitch()) {
+        centipede.digitalWrite(OUT_DRAIN, HIGH);
+      }
+    }
+  }
   if (wantedWaterlevel == GetWaterlevel())
   {
     centipede.digitalWrite(OUT_SINK, LOW);
     centipede.digitalWrite(OUT_DRAIN, LOW);
-  }
-
-  else if (wantedWaterlevel < GetWaterlevel())
-  {
-    centipede.digitalWrite(OUT_SINK, HIGH);
-    centipede.digitalWrite(OUT_DRAIN, LOW);
-  }
-
-  else if (wantedWaterlevel > GetWaterlevel())
-  {
-    centipede.digitalWrite(OUT_SINK, LOW);
-    if (GetPressureSwitch()) {
-      centipede.digitalWrite(OUT_DRAIN, HIGH);
-    }
   }
 }
 //set speed to off, slow, medium or high respectivly to 0, 1, 2, 3
