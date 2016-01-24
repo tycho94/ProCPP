@@ -57,7 +57,9 @@ class ProgramExecutor
     void mainWashAB();
     void preWashA();
     void mainWashC();
-
+    void unlock();
+    bool check(int money);
+    
     IBuzzer * mBuzzer;
     IMotor * mMotor;
     ILock * mLock;
@@ -69,5 +71,3 @@ class ProgramExecutor
 };
 
 #endif
-
-

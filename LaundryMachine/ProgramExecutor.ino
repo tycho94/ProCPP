@@ -40,19 +40,32 @@ if(check(360))
 {
   preWashA();
   mainWashAB();
-  morestuff();
+  unlock();
+
 }
-    return;
+
 }
 
 // IMPLEMENT PROG B
 void ProgramExecutor::programB() {
-    return;
+  if(check(480))
+  {
+    preWashBC();
+    mainWashAB();
+    unlock();
+
+  }
 }
 
 // IMPLEMENT PROG C
 void ProgramExecutor::programC() {
-    return;
+  if(check(510))
+  {
+    preWashBC();
+    mainWashC();
+    unlock();
+
+  }
 }
 
 bool ProgramExecutor::check(int money) {
@@ -67,11 +80,23 @@ bool ProgramExecutor::check(int money) {
 
 void ProgramExecutor::preWashBC(){
   // fill 50% with water
+  mWater->SetWaterlevel(2);
   // heat to 50%
+  mTemperature->SetTemperature(2);
   // add soap1
+  mSoap->SetSoap1(false);
   // rotate clockwise, at regular speed for 1 minute
+  mMotor->SetDirection(1);
+  mMotor->SetMotor(MOTOR_REGULAR);
+  delay(10000);
   // rotate counterclockwise, at regular speed for 1 minute
+  mMotor->SetDirection(0);
+  mMotor->SetMotor(MOTOR_REGULAR);
+  delay(10000);
   // drain water
+  mWater->SetWaterlevel(0);
+
+
 }
 
 void ProgramExecutor::mainWashAB(){
@@ -144,7 +169,7 @@ void ProgramExecutor::preWashA(){
   mMotor->SetMotor(MOTOR_REGULAR);
   delay(10000);
   // drain
-  mWater->SetWaterlevel(WaterLevel.WATER_66_PERCENT);
+  mWater->SetWaterlevel(WaterLevel.WATER_0_PERCENT);
 }
 void ProgramExecutor::mainWashC(){
   int i;
@@ -180,4 +205,8 @@ void ProgramExecutor::mainWashC(){
     while (mWater->GetWaterlevel() > 0){}
     mWater->SetDrain(false);
   }
+}
+
+void ProgramExecutor::unlock(){
+  mLock->SetLock(false);
 }
