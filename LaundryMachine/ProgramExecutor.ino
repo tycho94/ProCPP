@@ -36,19 +36,12 @@ bool ProgramExecutor::IsReady()
 
 // IMPLEMENT PROG A
 void ProgramExecutor::programA() {
-  if(mCoinWallet->Withdraw(360))
-  {
-      if((mLock->GetLockSwitch())&&(mSoap->GetSoap1Switch()))
-      {
-        mWater->SetWaterlevel(2);
-        mSoap->SetSoap1(false);
-        mMotor->SetMotor(MOTOR_REGULAR);
-        mMotor->SetDirection(1);
-        delay(10000);
-        mMotor->SetDirection(0);
-
-      }
-  }
+if(check(360))
+{
+  preWashA();
+  mainWashAB();
+  morestuff();
+}
     return;
 }
 
@@ -61,6 +54,16 @@ void ProgramExecutor::programB() {
 void ProgramExecutor::programC() {
     return;
 }
+
+void ProgramExecutor::check(int money) {
+  if(mCoinWallet->Withdraw(money))
+  {
+      if((mLock->GetLockSwitch())&&(mSoap->GetSoap1Switch())&&((mSoap->GetSoap1Switch())
+      {
+        return true;
+      }
+  }
+}
 void ProgramExecutor::preWashBC(){
 
 }
@@ -69,6 +72,12 @@ void ProgramExecutor::mainWashAB(){
 }
 void ProgramExecutor::preWashA(){
 
+  mWater->SetWaterlevel(2);
+  mSoap->SetSoap1(false);
+  mMotor->SetMotor(MOTOR_REGULAR);
+  mMotor->SetDirection(1);
+  delay(10000);
+  mMotor->SetDirection(0);
 }
 void ProgramExecutor::mainWashC(){
 
