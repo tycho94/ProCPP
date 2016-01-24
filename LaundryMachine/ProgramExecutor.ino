@@ -13,15 +13,15 @@ ProgramExecutor::ProgramExecutor(IBuzzer * b, IMotor * m, ILock * l, ISoap * s, 
 
 bool ProgramExecutor::Start(Program program)
 {
-  if (program == PROGRAM_A) {
-    programA();
-  } else if (program == PROGRAM_B) {
-    programB();
-  } else if (program == PROGRAM_C) {
-    programC();
-  } else {
-    return -1;
-  }
+    if (program == PROGRAM_A) {
+        programA();
+    } else if (program == PROGRAM_B) {
+        programB();
+    } else if (program == PROGRAM_C) {
+        programC();
+    } else {
+        return -1;
+    }
 }
 
 bool ProgramExecutor::Step()
@@ -36,19 +36,19 @@ bool ProgramExecutor::IsReady()
 
 // IMPLEMENT PROG A
 void ProgramExecutor::programA() {
-  if (check(360))
-  {
-    preWashA();
-    mainWashAB();
-    unlock();
+if(check(360))
+{
+  preWashA();
+  mainWashAB();
+  unlock();
 
-  }
+}
 
 }
 
 // IMPLEMENT PROG B
 void ProgramExecutor::programB() {
-  if (check(480))
+  if(check(480))
   {
     preWashBC();
     mainWashAB();
@@ -59,7 +59,7 @@ void ProgramExecutor::programB() {
 
 // IMPLEMENT PROG C
 void ProgramExecutor::programC() {
-  if (check(510))
+  if(check(510))
   {
     preWashBC();
     mainWashC();
@@ -109,6 +109,7 @@ void ProgramExecutor::preWashBC() {
   mTemperature->SetTemperature(COLD);
   mWater->SetWaterlevel(0);
 
+
 }
 
 void ProgramExecutor::mainWashAB() {
@@ -117,28 +118,56 @@ void ProgramExecutor::mainWashAB() {
   // fill 50% with water
   mWater->SetWaterlevel(WATER_50_PERCENT);
   // heat to 50%
+  mTemperature->SetTemperature(Temperature.WARM);
   // add soap2
-  for (i = 0; i < 1; i++)
+  mSoap->SetSoap2(true);
+  for (i=0; i < 1; i++)
   {
     // rotate clockwise, at regular speed for 1 minute
+    mMotor->SetDirection(1);
+    mMotor->SetMotor(Speed.MOTOR_REGULAR);
+    delay(60000);
+    mMotor->SetMotor(Speed.MOTOR_OFF);
     // rotate counterclockwise, at regular speed for 1 minute
+    mMotor->SetDirection(0);
+    mMotor->SetMotor(Speed.MOTOR_REGULAR);
+    delay(60000);
   }
   // drain water
+  Drain();
+
   //===================== RINSE ========================
   // fill 50% with water
-  for (i = 0; i < 1; i++)
+  mWater->SetWaterlevel(WaterLevel.WATER_66_PERCENT);
+  for (i=0; i < 1; i++)
   {
     // rotate clockwise, at regular speed for 1 minute
+    mMotor->SetDirection(1);
+    mMotor->SetMotor(Speed.MOTOR_REGULAR);
+    delay(60000);
+    mMotor->SetMotor(Speed.MOTOR_OFF);
     // rotate counterclockwise, at regular speed for 1 minute
+    mMotor->SetDirection(0);
+    mMotor->SetMotor(Speed.MOTOR_REGULAR);
+    delay(60000);
   }
   // drain water
+  mWater->SetWaterlevel(WaterLevel.WATER_0_PERCENT);
   //===================== DRY ==========================
   // keep draining the water
-  for (i = 0; i < 1; i++)
+  mWater->SetDrain(true);
+  for (i=0; i < 1; i++)
   {
     // rotate clockwise, at regular speed for 30s
+    mMotor->SetDirection(1);
+    mMotor->SetMotor(Speed.MOTOR_REGULAR);
+    delay(30000);
     // rotate counterclockwise, at regular speed for 30s
+    mMotor->SetDirection(0);
+    mMotor->SetMotor(Speed.MOTOR_REGULAR);
+    delay(30000);
   }
+  mWater->SetWaterlevel(WaterLevel.WATER_0_PERCENT);
 }
 void ProgramExecutor::preWashA() {
   // fill 50% of water
@@ -153,7 +182,7 @@ void ProgramExecutor::preWashA() {
   mMotor->SetMotor(MOTOR_REGULAR);
   delay(10000);
   // drain
-  mWater->SetWaterlevel(0);
+  mWater->SetWaterlevel(WaterLevel.WATER_0_PERCENT);
 }
 void ProgramExecutor::mainWashC() {
   int i;
@@ -181,6 +210,13 @@ void ProgramExecutor::mainWashC() {
   {
     // rotate clockwise, at regular speed for 30s
     // rotate counterclockwise, at regular speed for 30s
+  }
+
+  void Drain()
+  {
+    mWater->SetDrain(true);
+    while (mWater->GetWaterlevel() > 0){}
+    mWater->SetDrain(false);
   }
 }
 
