@@ -40,6 +40,7 @@ if(check(360))
 {
   preWashA();
   mainWashAB();
+  unlock();
 
 }
 
@@ -51,6 +52,7 @@ void ProgramExecutor::programB() {
   {
     preWashBC();
     mainWashAB();
+    unlock();
 
   }
 }
@@ -61,6 +63,7 @@ void ProgramExecutor::programC() {
   {
     preWashBC();
     mainWashC();
+    unlock();
 
   }
 }
@@ -166,4 +169,8 @@ void ProgramExecutor::mainWashC(){
     // rotate clockwise, at regular speed for 30s
     // rotate counterclockwise, at regular speed for 30s
   }
+}
+
+void ProgramExecutor::unlock(){
+  mLock->SetLock(false);
 }
