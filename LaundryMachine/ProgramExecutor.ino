@@ -40,19 +40,29 @@ if(check(360))
 {
   preWashA();
   mainWashAB();
-  morestuff();
+
 }
-    return;
+
 }
 
 // IMPLEMENT PROG B
 void ProgramExecutor::programB() {
-    return;
+  if(check(480))
+  {
+    preWashBC();
+    mainWashAB();
+
+  }
 }
 
 // IMPLEMENT PROG C
 void ProgramExecutor::programC() {
-    return;
+  if(check(510))
+  {
+    preWashBC();
+    mainWashC();
+
+  }
 }
 
 bool ProgramExecutor::check(int money) {
