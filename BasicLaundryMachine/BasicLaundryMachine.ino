@@ -35,7 +35,7 @@ void setup()
 {
   Wire.begin(); // start I2C
   CS.initialize(); // set all registers to default
-  for (int i = 0; i <= 15; i++) 
+  for (int i = 0; i <= 15; i++)
   {
     CS.pinMode(i, OUTPUT);
   }
@@ -56,7 +56,6 @@ void setup()
   CS.digitalWrite(OUT_DRAIN, LOW);
   CS.digitalWrite(OUT_LOCK, LOW);
 }
-
 void loop()
 {
   CS.digitalWrite(OUT_BUZZER, !CS.digitalRead(IN_IN0));
@@ -64,4 +63,3 @@ void loop()
   CS.digitalWrite(OUT_SINK,    CS.digitalRead(IN_IN2));
   CS.digitalWrite(OUT_SPEED1, !CS.digitalRead(IN_IN3));
 }
-

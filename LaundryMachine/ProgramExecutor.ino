@@ -36,6 +36,17 @@ bool ProgramExecutor::IsReady()
 
 // IMPLEMENT PROG A
 void ProgramExecutor::programA() {
+  if(mCoinWallet->Withdraw(360))
+  {
+      if((mLock->GetLockSwitch())&&(mSoap->GetSoap1Switch()))
+      {
+        mWater->SetWaterlevel(2);
+        mSoap->SetSoap1(false);
+        mMotor->SetMotor(MOTOR_REGULAR);
+        mMotor->SetDirection(1);
+
+      }
+  }
     return;
 }
 
