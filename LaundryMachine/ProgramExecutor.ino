@@ -55,7 +55,7 @@ void ProgramExecutor::programC() {
     return;
 }
 
-void ProgramExecutor::check(int money) {
+bool ProgramExecutor::check(int money) {
   if(mCoinWallet->Withdraw(money))
   {
       if((mLock->GetLockSwitch())&&(mSoap->GetSoap1Switch())&&((mSoap->GetSoap1Switch())
@@ -103,13 +103,19 @@ void ProgramExecutor::mainWashAB(){
   }
 }
 void ProgramExecutor::preWashA(){
-
+  // fill 50% of water
   mWater->SetWaterlevel(2);
+  // add soap1
   mSoap->SetSoap1(false);
-  mMotor->SetMotor(MOTOR_REGULAR);
+  //
   mMotor->SetDirection(1);
+  mMotor->SetMotor(MOTOR_REGULAR);
   delay(10000);
   mMotor->SetDirection(0);
+  mMotor->SetMotor(MOTOR_REGULAR);
+  delay(10000);
+  // drain
+  //mWater->
 }
 void ProgramExecutor::mainWashC(){
   int i;
