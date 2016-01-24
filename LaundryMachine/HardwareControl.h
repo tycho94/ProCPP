@@ -43,7 +43,7 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     void SetSoap2(bool level);   // off = 0 on = 1
     void SetWaterlevel(int waterlevel);
     //void SetSink(bool state);     // off = 0 on = 1
-    void SetDrain(bool state);    // off = 0 on = 1
+    //void SetDrain(bool state);    // off = 0 on = 1
     void SetMotor(int speedlevel);   // 0=off 1=slow 2=medium 3=high
     void SetTemperature(int level);  // off = 0 on = 1
     void SetDirection(bool dir); // left = 0 right = 1

@@ -11,14 +11,14 @@
 #include "CoinWallet.h"
 #include "ProgramSettings.h"
 
-enum ProgramState{
+enum ProgramState {
   PREWASH,
   MAIN_WASH,
   RINSE,
   CENTRIFUGATION
 };
 
-enum TimeAction{
+enum TimeAction {
   TAKE_WATER,
   HEAT,
   ROTATE_MOTOR,
@@ -26,7 +26,7 @@ enum TimeAction{
   SINK_WATER
 };
 
-enum TimeActionDone{
+enum TimeActionDone {
   WATER_FILLED,
   WATER_HEATED,
   MOTER_ROTATED,
@@ -34,7 +34,7 @@ enum TimeActionDone{
   WATER_SINKED
 };
 
-enum Action{
+enum Action {
   ADD_SOAP1,
   ADD_SOAP2,
   UNLOCK
@@ -59,7 +59,7 @@ class ProgramExecutor
     void mainWashC();
     void unlock();
     bool check(int money);
-    
+
     IBuzzer * mBuzzer;
     IMotor * mMotor;
     ILock * mLock;

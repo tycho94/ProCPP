@@ -14,7 +14,7 @@ class IWater
   public:
     // Inputs
     //virtual void SetSink(boolean state) = 0;
-    virtual void SetDrain(boolean state) = 0;
+    //virtual void SetDrain(boolean state) = 0;
     virtual int GetWaterlevel() = 0; //level: 0=empty, 1=1/3, 2=2/3, 3=filled
     virtual bool GetPressureSwitch() = 0;
 
