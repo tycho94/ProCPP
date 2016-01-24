@@ -64,11 +64,43 @@ void ProgramExecutor::check(int money) {
       }
   }
 }
+
 void ProgramExecutor::preWashBC(){
-
+  // fill 50% with water
+  // heat to 50%
+  // add soap1
+  // rotate clockwise, at regular speed for 1 minute
+  // rotate counterclockwise, at regular speed for 1 minute
+  // drain water
 }
-void ProgramExecutor::mainWashAB(){
 
+void ProgramExecutor::mainWashAB(){
+  int i;
+  //===================== WASH =========================
+  // fill 50% with water
+  // heat to 50%
+  // add soap2
+  for (i=0; i < 1; i++)
+  {
+    // rotate clockwise, at regular speed for 1 minute
+    // rotate counterclockwise, at regular speed for 1 minute
+  }
+  // drain water
+  //===================== RINSE ========================
+  // fill 50% with water
+  for (i=0; i < 1; i++)
+  {
+    // rotate clockwise, at regular speed for 1 minute
+    // rotate counterclockwise, at regular speed for 1 minute
+  }
+  // drain water
+  //===================== DRY ==========================
+  // keep draining the water
+  for (i=0; i < 1; i++)
+  {
+    // rotate clockwise, at regular speed for 30s
+    // rotate counterclockwise, at regular speed for 30s
+  }
 }
 void ProgramExecutor::preWashA(){
 
@@ -80,5 +112,30 @@ void ProgramExecutor::preWashA(){
   mMotor->SetDirection(0);
 }
 void ProgramExecutor::mainWashC(){
-
+  int i;
+  //===================== WASH =========================
+  // fill 100% with water
+  // heat to 100%
+  // add soap2
+  for (i=0; i < 3; i++)
+  {
+    // rotate clockwise, at regular speed for 1 minute
+    // rotate counterclockwise, at regular speed for 1 minute
+  }
+  // drain water
+  //===================== RINSE ========================
+  // fill 50% with water
+  for (i=0; i < 3; i++)
+  {
+    // rotate clockwise, at regular speed for 1 minute
+    // rotate counterclockwise, at regular speed for 1 minute
+  }
+  // drain water
+  //===================== DRY ==========================
+  // keep draining the water
+  for (i=0; i < 2; i++)
+  {
+    // rotate clockwise, at regular speed for 30s
+    // rotate counterclockwise, at regular speed for 30s
+  }
 }
