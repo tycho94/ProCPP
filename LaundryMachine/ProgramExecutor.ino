@@ -44,6 +44,8 @@ void ProgramExecutor::programA() {
         mSoap->SetSoap1(false);
         mMotor->SetMotor(MOTOR_REGULAR);
         mMotor->SetDirection(1);
+        delay(10000);
+        mMotor->SetDirection(0);
 
       }
   }
@@ -59,16 +61,3 @@ void ProgramExecutor::programB() {
 void ProgramExecutor::programC() {
     return;
 }
-void ProgramExecutor::preWashBC(){
-  
-}
-void ProgramExecutor::mainWashAB(){
-  
-}
-void ProgramExecutor::preWashA(){
-  
-}
-void ProgramExecutor::mainWashC(){
-  
-}
-
