@@ -36,14 +36,16 @@ bool ProgramExecutor::IsReady()
 
 // IMPLEMENT PROG A
 void ProgramExecutor::programA() {
-if(check(360))
-{
-  preWashA();
-  mainWashAB();
-  unlock();
-
-}
-
+  if(check(360))
+  {
+    preWashA();
+    mainWashAB();
+    unlock();
+  }
+  else
+  {
+    unlock();
+  }
 }
 
 // IMPLEMENT PROG B
@@ -53,18 +55,26 @@ void ProgramExecutor::programB() {
     preWashBC();
     mainWashAB();
     unlock();
-
+  }
+  else
+  {
+    unlock();
   }
 }
 
 // IMPLEMENT PROG C
 void ProgramExecutor::programC() {
+mLock->SetLock(1);
   if(check(510))
   {
     preWashBC();
     mainWashC();
     unlock();
 
+  }
+  else
+  {
+      unlock();
   }
 }
 
@@ -94,7 +104,7 @@ void ProgramExecutor::preWashBC(){
   mMotor->SetMotor(MOTOR_REGULAR);
   delay(10000);
   // drain water
-  mWater->SetWaterlevel(0);
+  mWater->SetWaterlevel(WaterLevel.WATER_0_PERCENT);
 
 
 }
