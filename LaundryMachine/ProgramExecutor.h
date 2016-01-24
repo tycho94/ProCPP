@@ -53,6 +53,10 @@ class ProgramExecutor
     void programA();
     void programB();
     void programC();
+    void preWashBC();
+    void mainWashAB();
+    void preWashA();
+    void mainWashC();
 
     IBuzzer * mBuzzer;
     IMotor * mMotor;

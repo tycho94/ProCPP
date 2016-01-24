@@ -48,3 +48,16 @@ void ProgramExecutor::programB() {
 void ProgramExecutor::programC() {
     return;
 }
+void ProgramExecutor::preWashBC(){
+  
+}
+void ProgramExecutor::mainWashAB(){
+  
+}
+void ProgramExecutor::preWashA(){
+  
+}
+void ProgramExecutor::mainWashC(){
+  
+}
+
