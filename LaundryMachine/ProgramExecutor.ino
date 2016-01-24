@@ -11,22 +11,40 @@ ProgramExecutor::ProgramExecutor(IBuzzer * b, IMotor * m, ILock * l, ISoap * s, 
   mCoinWallet = c;
 }
 
-boolean ProgramExecutor::Start(ProgramSettings * p)
+bool ProgramExecutor::Start(Program program)
 {
-  mProgramSettings = p;
-  if (mCoinWallet->Withdraw(p->cost) && mLock->GetLockSwitch() && mSoap->GetSoap1Switch() && mSoap->GetSoap2Switch())
-    return true;
-  else
-    return false;
+    if (program == PROGRAM_A) {
+        programA();
+    } else if (program == PROGRAM_B) {
+        programB();
+    } else if (program == PROGRAM_C) {
+        programC();
+    } else {
+        return -1;
+    }
 }
 
-boolean ProgramExecutor::Step()
+bool ProgramExecutor::Step()
 {
   return (true);
 }
 
-boolean ProgramExecutor::IsReady()
+bool ProgramExecutor::IsReady()
 {
   return (false);
 }
 
+// IMPLEMENT PROG A
+void ProgramExecutor::programA() {
+    return;
+}
+
+// IMPLEMENT PROG B
+void ProgramExecutor::programB() {
+    return;
+}
+
+// IMPLEMENT PROG C
+void ProgramExecutor::programC() {
+    return;
+}

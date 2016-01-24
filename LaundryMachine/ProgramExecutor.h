@@ -45,11 +45,15 @@ class ProgramExecutor
 {
   public:
     ProgramExecutor(IBuzzer *, IMotor *, ILock *, ISoap *, ITemperature *, IWater *, CoinWallet *);
-    boolean Start(ProgramSettings *);
-    boolean Step();
-    boolean IsReady();
-    
+    bool Start(Program program);
+    bool Step();
+    bool IsReady();
+
   private:
+    void programA();
+    void programB();
+    void programC();
+
     IBuzzer * mBuzzer;
     IMotor * mMotor;
     ILock * mLock;

@@ -77,8 +77,8 @@ bool HardwareControl::GetProgramButton() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if start is high and coin10 is high, this happens when programbutton is clicked
-  return ((centipede.digitalRead(IN_IN0) == HIGH)
-  && (centipede.digitalRead(IN_IN3) == HIGH));
+  return ((centipede.digitalRead(IN_IN0) == HIGH) &&
+          (centipede.digitalRead(IN_IN3) == HIGH));
 
 }
 
@@ -93,7 +93,8 @@ bool HardwareControl::GetStartButton() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if start is high and coin10 is low - see program
-  return (centipede.digitalRead(IN_IN0) == HIGH && centipede.digitalRead(IN_IN3) == LOW);
+  return (centipede.digitalRead(IN_IN0) == HIGH &&
+          centipede.digitalRead(IN_IN3) == LOW);
 }
 
 //get switches
@@ -330,22 +331,22 @@ void HardwareControl::SetDirection(bool dir)
 }
 
 //set the program led
-void HardwareControl::SetProgramIndicator(int program)
+void HardwareControl::SetProgramIndicator(Program program)
 {
   SetGroup(4);
-  if (program == 1)
+  if (program == PROGRAM_A)
   {
     SetData(1);
     SetDataOff(2);
     SetDataOff(3);
   }
-  if (program == 2)
+  if (program == PROGRAM_B)
   {
     SetDataOff(1);
     SetData(2);
     SetDataOff(3);
   }
-  if (program == 3)
+  if (program == PROGRAM_C)
   {
     SetDataOff(1);
     SetDataOff(2);
@@ -431,4 +432,18 @@ void HardwareControl::Strobe()
   centipede.digitalWrite(OUT_STROBE, HIGH);
   delay(10);
   centipede.digitalWrite(OUT_STROBE, LOW);
+}
+
+// Retuns the amount of money each program requires (check the gdocs)
+bool HardwareControl::GetProgramMoney(Program program) {
+    if (program == PROGRAM_A) {
+        return 360;
+    } else if (program == PROGRAM_B) {
+        return 480;
+    } else if (program == PROGRAM_C) {
+        return 510;
+    } else {
+        // error
+        return -1;
+    }
 }

@@ -31,6 +31,7 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     // Settings
     int GetWaterlevel();   // 0=empty, 1=1/3, 2=2/3, 3=filled
     int GetTemperature(); // 0=cold, 1=medium, 2=hot
+    bool GetProgramMoney(Program program);
 
     // Outputs
     void SetCoin10(int leds);   // off = 0 - levels 1-2-3 = led 1-2-3
@@ -46,7 +47,7 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     void SetMotor(int speedlevel);   // 0=off 1=slow 2=medium 3=high
     void SetTemperature(int level);  // off = 0 on = 1
     void SetDirection(bool dir); // left = 0 right = 1
-    void SetProgramIndicator(int program); // off = 0 - levels 1-2-3 = led 1-2-3
+    void SetProgramIndicator(Program program); // off = 0 - levels 1-2-3 = led 1-2-3
 
   private:
     Centipede centipede;
