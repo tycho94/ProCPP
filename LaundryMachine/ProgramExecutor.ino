@@ -80,11 +80,8 @@ bool ProgramExecutor::check(int money) {
 }
 
 void ProgramExecutor::preWashBC() {
-  unsigned long t, current;
+  unsigned long t;
   // fill 50% with water
-  while (!(mWater->GetWaterlevel() == WATER_50_PERCENT)) {
-    mWater->SetWaterlevel(WATER_50_PERCENT);
-  }
   mWater->SetWaterlevel(WATER_50_PERCENT);
   // heat to 50%
   while (!(mTemperature->GetTemperature() == MEDIUM)) {
@@ -95,24 +92,21 @@ void ProgramExecutor::preWashBC() {
   // rotate clockwise, at regular speed for 1 minute
   mMotor->SetDirection(CLOCK);
   mMotor->SetMotor(MOTOR_REGULAR);
-  t = millis() + 5000;
+  
+  t = millis() + 10000;
   while (t > millis()) {
     mTemperature->SetTemperature(MEDIUM);
   }
   // rotate counterclockwise, at regular speed for 1 minute
   mMotor->SetDirection(COUNTERCLOCK);
   mMotor->SetMotor(MOTOR_REGULAR);
-  t = millis() + 5000;
+  t = millis() + 10000;
   while (t > millis()) {
     mTemperature->SetTemperature(MEDIUM);
   }
   // drain water
   mMotor->SetMotor(MOTOR_OFF);
   mTemperature->SetTemperature(COLD);
-
-  while (!(mWater->GetWaterlevel() == WATER_0_PERCENT)) {
-    mWater->SetWaterlevel(0);
-  }
   mWater->SetWaterlevel(0);
 
 }

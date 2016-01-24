@@ -64,11 +64,7 @@ void setup()
 
 void loop()
 {
-  mProgramExecutor->preWashBC();
-  while(true){
-    Serial.println("done");
-  }
-  /*
+  
     // select a program without going out of boundary
     if (mProgram->GetProgramButton()) {
         // cast the int to a program enum without going out of bounds
@@ -82,5 +78,5 @@ void loop()
             // start the program!
             mProgramExecutor->Start(selectedProgram);
         }
-    }*/
+    }
 }

@@ -49,7 +49,7 @@ class ProgramExecutor
     bool Step();
     bool IsReady();
 
-  public:
+  private:
     void programA();
     void programB();
     void programC();
