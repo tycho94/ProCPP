@@ -67,11 +67,23 @@ bool ProgramExecutor::check(int money) {
 
 void ProgramExecutor::preWashBC(){
   // fill 50% with water
+  mWater->SetWaterlevel(2);
   // heat to 50%
+  mTemperature->SetTemperature(2);
   // add soap1
+  mSoap->SetSoap1(false);
   // rotate clockwise, at regular speed for 1 minute
+  mMotor->SetDirection(1);
+  mMotor->SetMotor(MOTOR_REGULAR);
+  delay(10000);
   // rotate counterclockwise, at regular speed for 1 minute
+  mMotor->SetDirection(0);
+  mMotor->SetMotor(MOTOR_REGULAR);
+  delay(10000);
   // drain water
+  mWater->SetWaterlevel(0);
+
+
 }
 
 void ProgramExecutor::mainWashAB(){
@@ -115,7 +127,7 @@ void ProgramExecutor::preWashA(){
   mMotor->SetMotor(MOTOR_REGULAR);
   delay(10000);
   // drain
-  //mWater->
+  mWater->SetWaterlevel(0);
 }
 void ProgramExecutor::mainWashC(){
   int i;

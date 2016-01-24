@@ -14,6 +14,3 @@ class ProgramSelect
 };
 
 #endif
-
-
-
