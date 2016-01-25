@@ -36,6 +36,8 @@ static ProgramExecutor *mProgramExecutor;
 int requiredMoney = 0;
 Program selectedProgram = NO_PROGRAM;
 
+bool paid;
+
 void setup()
 {
   Serial.begin(9600);
@@ -62,6 +64,7 @@ void setup()
                                          mCoinWallet);
 
   mProgramExecutor->mainWashAB();
+  paid = false;
 }
 
 void loop()
@@ -71,13 +74,17 @@ void loop()
     // cast the int to a program enum without going out of bounds
     selectedProgram = (Program) ((selectedProgram + 1) % 3);
   }
+*/}
 
+
+void Pay()
+{
   // check if there is enough money and the program is selected
   requiredMoney = mProgram->GetProgramMoney(selectedProgram);
   if (requiredMoney) {
     if (mCoinWallet->Withdraw(requiredMoney)) {
-      // start the program!
-      mProgramExecutor->Start(selectedProgram);
+      // Price is paid
+      paid = true;
     }
   }
-*/}
+}
