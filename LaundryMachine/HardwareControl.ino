@@ -266,28 +266,43 @@ void HardwareControl::SetSoap2(bool level)
     SetData(3);
 }
 
-//set waterlevel to 0 emtpy, 1 33%, 2 66%, 3 filled
+//set waterlevel to 0 emtpy, 1 33%, 2 66%, 3 filled, -1 is constant draining
 void HardwareControl::SetWaterlevel(int wantedWaterlevel)
 {
-  if (wantedWaterlevel == GetWaterlevel())
-  {
-    centipede.digitalWrite(OUT_SINK, LOW);
-    centipede.digitalWrite(OUT_DRAIN, LOW);
-  }
-
-  else if (wantedWaterlevel < GetWaterlevel())
+  if (wantedWaterlevel < 0)
   {
     centipede.digitalWrite(OUT_SINK, HIGH);
     centipede.digitalWrite(OUT_DRAIN, LOW);
+    return;
   }
 
-  else if (wantedWaterlevel > GetWaterlevel())
+  while (true)
   {
-    centipede.digitalWrite(OUT_SINK, LOW);
-    if (GetPressureSwitch()) {
-      centipede.digitalWrite(OUT_DRAIN, HIGH);
+    if (wantedWaterlevel < GetWaterlevel())
+    {
+      centipede.digitalWrite(OUT_SINK, HIGH);
+      centipede.digitalWrite(OUT_DRAIN, LOW);
+    }
+
+    if (wantedWaterlevel > GetWaterlevel())
+    {
+      centipede.digitalWrite(OUT_SINK, LOW);
+      if (GetPressureSwitch()) {
+        centipede.digitalWrite(OUT_DRAIN, HIGH);
+      }
+      else {
+        centipede.digitalWrite(OUT_DRAIN, LOW);
+      }
+    }
+    if (wantedWaterlevel == GetWaterlevel())
+    {
+      centipede.digitalWrite(OUT_SINK, LOW);
+      centipede.digitalWrite(OUT_DRAIN, LOW);
+      return;
     }
   }
+
+
 }
 //set speed to off, slow, medium or high respectivly to 0, 1, 2, 3
 void HardwareControl::SetMotor(int speedlevel)
@@ -436,14 +451,14 @@ void HardwareControl::Strobe()
 
 // Retuns the amount of money each program requires (check the gdocs)
 bool HardwareControl::GetProgramMoney(Program program) {
-    if (program == PROGRAM_A) {
-        return 360;
-    } else if (program == PROGRAM_B) {
-        return 480;
-    } else if (program == PROGRAM_C) {
-        return 510;
-    } else {
-        // error
-        return -1;
-    }
+  if (program == PROGRAM_A) {
+    return 360;
+  } else if (program == PROGRAM_B) {
+    return 480;
+  } else if (program == PROGRAM_C) {
+    return 510;
+  } else {
+    // error
+    return -1;
+  }
 }
