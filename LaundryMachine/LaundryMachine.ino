@@ -68,14 +68,26 @@ void setup()
 }
 
 void loop()
-{/*
+{
+  while (!paid)
+    SelectProgram();
+
+  if (mProgram->GetStartButton() && paid)
+    StartProgram();
+}
+
+void SelectProgram()
+{
   // select a program without going out of boundary
   if (mProgram->GetProgramButton()) {
     // cast the int to a program enum without going out of bounds
     selectedProgram = (Program) ((selectedProgram + 1) % 3);
   }
-*/}
-
+  if (mProgram->GetStartButton()
+      && selectedProgram != NO_PROGRAM
+      && !paid )
+    Pay();
+}
 
 void Pay()
 {
@@ -87,4 +99,12 @@ void Pay()
       paid = true;
     }
   }
+}
+
+void StartProgram()
+{
+  // check soap
+  if (mSoap->GetSoap1Switch() && mSoap->GetSoap2Switch())
+    // start program
+    mProgramExecutor->Start(selectedProgram);
 }
