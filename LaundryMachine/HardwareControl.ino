@@ -276,7 +276,7 @@ void HardwareControl::SetWaterlevel(int wantedWaterlevel)
     return;
   }
 
-  while (wantedWaterlevel != GetWaterlevel())
+  while (true)
   {
     if (wantedWaterlevel < GetWaterlevel())
     {
@@ -284,22 +284,25 @@ void HardwareControl::SetWaterlevel(int wantedWaterlevel)
       centipede.digitalWrite(OUT_DRAIN, LOW);
     }
 
-    else if (wantedWaterlevel > GetWaterlevel())
+    if (wantedWaterlevel > GetWaterlevel())
     {
       centipede.digitalWrite(OUT_SINK, LOW);
       if (GetPressureSwitch()) {
         centipede.digitalWrite(OUT_DRAIN, HIGH);
       }
-      else{
+      else {
         centipede.digitalWrite(OUT_DRAIN, LOW);
       }
     }
+    if (wantedWaterlevel == GetWaterlevel())
+    {
+      centipede.digitalWrite(OUT_SINK, LOW);
+      centipede.digitalWrite(OUT_DRAIN, LOW);
+      return;
+    }
   }
-  if (wantedWaterlevel == GetWaterlevel())
-  {
-    centipede.digitalWrite(OUT_SINK, LOW);
-    centipede.digitalWrite(OUT_DRAIN, LOW);
-  }
+
+
 }
 //set speed to off, slow, medium or high respectivly to 0, 1, 2, 3
 void HardwareControl::SetMotor(int speedlevel)

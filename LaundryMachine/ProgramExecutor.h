@@ -39,7 +39,7 @@ class ProgramExecutor
     IWater * mWater;
     CoinWallet * mCoinWallet;
     ProgramSettings * mProgramSettings;
-    unsigned int t;
+    unsigned long t;
 };
 
 #endif

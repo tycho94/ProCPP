@@ -42,11 +42,6 @@ void ProgramExecutor::programA() {
     preWashA();
     mainWashAB();
     unlock();
-  }
-  else
-  {
-    unlock();
-  }
 
   }
 
@@ -59,26 +54,18 @@ void ProgramExecutor::programB() {
     preWashBC();
     mainWashAB();
     unlock();
-  }
-  else
-  {
-    unlock();
+
   }
 }
 
 // IMPLEMENT PROG C
 void ProgramExecutor::programC() {
-mLock->SetLock(1);
   if (check(510))
   {
     preWashBC();
     mainWashC();
     unlock();
 
-  }
-  else
-  {
-      unlock();
   }
 }
 
@@ -94,7 +81,6 @@ bool ProgramExecutor::check(int money) {
 }
 
 void ProgramExecutor::preWashBC() {
-  unsigned long t;
   // fill 50% with water
   mWater->SetWaterlevel(WATER_50_PERCENT);
   // heat to 50%
@@ -122,9 +108,7 @@ void ProgramExecutor::preWashBC() {
   // drain water & turn off moter & set heater off
   mMotor->SetMotor(MOTOR_OFF);
   mTemperature->SetTemperature(COLD);
-  mWater->SetWaterlevel(0);
-
-
+  mWater->SetWaterlevel(WATER_0_PERCENT);
 }
 
 void ProgramExecutor::mainWashAB() {
@@ -159,8 +143,7 @@ void ProgramExecutor::mainWashAB() {
   mTemperature->SetTemperature(COLD);
   mWater->SetWaterlevel(WATER_0_PERCENT);
 
-
-
+  
   //===================== RINSE ========================
   // fill 50% with water
   mWater->SetWaterlevel(WATER_50_PERCENT);
@@ -185,7 +168,7 @@ void ProgramExecutor::mainWashAB() {
   //===================== DRY ==========================
   // keep draining the water
   mWater->SetWaterlevel(WATER_CONST);
-  for (int i = 0; i < 1; i++)
+  for (int i = 0; i < 2; i++)
   {
     // rotate clockwise, at regular speed for 30s
     mMotor->SetDirection(CLOCK);
