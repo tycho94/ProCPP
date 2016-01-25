@@ -63,7 +63,7 @@ void setup()
                                          mWater,
                                          mCoinWallet);
 
-  mProgramExecutor->mainWashAB();
+
   paid = false;
 }
 

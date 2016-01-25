@@ -3,10 +3,10 @@
 
 enum Temperature
 {
-  COLD = 1,
-  MEDIUM = 2,
-  WARM = 3 ,
-  HOT = 4
+  COLD = 0,
+  COLD2 = 1,
+  MEDIUM = 2 ,
+  HOT = 3
 };
 
 class ITemperature

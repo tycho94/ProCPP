@@ -16,8 +16,6 @@ class ProgramExecutor
   public:
     ProgramExecutor(IBuzzer *, IMotor *, ILock *, ISoap *, ITemperature *, IWater *, CoinWallet *);
     bool Start(Program program);
-    bool Step();
-    bool IsReady();
 
   public:
     void programA();
