@@ -1,3 +1,4 @@
+
 #include "ProgramExecutor.h"
 
 ProgramExecutor::ProgramExecutor(IBuzzer * b, IMotor * m, ILock * l, ISoap * s, ITemperature * t, IWater * w, CoinWallet * c)
@@ -189,16 +190,21 @@ void ProgramExecutor::mainWashAB() {
 
 void ProgramExecutor::preWashA() {
   // fill 50% of water
-  mWater->SetWaterlevel(2);
+  mWater->SetWaterlevel(WATER_50_PERCENT);
   // add soap1
   mSoap->SetSoap1(false);
   //
-  mMotor->SetDirection(1);
-  mMotor->SetMotor(MOTOR_REGULAR);
-  delay(5000);
-  mMotor->SetDirection(0);
-  mMotor->SetMotor(MOTOR_REGULAR);
-  delay(5000);
+
+  t = millis() + 5000;
+  while (t > millis()) {
+    mMotor->SetDirection(CLOCK);
+    mMotor->SetMotor(MOTOR_REGULAR);
+    }
+
+  while (t > millis()) {
+    mMotor->SetDirection(COUNTERCLOCK);
+    mMotor->SetMotor(MOTOR_REGULAR);
+    }
   // drain
   mWater->SetWaterlevel(WATER_0_PERCENT);
 }
