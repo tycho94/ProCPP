@@ -42,6 +42,11 @@ void ProgramExecutor::programA() {
     preWashA();
     mainWashAB();
     unlock();
+  }
+  else
+  {
+    unlock();
+  }
 
   }
 
@@ -54,18 +59,26 @@ void ProgramExecutor::programB() {
     preWashBC();
     mainWashAB();
     unlock();
-
+  }
+  else
+  {
+    unlock();
   }
 }
 
 // IMPLEMENT PROG C
 void ProgramExecutor::programC() {
+mLock->SetLock(1);
   if (check(510))
   {
     preWashBC();
     mainWashC();
     unlock();
 
+  }
+  else
+  {
+      unlock();
   }
 }
 
@@ -81,6 +94,7 @@ bool ProgramExecutor::check(int money) {
 }
 
 void ProgramExecutor::preWashBC() {
+  unsigned long t;
   // fill 50% with water
   mWater->SetWaterlevel(WATER_50_PERCENT);
   // heat to 50%
