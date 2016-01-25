@@ -266,9 +266,15 @@ void HardwareControl::SetSoap2(bool level)
     SetData(3);
 }
 
-//set waterlevel to 0 emtpy, 1 33%, 2 66%, 3 filled
+//set waterlevel to 0 emtpy, 1 33%, 2 66%, 3 filled, -1 is constant draining
 void HardwareControl::SetWaterlevel(int wantedWaterlevel)
 {
+  if (wantedWaterlevel < 0)
+  {
+    centipede.digitalWrite(OUT_SINK, HIGH);
+    centipede.digitalWrite(OUT_DRAIN, LOW);
+    return;
+  }
 
   while (wantedWaterlevel != GetWaterlevel())
   {
@@ -439,14 +445,14 @@ void HardwareControl::Strobe()
 
 // Retuns the amount of money each program requires (check the gdocs)
 bool HardwareControl::GetProgramMoney(Program program) {
-    if (program == PROGRAM_A) {
-        return 360;
-    } else if (program == PROGRAM_B) {
-        return 480;
-    } else if (program == PROGRAM_C) {
-        return 510;
-    } else {
-        // error
-        return -1;
-    }
+  if (program == PROGRAM_A) {
+    return 360;
+  } else if (program == PROGRAM_B) {
+    return 480;
+  } else if (program == PROGRAM_C) {
+    return 510;
+  } else {
+    // error
+    return -1;
+  }
 }
