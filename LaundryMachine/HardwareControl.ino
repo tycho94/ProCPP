@@ -290,6 +290,9 @@ void HardwareControl::SetWaterlevel(int wantedWaterlevel)
       if (GetPressureSwitch()) {
         centipede.digitalWrite(OUT_DRAIN, HIGH);
       }
+      else{
+        centipede.digitalWrite(OUT_DRAIN, LOW);
+      }
     }
   }
   if (wantedWaterlevel == GetWaterlevel())

@@ -3,6 +3,7 @@
 
 enum WaterLevel
 {
+  WATER_CONST = -1,
   WATER_0_PERCENT = 0,
   WATER_33_PERCENT = 1,
   WATER_50_PERCENT = 2,

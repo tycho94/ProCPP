@@ -61,10 +61,11 @@ void setup()
                                          mWater,
                                          mCoinWallet);
 
+  mProgramExecutor->mainWashAB();
 }
 
 void loop()
-{
+{/*
   // select a program without going out of boundary
   if (mProgram->GetProgramButton()) {
     // cast the int to a program enum without going out of bounds
@@ -79,4 +80,4 @@ void loop()
       mProgramExecutor->Start(selectedProgram);
     }
   }
-}
+*/}

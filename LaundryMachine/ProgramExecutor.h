@@ -19,7 +19,7 @@ class ProgramExecutor
     bool Step();
     bool IsReady();
 
-  private:
+  public:
     void programA();
     void programB();
     void programC();
@@ -29,6 +29,7 @@ class ProgramExecutor
     void mainWashC();
     void unlock();
     bool check(int money);
+    
 
     IBuzzer * mBuzzer;
     IMotor * mMotor;
@@ -38,6 +39,7 @@ class ProgramExecutor
     IWater * mWater;
     CoinWallet * mCoinWallet;
     ProgramSettings * mProgramSettings;
+    unsigned int t;
 };
 
 #endif
