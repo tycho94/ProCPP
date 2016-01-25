@@ -37,7 +37,7 @@ class ProgramExecutor
     IWater * mWater;
     CoinWallet * mCoinWallet;
     ProgramSettings * mProgramSettings;
-    unsigned long t;
+    unsigned long looptime;
 };
 
 #endif
