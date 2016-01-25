@@ -14,7 +14,7 @@ ProgramExecutor::ProgramExecutor(IBuzzer * b, IMotor * m, ILock * l, ISoap * s, 
   mTemperature = t;
   mWater = w;
   mCoinWallet = c;
-  t = NULL;
+  this.t = NULL;
 }
 
 bool ProgramExecutor::Start(Program program)
@@ -208,7 +208,7 @@ void ProgramExecutor::mainWashC() {
       mTemperature->SetTemperature(HOT);
     }
   }
-  
+
   // drain water
   mMotor->SetMotor(MOTOR_OFF);
   mTemperature->SetTemperature(COLD);
@@ -233,7 +233,7 @@ void ProgramExecutor::mainWashC() {
   // drain water
   mMotor->SetMotor(MOTOR_OFF);
   mWater->SetWaterlevel(WATER_0_PERCENT);
-  
+
   //===================== DRY ==========================
   // keep draining the water
   mWater->SetWaterlevel(WATER_CONST);
