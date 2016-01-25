@@ -3,8 +3,8 @@
 
 enum Direction
 {
-  LEFT = 0 ,
-  RIGHT = 1
+  COUNTERCLOCK = 0 ,
+  CLOCK = 1
 };
 
 enum Speed
