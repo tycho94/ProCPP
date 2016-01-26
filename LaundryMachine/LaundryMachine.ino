@@ -33,10 +33,7 @@ static ProgramSelect *mProgramSelect;
 static ProgramSettings *mProgramSettings;
 static ProgramExecutor *mProgramExecutor;
 
-int requiredMoney = 0;
-Program selectedProgram = NO_PROGRAM;
-
-bool paid;
+Program selectedProgram;
 
 void setup()
 {
@@ -62,49 +59,76 @@ void setup()
                                          mTemperature,
                                          mWater,
                                          mCoinWallet);
-
-
-  paid = false;
+  selectedProgram = PROGRAM_A;
 }
 
 void loop()
 {
-  while (!paid)
-    SelectProgram();
-
-  if (mProgram->GetStartButton() && paid)
-    StartProgram();
+  ButtonState();
+  SwitchState();
+  Serial.println("Starting program" + (int)selectedProgram);
+  mProgramExecutor->Start(selectedProgram);
+  mBuzzer->Buzz();
 }
 
-void SelectProgram()
-{
-  // select a program without going out of boundary
-  if (mProgram->GetProgramButton()) {
-    // cast the int to a program enum without going out of bounds
-    selectedProgram = (Program) ((selectedProgram + 1) % 3);
-  }
-  if (mProgram->GetStartButton()
-      && selectedProgram != NO_PROGRAM
-      && !paid )
-    Pay();
-}
+void ButtonState() {
+  mProgram->SetProgramIndicator(selectedProgram);
+  while (true) {
+    if (mProgram->GetProgramButton()) {
+      selectedProgram = (Program) ((selectedProgram + 1) % 3);
+      mProgram->SetProgramIndicator(selectedProgram);
+    }
+    if (mCoin->GetCoin10Button()) {
+      mCoinWallet->Deposit(10);
+    }
+    if (mCoin->GetCoin50Button()) {
+      mCoinWallet->Deposit(50);
+    }
+    if (mCoin->GetCoin200Button()) {
+      mCoinWallet->Deposit(200);
+    }
+    if (mCoin->GetCoinClearButton())
+    {
+      mCoinWallet->Clear();
+    }
 
-void Pay()
-{
-  // check if there is enough money and the program is selected
-  requiredMoney = mProgram->GetProgramMoney(selectedProgram);
-  if (requiredMoney) {
-    if (mCoinWallet->Withdraw(requiredMoney)) {
-      // Price is paid
-      paid = true;
+    if (mProgram->GetStartButton()
+        && selectedProgram != NO_PROGRAM
+        && mCoinWallet->Withdraw(mProgram->GetProgramMoney(selectedProgram))) {
+      mBuzzer->Buzz();
+      Serial.println("Payed");
+      break;
+    }
+    else{
+      Serial.println("Not enough pesos");
     }
   }
 }
 
-void StartProgram()
-{
-  // check soap
-  if (mSoap->GetSoap1Switch() && mSoap->GetSoap2Switch())
-    // start program
-    mProgramExecutor->Start(selectedProgram);
+void SwitchState() {
+  while (true) {
+    if (mSoap->GetSoap1Switch())
+      mSoap->SetSoap1(true);
+    else
+      mSoap->SetSoap1(false);
+
+    if (mSoap->GetSoap2Switch())
+      mSoap->SetSoap2(true);
+    else
+      mSoap->SetSoap2(false);
+
+    if (mLock->GetLockSwitch())
+      mLock->SetLock(true);
+    else
+      mLock->SetLock(false);
+
+    if ( mSoap->GetSoap1Switch() &&
+         mSoap->GetSoap2Switch() &&
+         mLock->GetLockSwitch()) {
+      if (mProgram->GetStartButton()) {
+      mBuzzer->Buzz();
+        break;
+      }
+    }
+  }
 }

@@ -17,7 +17,7 @@ class ProgramExecutor
     ProgramExecutor(IBuzzer *, IMotor *, ILock *, ISoap *, ITemperature *, IWater *, CoinWallet *);
     bool Start(Program program);
 
-  public:
+  private:
     void programA();
     void programB();
     void programC();
@@ -26,9 +26,8 @@ class ProgramExecutor
     void preWashA();
     void mainWashC();
     void unlock();
-    bool check(int money);
-    
-
+    void StopMotor(bool turn);
+   
     IBuzzer * mBuzzer;
     IMotor * mMotor;
     ILock * mLock;

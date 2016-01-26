@@ -56,29 +56,40 @@ bool HardwareControl::GetCoin10Button() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if coin 10 is clicked, since clear also clicks coin 10 + 50 + 200 check if btn 50,200 low
-  return (centipede.digitalRead(IN_IN3) == HIGH && centipede.digitalRead(IN_IN2) == LOW && centipede.digitalRead(IN_IN1) == LOW);
+  return (centipede.digitalRead(IN_IN0) == LOW &&
+          centipede.digitalRead(IN_IN1) == LOW &&
+          centipede.digitalRead(IN_IN2) == LOW &&
+          centipede.digitalRead(IN_IN3) == HIGH);
 }
 
 bool HardwareControl::GetCoin50Button() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if coin 50 is clicked, since clear also clicks coin 10 + 50 + 200 check if btn 10,200 are low
-  return (centipede.digitalRead(IN_IN2) == HIGH && centipede.digitalRead(IN_IN1) == LOW && centipede.digitalRead(IN_IN3) == LOW);
+  return (centipede.digitalRead(IN_IN0) == LOW &&
+          centipede.digitalRead(IN_IN1) == LOW &&
+          centipede.digitalRead(IN_IN2) == HIGH &&
+          centipede.digitalRead(IN_IN3) == LOW);
 }
 
 bool HardwareControl::GetCoin200Button() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if coin 200 is clicked, since clear also clicks coin 10 + 50 + 200 check if btn 10,50 are low
-  return (centipede.digitalRead(IN_IN1) == HIGH && centipede.digitalRead(IN_IN2) == LOW && centipede.digitalRead(IN_IN3) == LOW);
+  return (centipede.digitalRead(IN_IN0) == LOW &&
+          centipede.digitalRead(IN_IN1) == HIGH &&
+          centipede.digitalRead(IN_IN2) == LOW &&
+          centipede.digitalRead(IN_IN3) == LOW);
 }
 
 bool HardwareControl::GetProgramButton() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if start is high and coin10 is high, this happens when programbutton is clicked
-  return ((centipede.digitalRead(IN_IN0) == HIGH) &&
-          (centipede.digitalRead(IN_IN3) == HIGH));
+  return (centipede.digitalRead(IN_IN0) == HIGH &&
+          centipede.digitalRead(IN_IN1) == LOW &&
+          centipede.digitalRead(IN_IN2) == LOW &&
+          centipede.digitalRead(IN_IN3) == HIGH);
 
 }
 
@@ -86,7 +97,10 @@ bool HardwareControl::GetCoinClearButton() {
   //set keyselect to 1(buttons)
   this->SetKeySelect(1);
   //check if button10,50,200 are pressed(this is the result of pressing coinclear)
-  return ((centipede.digitalRead(IN_IN1) == HIGH) && (centipede.digitalRead(IN_IN2) == HIGH) && (centipede.digitalRead(IN_IN3) == HIGH));
+  return (centipede.digitalRead(IN_IN0) == LOW &&
+          centipede.digitalRead(IN_IN1) == HIGH &&
+          centipede.digitalRead(IN_IN2) == HIGH &&
+          centipede.digitalRead(IN_IN3) == HIGH);
 
 }
 bool HardwareControl::GetStartButton() {
@@ -94,6 +108,8 @@ bool HardwareControl::GetStartButton() {
   this->SetKeySelect(1);
   //check if start is high and coin10 is low - see program
   return (centipede.digitalRead(IN_IN0) == HIGH &&
+          centipede.digitalRead(IN_IN1) == LOW &&
+          centipede.digitalRead(IN_IN2) == LOW &&
           centipede.digitalRead(IN_IN3) == LOW);
 }
 
@@ -236,10 +252,12 @@ void HardwareControl::SetCoin200(int leds)
   }
 }
 
-//set the buzzer to true or false, 0 or 1
-void HardwareControl::SetBuzzer(bool level)
+//turn on buzzer for a second
+void HardwareControl::Buzz()
 {
-  centipede.digitalWrite(OUT_BUZZER, !level);
+  centipede.digitalWrite(OUT_BUZZER, LOW);
+  delay(50);
+  centipede.digitalWrite(OUT_BUZZER, HIGH);
 }
 
 //set the lock led to on or off, 0 or 1
@@ -329,6 +347,25 @@ void HardwareControl::SetMotor(int speedlevel)
   }
 }
 
+int HardwareControl::GetMotor()
+{
+  if (centipede.digitalRead(OUT_SPEED2) == HIGH &&
+      centipede.digitalRead(OUT_SPEED1) == HIGH)
+    return MOTOR_OFF;  
+    
+    if (centipede.digitalRead(OUT_SPEED2) == HIGH &&
+      centipede.digitalRead(OUT_SPEED1) == LOW)
+    return MOTOR_LOW;  
+    
+    if (centipede.digitalRead(OUT_SPEED2) == LOW &&
+      centipede.digitalRead(OUT_SPEED1) == HIGH)
+    return MOTOR_REGULAR;  
+    
+    if (centipede.digitalRead(OUT_SPEED2) == LOW &&
+      centipede.digitalRead(OUT_SPEED1) == LOW)
+    return MOTOR_HIGH;
+}
+
 //set the heater to keep temp at certain value, 0 = cold, 1 = less cold, 2 = medium, 3 = hot
 void HardwareControl::SetTemperature(int level)
 {
@@ -351,9 +388,9 @@ void HardwareControl::SetProgramIndicator(Program program)
   SetGroup(4);
   if (program == PROGRAM_A)
   {
+    SetDataOff(3);
     SetData(1);
     SetDataOff(2);
-    SetDataOff(3);
   }
   if (program == PROGRAM_B)
   {
@@ -363,9 +400,9 @@ void HardwareControl::SetProgramIndicator(Program program)
   }
   if (program == PROGRAM_C)
   {
-    SetDataOff(1);
     SetDataOff(2);
     SetData(3);
+    SetDataOff(1);
   }
 
 }
@@ -450,7 +487,7 @@ void HardwareControl::Strobe()
 }
 
 // Retuns the amount of money each program requires (check the gdocs)
-bool HardwareControl::GetProgramMoney(Program program) {
+int HardwareControl::GetProgramMoney(Program program) {
   if (program == PROGRAM_A) {
     return 360;
   } else if (program == PROGRAM_B) {
