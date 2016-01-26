@@ -115,6 +115,7 @@ void SwitchState() {
          mSoap->GetSoap2Switch() &&
          mLock->GetLockSwitch()) {
       if (mProgram->GetStartButton()) {
+        mCoinWallet->Clear();
         mBuzzer->Buzz();
         break;
       }

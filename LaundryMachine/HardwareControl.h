@@ -57,6 +57,7 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     void SetData(int data);     // data 0 = LOW 1 = DATAA 2 = DATAB 3 = DATAC
     void SetDataOff(int data);
     void Strobe();
+    void PressureError();
 
 };
 

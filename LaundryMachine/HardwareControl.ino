@@ -310,6 +310,7 @@ void HardwareControl::SetWaterlevel(int wantedWaterlevel)
       }
       else {
         centipede.digitalWrite(OUT_DRAIN, LOW);
+        PressureError();
       }
     }
     if (wantedWaterlevel == GetWaterlevel())
@@ -386,6 +387,12 @@ void HardwareControl::SetDirection(bool dir)
 void HardwareControl::SetProgramIndicator(Program program)
 {
   SetGroup(4);
+  if (program == NO_PROGRAM)
+  {
+    SetDataOff(1);
+    SetDataOff(2);
+    SetDataOff(3);
+  }
   if (program == PROGRAM_A)
   {
     SetDataOff(3);
@@ -404,7 +411,6 @@ void HardwareControl::SetProgramIndicator(Program program)
     SetData(3);
     SetDataOff(1);
   }
-
 }
 
 // private sets - used by gets/sets
@@ -499,3 +505,10 @@ int HardwareControl::GetProgramMoney(Program program) {
     return -1;
   }
 }
+
+void HardwareControl::PressureError() {
+  SetProgramIndicator(NO_PROGRAM);
+  delay(100);
+  SetProgramIndicator(selectedProgram);
+}
+
