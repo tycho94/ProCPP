@@ -351,17 +351,17 @@ int HardwareControl::GetMotor()
 {
   if (centipede.digitalRead(OUT_SPEED2) == HIGH &&
       centipede.digitalRead(OUT_SPEED1) == HIGH)
-    return MOTOR_OFF;  
-    
-    if (centipede.digitalRead(OUT_SPEED2) == HIGH &&
+    return MOTOR_OFF;
+
+  if (centipede.digitalRead(OUT_SPEED2) == HIGH &&
       centipede.digitalRead(OUT_SPEED1) == LOW)
-    return MOTOR_LOW;  
-    
-    if (centipede.digitalRead(OUT_SPEED2) == LOW &&
+    return MOTOR_LOW;
+
+  if (centipede.digitalRead(OUT_SPEED2) == LOW &&
       centipede.digitalRead(OUT_SPEED1) == HIGH)
-    return MOTOR_REGULAR;  
-    
-    if (centipede.digitalRead(OUT_SPEED2) == LOW &&
+    return MOTOR_REGULAR;
+
+  if (centipede.digitalRead(OUT_SPEED2) == LOW &&
       centipede.digitalRead(OUT_SPEED1) == LOW)
     return MOTOR_HIGH;
 }

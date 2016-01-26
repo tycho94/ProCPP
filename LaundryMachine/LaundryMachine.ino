@@ -12,8 +12,6 @@
 
 #include "HardwareControl.h"
 #include "CoinWallet.h"
-#include "ProgramSelect.h"
-#include "ProgramSettings.h"
 #include "ProgramExecutor.h"
 
 //interfaces
@@ -29,16 +27,12 @@ static IWater * mWater;
 //classes
 static CoinWallet *mCoinWallet;
 static HardwareControl *mControl;
-static ProgramSelect *mProgramSelect;
-static ProgramSettings *mProgramSettings;
 static ProgramExecutor *mProgramExecutor;
 
 Program selectedProgram;
 
 void setup()
 {
-  Serial.begin(9600);
-  Serial.println("start");
   // interfaces
   mBuzzer = new HardwareControl();
   mCoin = new HardwareControl();
@@ -66,7 +60,6 @@ void loop()
 {
   ButtonState();
   SwitchState();
-  Serial.println("Starting program" + (int)selectedProgram);
   mProgramExecutor->Start(selectedProgram);
   mBuzzer->Buzz();
 }
@@ -96,11 +89,7 @@ void ButtonState() {
         && selectedProgram != NO_PROGRAM
         && mCoinWallet->Withdraw(mProgram->GetProgramMoney(selectedProgram))) {
       mBuzzer->Buzz();
-      Serial.println("Payed");
       break;
-    }
-    else{
-      Serial.println("Not enough pesos");
     }
   }
 }
@@ -126,7 +115,7 @@ void SwitchState() {
          mSoap->GetSoap2Switch() &&
          mLock->GetLockSwitch()) {
       if (mProgram->GetStartButton()) {
-      mBuzzer->Buzz();
+        mBuzzer->Buzz();
         break;
       }
     }

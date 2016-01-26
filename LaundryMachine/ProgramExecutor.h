@@ -9,7 +9,6 @@
 #include "ITemperature.h"
 #include "IWater.h"
 #include "CoinWallet.h"
-#include "ProgramSettings.h"
 
 class ProgramExecutor
 {
@@ -27,7 +26,7 @@ class ProgramExecutor
     void mainWashC();
     void unlock();
     void StopMotor(bool turn);
-   
+
     IBuzzer * mBuzzer;
     IMotor * mMotor;
     ILock * mLock;
@@ -35,7 +34,6 @@ class ProgramExecutor
     ITemperature * mTemperature;
     IWater * mWater;
     CoinWallet * mCoinWallet;
-    ProgramSettings * mProgramSettings;
     unsigned long looptime;
 };
 

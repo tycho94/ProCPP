@@ -50,8 +50,6 @@ int CoinWallet::Clear()
   mCoin->SetCoin10(0);
   mCoin->SetCoin50(0);
   mCoin->SetCoin200(0);
-  Serial.println("return: ");
-  Serial.println(temp);
   return temp;
 }
 
@@ -60,12 +58,7 @@ bool CoinWallet::Withdraw(int amount)
 {
   if (amount <= balance)
   {
-    Serial.println(balance);
-    Serial.println("minus");
-    Serial.println(amount);
-    Serial.println("equals");
     balance -= amount;
-    Serial.println(balance);
     ShowBalance(10);
     ShowBalance(50);
     ShowBalance(200);
