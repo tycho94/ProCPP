@@ -31,13 +31,13 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     // Settings
     int GetWaterlevel();   // 0=empty, 1=1/3, 2=2/3, 3=filled
     int GetTemperature(); // 0=cold, 1=medium, 2=hot
-    bool GetProgramMoney(Program program);
+    int GetProgramMoney(Program program);
 
     // Outputs
     void SetCoin10(int leds);   // off = 0 - levels 1-2-3 = led 1-2-3
     void SetCoin50(int leds);   // off = 0 - levels 1-2-3 = led 1-2-3
     void SetCoin200(int leds);  // off = 0 - levels 1-2 = led 1-2
-    void SetBuzzer(bool level);  // off = 0 on = 1
+    void Buzz();  // off = 0 on = 1
     void SetLock(bool level);    // off = 0 on = 1
     void SetSoap1(bool level);   // off = 0 on = 1
     void SetSoap2(bool level);   // off = 0 on = 1
@@ -45,6 +45,7 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     //void SetSink(bool state);     // off = 0 on = 1
     //void SetDrain(bool state);    // off = 0 on = 1
     void SetMotor(int speedlevel);   // 0=off 1=slow 2=medium 3=high
+    int GetMotor();   // 0=off 1=slow 2=medium 3=high
     void SetTemperature(int level);  // off = 0 on = 1
     void SetDirection(bool dir); // left = 0 right = 1
     void SetProgramIndicator(Program program); // off = 0 - levels 1-2-3 = led 1-2-3
@@ -56,6 +57,7 @@ class HardwareControl: public IBuzzer, public ICoin, public ILock, public IMotor
     void SetData(int data);     // data 0 = LOW 1 = DATAA 2 = DATAB 3 = DATAC
     void SetDataOff(int data);
     void Strobe();
+    void PressureError();
 
 };
 

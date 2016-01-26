@@ -1,5 +1,5 @@
 #include <Wire.h>
-#include "Centipede.h"
+#include <Centipede.h>
 
 #include "IBuzzer.h"
 #include "ICoin.h"
@@ -12,8 +12,6 @@
 
 #include "HardwareControl.h"
 #include "CoinWallet.h"
-#include "ProgramSelect.h"
-#include "ProgramSettings.h"
 #include "ProgramExecutor.h"
 
 //interfaces
@@ -29,17 +27,16 @@ static IWater * mWater;
 //classes
 static CoinWallet *mCoinWallet;
 static HardwareControl *mControl;
-static ProgramSelect *mProgramSelect;
-static ProgramSettings *mProgramSettings;
 static ProgramExecutor *mProgramExecutor;
 
-int requiredMoney = 0;
-Program selectedProgram = NO_PROGRAM;
+Program selectedProgram;
 
 void setup()
 {
   Serial.begin(9600);
-  Serial.println("start");
+  Serial.println("Start");
+  Serial.println("Select a program and insert money");
+  Serial.println("Then press start");
   // interfaces
   mBuzzer = new HardwareControl();
   mCoin = new HardwareControl();
@@ -60,24 +57,81 @@ void setup()
                                          mTemperature,
                                          mWater,
                                          mCoinWallet);
-
-  mProgramExecutor->mainWashAB();
+  selectedProgram = PROGRAM_A;
 }
 
 void loop()
-{/*
-  // select a program without going out of boundary
-  if (mProgram->GetProgramButton()) {
-    // cast the int to a program enum without going out of bounds
-    selectedProgram = (Program) ((selectedProgram + 1) % 3);
-  }
+{
+  ButtonState();
+  SwitchState();
+  mProgramExecutor->Start(selectedProgram);
+  mBuzzer->Buzz();
+}
 
-  // check if there is enough money and the program is selected
-  requiredMoney = mProgram->GetProgramMoney(selectedProgram);
-  if (requiredMoney) {
-    if (mCoinWallet->Withdraw(requiredMoney)) {
-      // start the program!
-      mProgramExecutor->Start(selectedProgram);
+void ButtonState() {
+  mProgram->SetProgramIndicator(selectedProgram);
+  while (true) {
+    if (mProgram->GetProgramButton()) {
+      selectedProgram = (Program) ((selectedProgram + 1) % 3);
+      mProgram->SetProgramIndicator(selectedProgram);
+    }
+    if (mCoin->GetCoin10Button()) {
+      mCoinWallet->Deposit(10);
+    }
+    if (mCoin->GetCoin50Button()) {
+      mCoinWallet->Deposit(50);
+    }
+    if (mCoin->GetCoin200Button()) {
+      mCoinWallet->Deposit(200);
+    }
+    if (mCoin->GetCoinClearButton())
+    {
+      mCoinWallet->Clear();
+    }
+
+    if (mProgram->GetStartButton()
+        && selectedProgram != NO_PROGRAM
+        && mCoinWallet->Withdraw(mProgram->GetProgramMoney(selectedProgram))) {
+      String program = (String)selectedProgram;
+      program.replace('0', 'A');
+      program.replace('1', 'B');
+      program.replace('2', 'C');
+      Serial.print("\nProgram: ");
+      Serial.println(program);
+      mCoinWallet->Clear();
+      mBuzzer->Buzz();
+      Serial.println("\nAdd soap and close the door");
+      Serial.println("Then press start");
+      break;
     }
   }
-*/}
+}
+
+void SwitchState() {
+  while (true) {
+    if (mSoap->GetSoap1Switch())
+      mSoap->SetSoap1(true);
+    else
+      mSoap->SetSoap1(false);
+
+    if (mSoap->GetSoap2Switch())
+      mSoap->SetSoap2(true);
+    else
+      mSoap->SetSoap2(false);
+
+    if (mLock->GetLockSwitch())
+      mLock->SetLock(true);
+    else
+      mLock->SetLock(false);
+
+    if ( mSoap->GetSoap1Switch() &&
+         mSoap->GetSoap2Switch() &&
+         mLock->GetLockSwitch()) {
+      if (mProgram->GetStartButton()) {
+        Serial.print("Program started");
+        mBuzzer->Buzz();
+        break;
+      }
+    }
+  }
+}

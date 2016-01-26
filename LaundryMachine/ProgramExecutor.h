@@ -9,17 +9,14 @@
 #include "ITemperature.h"
 #include "IWater.h"
 #include "CoinWallet.h"
-#include "ProgramSettings.h"
 
 class ProgramExecutor
 {
   public:
     ProgramExecutor(IBuzzer *, IMotor *, ILock *, ISoap *, ITemperature *, IWater *, CoinWallet *);
-    bool Start(Program program);
-    bool Step();
-    bool IsReady();
+    void Start(Program program);
 
-  public:
+  private:
     void programA();
     void programB();
     void programC();
@@ -28,8 +25,8 @@ class ProgramExecutor
     void preWashA();
     void mainWashC();
     void unlock();
-    bool check(int money);
-    
+    void StopMotor(bool turn);
+    void RunCent(Speed curSpeed, Temperature curTemp);
 
     IBuzzer * mBuzzer;
     IMotor * mMotor;
@@ -38,8 +35,7 @@ class ProgramExecutor
     ITemperature * mTemperature;
     IWater * mWater;
     CoinWallet * mCoinWallet;
-    ProgramSettings * mProgramSettings;
-    unsigned long t;
+    unsigned long looptime;
 };
 
 #endif

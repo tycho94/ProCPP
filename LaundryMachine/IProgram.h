@@ -14,7 +14,7 @@ class IProgram
     // Inputs
     virtual bool GetStartButton() = 0;
     virtual bool GetProgramButton() = 0;
-    virtual bool GetProgramMoney(Program program) = 0;
+    virtual int GetProgramMoney(Program program) = 0;
 
     // Outputs
     virtual void SetProgramIndicator(Program program) = 0;
