@@ -50,6 +50,8 @@ int CoinWallet::Clear()
   mCoin->SetCoin10(0);
   mCoin->SetCoin50(0);
   mCoin->SetCoin200(0);
+  Serial.print("Returning money: ");
+  Serial.println(temp);
   return temp;
 }
 

@@ -507,6 +507,7 @@ int HardwareControl::GetProgramMoney(Program program) {
 }
 
 void HardwareControl::PressureError() {
+  Serial.println("ERROR: No water");
   SetProgramIndicator(NO_PROGRAM);
   delay(100);
   SetProgramIndicator(selectedProgram);

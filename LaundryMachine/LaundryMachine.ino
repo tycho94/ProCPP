@@ -1,5 +1,5 @@
 #include <Wire.h>
-#include "Centipede.h"
+#include <Centipede.h>
 
 #include "IBuzzer.h"
 #include "ICoin.h"
@@ -33,6 +33,10 @@ Program selectedProgram;
 
 void setup()
 {
+  Serial.begin(9600);
+  Serial.println("Start");
+  Serial.println("Select a program and insert money");
+  Serial.println("Then press start");
   // interfaces
   mBuzzer = new HardwareControl();
   mCoin = new HardwareControl();
@@ -88,7 +92,16 @@ void ButtonState() {
     if (mProgram->GetStartButton()
         && selectedProgram != NO_PROGRAM
         && mCoinWallet->Withdraw(mProgram->GetProgramMoney(selectedProgram))) {
+      String program = (String)selectedProgram;
+      program.replace('0', 'A');
+      program.replace('1', 'B');
+      program.replace('2', 'C');
+      Serial.print("\nProgram: ");
+      Serial.println(program);
+      mCoinWallet->Clear();
       mBuzzer->Buzz();
+      Serial.println("\nAdd soap and close the door");
+      Serial.println("Then press start");
       break;
     }
   }
@@ -115,7 +128,7 @@ void SwitchState() {
          mSoap->GetSoap2Switch() &&
          mLock->GetLockSwitch()) {
       if (mProgram->GetStartButton()) {
-        mCoinWallet->Clear();
+        Serial.print("Program started");
         mBuzzer->Buzz();
         break;
       }
