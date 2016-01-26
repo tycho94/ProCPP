@@ -21,7 +21,7 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
 
 
     // IBuzzer
-    void SetBuzzer(bool level);
+    void Buzz();
     // custom function for tests
     bool GetBuzzer();
 
@@ -49,13 +49,14 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     // IProgram
     bool GetStartButton();
     bool GetProgramButton();
-    void SetProgramIndicator(int program);
+    void SetProgramIndicator(Program program);
     int GetProgramIndicator();
+    int GetProgramMoney(Program program);
 
     // IMotor
+    int GetMotor();
     void SetMotor(int speedlevel);
     void SetDirection(bool dir);
-    int GetMotorSpeed();
     int GetMotorDir();
 
     // ILock
@@ -110,5 +111,5 @@ class StubHardwareControl: public IBuzzer, public ICoin, public ILock, public IM
     // Program testing variables
     bool startButton;
     bool programButton;
-    int programIndicator;
+    Program programIndicator;
 };

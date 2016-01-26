@@ -68,10 +68,6 @@ bool StubHardwareControl::GetStartButton() {
     return startButton;
 }
 
-int StubHardwareControl::GetMotorSpeed(){
-    return motorSpeed;
-}
-
 int StubHardwareControl::GetMotorDir(){
     return motorDir;
 }
@@ -105,8 +101,8 @@ void StubHardwareControl::SetMotor(int speedlevel) {
       motorSpeed = speedlevel;
 }
 
-void StubHardwareControl::SetProgramIndicator(int program) {
-	if(program <= 2 && program >= 0)
+void StubHardwareControl::SetProgramIndicator(Program program) {
+	if(program <= 3 && program >= -1)
 	    programIndicator = program;
 }
 
@@ -114,8 +110,8 @@ int StubHardwareControl::GetProgramIndicator(){
 	return programIndicator;
 }
 
-void StubHardwareControl::SetBuzzer(bool level) {
-    BuzzerButton = level;
+void StubHardwareControl::Buzz() {
+    BuzzerButton = !BuzzerButton;
 }
 
 bool StubHardwareControl::GetBuzzer() {
@@ -171,4 +167,23 @@ void StubHardwareControl::SetWaterlevel(int level) {
     //(void) level; // this does nothing, gets rid of compiler warning
     if (level >= 0 && level < 4)
       waterLevel = level;
+}
+int StubHardwareControl::GetMotor(){
+	return motorSpeed;
+}
+
+int StubHardwareControl::GetProgramMoney(Program program) {
+  if (program == PROGRAM_A) {
+    return 360;
+    }
+  else if (program == PROGRAM_B) {
+    return 480;
+    }
+  else if (program == PROGRAM_C) {
+    return 510;
+    }
+  else if(program == NO_PROGRAM){
+	   return -1;
+	}
+	return -1;
 }

@@ -4,14 +4,15 @@
 TEST(Buzzer, SetBuzzerTrue) {
     StubHardwareControl c;
 
-    c.SetBuzzer(true);
+    c.Buzz();
     EXPECT_EQ(c.GetBuzzer(), true);
 }
 
 TEST(Buzzer, SetBuzzerFalse) {
     StubHardwareControl c;
 
-    c.SetBuzzer(false);
+    c.Buzz();
+    c.Buzz();
     EXPECT_EQ(c.GetBuzzer(), false);
 }
 

@@ -7,8 +7,9 @@ TEST(Temperature, SetTemperature) {
 
     c.SetTemperature(COLD);
     ASSERT_EQ(c.GetTemperature(), COLD);
-    c.SetTemperature(WARM);
-    ASSERT_EQ(c.GetTemperature(), WARM);
+    ASSERT_NE(c.GetTemperature(), COLD2);
+    c.SetTemperature(MEDIUM);
+    ASSERT_EQ(c.GetTemperature(), MEDIUM);
     //cant be hotter here
     ASSERT_NE(c.GetTemperature(), HOT);
     c.SetTemperature(HOT);

@@ -5,13 +5,15 @@
 TEST(Program, SetProgramIndicator) {
     StubHardwareControl c;
 
-    	c.SetProgramIndicator(1);
-    	ASSERT_EQ(c.GetProgramIndicator(), 1);
-	c.SetProgramIndicator(0);
-	ASSERT_EQ(c.GetProgramIndicator(), 0);
-	ASSERT_NE(c.GetProgramIndicator(), 1);
-	c.SetProgramIndicator(5);
-	ASSERT_EQ(c.GetProgramIndicator(), 0);
+    c.SetProgramIndicator(PROGRAM_B);
+	ASSERT_EQ(c.GetProgramIndicator(), PROGRAM_B);
+	
+	c.SetProgramIndicator(PROGRAM_A);
+	ASSERT_EQ(c.GetProgramIndicator(), PROGRAM_A);
+	ASSERT_NE(c.GetProgramIndicator(), PROGRAM_B);
+	
+	c.SetProgramIndicator(NO_PROGRAM);
+	ASSERT_EQ(c.GetProgramIndicator(), NO_PROGRAM);
 }
 //Check if program button work
 TEST(Program, GetProgramButton) {
@@ -25,4 +27,14 @@ TEST(Program, GetStartButton) {
     StubHardwareControl c;
 
     EXPECT_EQ(c.GetStartButton(), true);
+}
+
+//test the getprogramcost
+TEST(Program, GetProgramMoney){
+	StubHardwareControl c;
+	
+	ASSERT_EQ(c.GetProgramMoney(NO_PROGRAM), -1);
+	EXPECT_EQ(c.GetProgramMoney(PROGRAM_A), 360);
+	EXPECT_EQ(c.GetProgramMoney(PROGRAM_B), 480);
+	EXPECT_EQ(c.GetProgramMoney(PROGRAM_C), 510);
 }
