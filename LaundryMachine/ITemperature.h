@@ -1,13 +1,13 @@
 #ifndef ITEMPERATURE_H
 #define ITEMPERATURE_H
 
-enum Temperature
+typedef enum
 {
   COLD = 0,
   COLD2 = 1,
   MEDIUM = 2 ,
   HOT = 3
-};
+} Temperature;
 
 class ITemperature
 {

@@ -17,7 +17,7 @@ ProgramExecutor::ProgramExecutor(IBuzzer * b, IMotor * m, ILock * l, ISoap * s, 
   looptime = 0;
 }
 
-bool ProgramExecutor::Start(Program program)
+void ProgramExecutor::Start(Program program)
 {
   if (program == PROGRAM_A) {
     programA();
@@ -25,8 +25,6 @@ bool ProgramExecutor::Start(Program program)
     programB();
   } else if (program == PROGRAM_C) {
     programC();
-  } else {
-    return -1;
   }
 }
 
@@ -58,22 +56,13 @@ void ProgramExecutor::preWashA() {
   mWater->SetWaterlevel(WATER_50_PERCENT);
   // add soap1
   mSoap->SetSoap1(false);
-  //
 
-  mMotor->SetDirection(CLOCK);
-  mMotor->SetMotor(MOTOR_REGULAR);
+  //run motor
+  RunCent(MOTOR_REGULAR, COLD);
 
-  looptime = millis() + WASH_TIME;
-  while (looptime > millis()) {
-  }
-  StopMotor(true);
-  mMotor->SetDirection(COUNTERCLOCK);
-  mMotor->SetMotor(MOTOR_REGULAR);
-  looptime = millis() + WASH_TIME;
-  while (looptime > millis()) {
-  }
-  // drain
+  //motor off
   StopMotor(false);
+  //water drain off
   mWater->SetWaterlevel(WATER_0_PERCENT);
 }
 
@@ -86,26 +75,15 @@ void ProgramExecutor::preWashBC() {
   }
   // add soap1
   mSoap->SetSoap1(false);
-  // rotate clockwise, at regular speed for 1 minute
-  mMotor->SetDirection(CLOCK);
-  mMotor->SetMotor(MOTOR_REGULAR);
 
-  looptime = millis() + WASH_TIME;
-  while (looptime > millis()) {
-    mTemperature->SetTemperature(MEDIUM);
-  }
-  // rotate counterclockwise, at regular speed for 1 minute
-  StopMotor(true);
-  mMotor->SetDirection(COUNTERCLOCK);
-  mMotor->SetMotor(MOTOR_REGULAR);
-  looptime = millis() + WASH_TIME;
-  while (looptime > millis()) {
-    mTemperature->SetTemperature(MEDIUM);
-  }
+  //run motor
+  RunCent(MOTOR_REGULAR, MEDIUM);
 
-  // drain water & turn off moter & set heater off
+  //motor off
   StopMotor(false);
+  //heater off
   mTemperature->SetTemperature(COLD);
+  //water drain off
   mWater->SetWaterlevel(WATER_0_PERCENT);
 }
 
@@ -121,82 +99,56 @@ void ProgramExecutor::mainWashAB() {
   }
   // add soap2
   mSoap->SetSoap2(false);
+
+  //run motor twice
   for (int i = 0; i < 2; i++)
   {
-    // rotate clockwise, at regular speed for 1 minute
-    StopMotor(true);
-    mMotor->SetDirection(CLOCK);
-    mMotor->SetMotor(MOTOR_REGULAR);
-
-    looptime = millis() + WASH_TIME;
-    while (looptime > millis()) {
-      mTemperature->SetTemperature(MEDIUM);
-    }
-    // rotate counterclockwise, at regular speed for 1 minute
-    StopMotor(true);
-    mMotor->SetDirection(COUNTERCLOCK);
-    mMotor->SetMotor(MOTOR_REGULAR);
-    looptime = millis() + WASH_TIME;
-    while (looptime > millis()) {
-      mTemperature->SetTemperature(MEDIUM);
-    }
+    //run motor
+    RunCent(MOTOR_REGULAR, MEDIUM);
   }
-  // drain water & turn off moter & set heater off
+
+  //motor off
   StopMotor(false);
+  //heater off
   mTemperature->SetTemperature(COLD);
+  //water drain off
   mWater->SetWaterlevel(WATER_0_PERCENT);
 
   //===================== RINSE ========================
   // fill 50% with water
   mWater->SetWaterlevel(WATER_50_PERCENT);
+
+  //run motor twice
   for (int i = 0; i < 2; i++)
   {
-    // rotate clockwise, at regular speed for 1 minute
-    StopMotor(true);
-    mMotor->SetDirection(CLOCK);
-    mMotor->SetMotor(MOTOR_REGULAR);
-    looptime = millis() + WASH_TIME;
-    while (looptime > millis()) {
-    }
-    // rotate counterclockwise, at regular speed for 1 minute
-    StopMotor(true);
-    mMotor->SetDirection(COUNTERCLOCK);
-    mMotor->SetMotor(MOTOR_REGULAR);
-    looptime = millis() + WASH_TIME;
-    while (looptime > millis()) {
-    }
+    //run motor
+    RunCent(MOTOR_REGULAR, COLD);
   }
-  // drain water and turn off motor
+
+  //motor off
   StopMotor(false);
+  //water drain off
   mWater->SetWaterlevel(WATER_0_PERCENT);
 
   //===================== DRY ==========================
   // keep draining the water
   mWater->SetWaterlevel(WATER_CONST);
+
+  //loop motor twice
   for (int i = 0; i < 2; i++)
   {
-    // rotate clockwise, at regular speed for 30s
-    StopMotor(true);
-    mMotor->SetDirection(CLOCK);
-    mMotor->SetMotor(MOTOR_HIGH);
-    looptime = millis() + CENT_TIME;
-    while (looptime > millis()) {
-    }
-    // rotate counterclockwise, at regular speed for 30s
-    StopMotor(true);
-    mMotor->SetDirection(COUNTERCLOCK);
-    mMotor->SetMotor(MOTOR_HIGH);
-    looptime = millis() + CENT_TIME;
-    while (looptime > millis()) {
-    }
+    //run motor
+    RunCent(MOTOR_HIGH, COLD);
   }
-  //drain and motor off
+
+  //motor off
   StopMotor(false);
+  //water drain off
   mWater->SetWaterlevel(WATER_0_PERCENT);
 }
 
 void ProgramExecutor::mainWashC() {
-  int i;
+
   //===================== WASH =========================
   // fill 100% with water
   mWater->SetWaterlevel(WATER_100_PERCENT);
@@ -206,75 +158,51 @@ void ProgramExecutor::mainWashC() {
   }
   // add soap2
   mSoap->SetSoap2(false);
+
+  //run motor 4 times
   for (int i = 0; i < 4; i++)
   {
-    // rotate clockwise, at regular speed for 1 minute
-    StopMotor(true);
-    mMotor->SetDirection(CLOCK);
-    mMotor->SetMotor(MOTOR_REGULAR);
-    looptime = millis() + WASH_TIME;
-    while (looptime > millis()) {
-      mTemperature->SetTemperature(HOT);
-    }
-    // rotate counterclockwise, at regular speed for 1 minute
-    StopMotor(true);
-    mMotor->SetDirection(COUNTERCLOCK);
-    mMotor->SetMotor(MOTOR_REGULAR);
-    looptime = millis() + WASH_TIME;
-    while (looptime > millis()) {
-      mTemperature->SetTemperature(HOT);
-    }
+    //run motor
+    RunCent(MOTOR_REGULAR, HOT);
   }
 
-  // drain water
+  //motor off
   StopMotor(false);
+  //heater off
   mTemperature->SetTemperature(COLD);
+  //water drain off
   mWater->SetWaterlevel(WATER_0_PERCENT);
+
   //===================== RINSE ========================
   // fill 50% with water
   mWater->SetWaterlevel(WATER_50_PERCENT);
+
+  //run motor 4 times
   for (int i = 0; i < 4; i++)
   {
-    // rotate clockwise, at regular speed for 1 minute
-    StopMotor(true);
-    mMotor->SetDirection(CLOCK);
-    mMotor->SetMotor(MOTOR_REGULAR);
-    looptime = millis() + WASH_TIME;
-    while (looptime > millis()) {
-    }
-    // rotate counterclockwise, at regular speed for 1 minute
-    StopMotor(true);
-    mMotor->SetDirection(COUNTERCLOCK);
-    mMotor->SetMotor(MOTOR_REGULAR);
-    looptime = millis() + WASH_TIME;
-    while (looptime > millis()) {
-    }
+    //run motor
+    RunCent(MOTOR_REGULAR, COLD);
   }
-  // drain water
+
+  //motor off
   StopMotor(false);
+  //water drain off
   mWater->SetWaterlevel(WATER_0_PERCENT);
 
   //===================== DRY ==========================
   // keep draining the water
   mWater->SetWaterlevel(WATER_CONST);
+
+  //run motor 3 times
   for (int i = 0; i < 3; i++)
   {
-    // rotate clockwise, at regular speed for 30s
-    StopMotor(true);
-    mMotor->SetDirection(CLOCK);
-    mMotor->SetMotor(MOTOR_HIGH);
-    looptime = millis() + CENT_TIME;
-    while (looptime > millis()) {
-    }
-    // rotate counterclockwise, at regular speed for 30s
-    StopMotor(true);
-    mMotor->SetDirection(COUNTERCLOCK);
-    mMotor->SetMotor(MOTOR_HIGH);
-    looptime = millis() + CENT_TIME;
-    while (looptime > millis()) {
-    }
+    //run motor
+    RunCent(MOTOR_HIGH, COLD);
   }
+
+  //motor off
   StopMotor(false);
+  //water drain off
   mWater->SetWaterlevel(WATER_0_PERCENT);
 }
 
@@ -328,4 +256,25 @@ void ProgramExecutor::StopMotor(bool turn) {
   }
   return;
 }
+
+void ProgramExecutor::RunCent(Speed curSpeed, Temperature curTemp) {
+
+  // rotate clockwise, at regular speed for 1 minute
+  StopMotor(true);
+  mMotor->SetDirection(CLOCK);
+  mMotor->SetMotor(curSpeed);
+  looptime = millis() + WASH_TIME;
+  while (looptime > millis()) {
+    mTemperature->SetTemperature(curTemp);
+  }
+  // rotate counterclockwise, at regular speed for 1 minute
+  StopMotor(true);
+  mMotor->SetDirection(COUNTERCLOCK);
+  mMotor->SetMotor(curSpeed);
+  looptime = millis() + WASH_TIME;
+  while (looptime > millis()) {
+    mTemperature->SetTemperature(curTemp);
+  }
+}
+
 
