@@ -26,7 +26,6 @@ static IWater * mWater;
 
 //classes
 static CoinWallet *mCoinWallet;
-static HardwareControl *mControl;
 static ProgramExecutor *mProgramExecutor;
 
 Program selectedProgram;
@@ -49,7 +48,6 @@ void setup()
 
   //classes
   mCoinWallet = new CoinWallet(mCoin);
-  mControl = new HardwareControl();
   mProgramExecutor = new ProgramExecutor(mBuzzer,
                                          mMotor,
                                          mLock,
