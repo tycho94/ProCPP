@@ -365,6 +365,8 @@ int HardwareControl::GetMotor()
   if (centipede.digitalRead(OUT_SPEED2) == LOW &&
       centipede.digitalRead(OUT_SPEED1) == LOW)
     return MOTOR_HIGH;
+
+    return -1;
 }
 
 //set the heater to keep temp at certain value, 0 = cold, 1 = less cold, 2 = medium, 3 = hot

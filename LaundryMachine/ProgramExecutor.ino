@@ -241,7 +241,7 @@ void ProgramExecutor::StopMotor(bool turn) {
   }
   if (mMotor->GetMotor() == MOTOR_HIGH) {
     looptime = millis() + 2000;
-    int slow = millis() + 850;
+    unsigned long slow = millis() + 850;
     mMotor->SetMotor(MOTOR_REGULAR);
     while (looptime > millis()) {
       if (slow < millis())
